@@ -44,8 +44,8 @@ const DDMenu: React.FC<DDMenuProps> = ({
             {filter}
           </DropdownMenuRadioItem>
           <DropdownMenuSeparator />
-          {options.map((option) => (
-            <DropdownMenuRadioItem value={option}>
+          {options.map((option, index) => (
+            <DropdownMenuRadioItem key={index} value={option}>
               {option}
             </DropdownMenuRadioItem>
           ))}
