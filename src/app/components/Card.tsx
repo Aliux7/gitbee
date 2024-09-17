@@ -18,7 +18,7 @@ const Card: React.FC<CardProps> = ({ image, title, developers, delay }) => {
     <motion.div
       transition={{ duration: 0.5, delay: delay }}
       variants={charVariants}
-      className="w-80 h-[25rem] bg-white border rounded-lg shadow-sm hover:shadow-lg flex flex-col justify-center gap-4 overflow-hidden px-4 cursor-pointer hover:-translate-y-3 transition-transform duration-300 ease-in-out"
+      className="w-full max-w-80 h-[25rem] bg-white border rounded-lg shadow-sm hover:shadow-lg flex flex-col justify-center gap-4 overflow-hidden px-4 cursor-pointer hover:-translate-y-3 transition-transform duration-300 ease-in-out"
     >
       <img src={image} className="w-auto h-72 object-cover rounded-lg" />
       <div className="w-full flex flex-col gap-1">

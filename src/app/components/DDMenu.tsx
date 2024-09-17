@@ -14,18 +14,11 @@ import {
 
 type DDMenuProps = {
   filter: string;
-  // title: string;
   options: string[];
-  // delay: number;
+  icon: React.ReactElement;
 };
 
-const DDMenu: React.FC<DDMenuProps> = ({
-  filter,
-  options,
-  // title,
-  // developers,
-  // delay,
-}) => {
+const DDMenu: React.FC<DDMenuProps> = ({ filter, options, icon }) => {
   const [position, setPosition] = React.useState(filter);
 
   return (
@@ -33,17 +26,16 @@ const DDMenu: React.FC<DDMenuProps> = ({
       <DropdownMenuTrigger asChild>
         <Button
           variant="outline"
-          className="h-full w-44 text-gray-500 font-poppins font-normal"
+          className="h-full w-44 flex justify-between items-center gap-3 py-3"
         >
-          {position}
+          <div className="pr-2 border-r h-full flex justify-center items-center">{icon}</div>
+          <div className="truncate text-gray-500 hover:text-[#1f2937] font-poppins font-normal">
+            {position}
+          </div>
         </Button>
       </DropdownMenuTrigger>
       <DropdownMenuContent className="w-44">
         <DropdownMenuRadioGroup value={position} onValueChange={setPosition}>
-          <DropdownMenuRadioItem value={filter} disabled>
-            {filter}
-          </DropdownMenuRadioItem>
-          <DropdownMenuSeparator />
           {options.map((option, index) => (
             <DropdownMenuRadioItem key={index} value={option}>
               {option}

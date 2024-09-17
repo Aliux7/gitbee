@@ -1,16 +1,19 @@
 "use client";
 import React, { useEffect, useRef, useState } from "react";
-import { Hero } from "../components/home/Hero";
 import Card from "../components/Card";
 import { motion, useScroll } from "framer-motion";
 import { CiSearch } from "react-icons/ci";
 import DDMenu from "../components/DDMenu";
+import { TbCategory2 } from "react-icons/tb";
+import { IoBookOutline } from "react-icons/io5";
+import { CiCalendarDate } from "react-icons/ci";
+import { IoIosArrowRoundBack } from "react-icons/io";
 
 const page = () => {
   const { scrollYProgress } = useScroll();
   const prevScrollY = useRef(0);
   const [expand, setExpand] = useState(true);
-  const [showDevelopers, setShowDevelopers] = useState(false);
+  const [showDevelopers, setShowDevelopers] = useState(true);
 
   useEffect(() => {
     scrollYProgress.onChange((currentScrollY) => {
@@ -56,125 +59,231 @@ const page = () => {
           <DDMenu
             options={["Category 1", "Category 2", "Category 3"]}
             filter="Category"
+            icon={<TbCategory2 className="w-4 h-4" />}
           />
           <DDMenu
             options={["Computer Science", "Sistem Information"]}
             filter="Major"
+            icon={<IoBookOutline className="w-4 h-4" />}
           />
           <DDMenu
             options={["2024", "2023", "2022", "2021", "2020"]}
             filter="Year"
+            icon={<CiCalendarDate className="w-5 h-5" />}
           />
         </div>
       </div>
-      <div className="relative h-[200vh] bg-white mx-9 rounded-md px-5 flex flex-col mb-14">
+      <motion.div
+        variants={{
+          hidden: { opacity: 0 },
+          show: { opacity: 1 },
+        }}
+        initial="hidden"
+        animate="show"
+        className="relative h-full bg-white mx-9 rounded-md flex flex-col mb-14 pb-7"
+      >
         <div
-          className={`w-full h-auto bg-white sticky ${
+          className={`w-full h-auto bg-white sticky z-10 px-5 transition-all ease-in-out duration-300 ${
             expand ? "top-[12.25rem]" : "top-28"
-          }`}
+          } ${showDevelopers ? "hidden" : "visible"}`}
         >
           <div className="p-2 rounded-md my-4 border text-gray-500">
             1705 Results Found
           </div>
         </div>
-        <div className="flex w-full h-fit mt-3">
+        <div className="relative flex w-full h-fit mt-3 px-5">
           <div
             className={`${
-              showDevelopers ? "w-80 mr-4 border-r" : "w-0"
-            } transition-all ease-in-out duration-300 h-full`}
-          ></div>
-          <motion.div
-            className={`grid ${
-              showDevelopers ? "grid-cols-3" : "grid-cols-4"
-            } flex-grow h-fit gap-10 justify-center items-start`}
-            initial="hidden"
-            whileInView="reveal"
-            transition={{ staggerChildren: 0.5 }}
-            onClick={() => setShowDevelopers(!showDevelopers)}
+              showDevelopers
+                ? "w-80 mr-4 border-r h-96 py-2 opacity-100"
+                : "w-0 opacity-0"
+            } sticky ${
+              expand ? "top-[16.75rem]" : "top-[11.25rem]"
+            } flex flex-col gap-5 transition-all ease-in-out duration-500 overflow-hidden`}
           >
-            <motion.div
-              transition={{ duration: 0.5, delay: 0 }}
-              variants={{ hidden: { opacity: 0 }, reveal: { opacity: 1 } }}
-              className="w-72  bg-white border rounded-lg shadow-sm hover:shadow-lg flex flex-col justify-center gap-4 overflow-hidden p-4 cursor-pointer hover:-translate-y-3 transition-transform duration-300 ease-in-out"
-            >
+            {/* <h1 className="text-center py-10 text-gray-500">No Project Selected</h1> */}
+            <div className="flex justify-start items-center gap-5 border-b pb-5 mr-4">
               <img
                 src="/images/1.jpg"
-                className="w-auto h-72 object-cover rounded-lg"
+                className="rounded-full h-20 w-20 p-1 border object-cover"
               />
-            </motion.div>
-            <motion.div
-              transition={{ duration: 0.5, delay: 0 }}
-              variants={{ hidden: { opacity: 0 }, reveal: { opacity: 1 } }}
-              className="w-72  bg-white border rounded-lg shadow-sm hover:shadow-lg flex flex-col justify-center gap-4 overflow-hidden p-4 cursor-pointer hover:-translate-y-3 transition-transform duration-300 ease-in-out"
-            >
-              <img
-                src="/images/2.jpg"
-                className="w-auto h-72 object-cover rounded-lg"
-              />
-            </motion.div>
-            <motion.div
-              transition={{ duration: 0.5, delay: 0 }}
-              variants={{ hidden: { opacity: 0 }, reveal: { opacity: 1 } }}
-              className="w-72  bg-white border rounded-lg shadow-sm hover:shadow-lg flex flex-col justify-center gap-4 overflow-hidden p-4 cursor-pointer hover:-translate-y-3 transition-transform duration-300 ease-in-out"
-            >
+              <div className="w-48">
+                <h1 className="truncate font-semibold">Kelson Edbert S</h1>
+                <h1 className="truncate text-sm text-gray-500">2540115465</h1>
+                <h1 className="truncate text-sm text-gray-500">
+                  Computer Science
+                </h1>
+              </div>
+            </div>
+            <div className="flex justify-start items-center gap-5 border-b pb-5 mr-4">
               <img
                 src="/images/3.jpg"
-                className="w-auto h-72 object-cover rounded-lg"
+                className="rounded-full h-20 w-20 p-1 border object-cover"
               />
-            </motion.div>
-            <motion.div
-              transition={{ duration: 0.5, delay: 0 }}
-              variants={{ hidden: { opacity: 0 }, reveal: { opacity: 1 } }}
-              className="w-72  bg-white border rounded-lg shadow-sm hover:shadow-lg flex flex-col justify-center gap-4 overflow-hidden p-4 cursor-pointer hover:-translate-y-3 transition-transform duration-300 ease-in-out"
-            >
-              <img
-                src="/images/4.jpg"
-                className="w-auto h-72 object-cover rounded-lg"
-              />
-            </motion.div>
-            <motion.div
-              transition={{ duration: 0.5, delay: 0 }}
-              variants={{ hidden: { opacity: 0 }, reveal: { opacity: 1 } }}
-              className="w-72  bg-white border rounded-lg shadow-sm hover:shadow-lg flex flex-col justify-center gap-4 overflow-hidden p-4 cursor-pointer hover:-translate-y-3 transition-transform duration-300 ease-in-out"
-            >
+              <div className="w-48">
+                <h1 className="truncate font-semibold">Timothy Darren</h1>
+                <h1 className="truncate text-sm text-gray-500">2540115465</h1>
+                <h1 className="truncate text-sm text-gray-500">
+                  Computer Science
+                </h1>
+              </div>
+            </div>
+            <div className="flex justify-start items-center gap-5 border-b pb-5 mr-4">
               <img
                 src="/images/5.jpg"
-                className="w-auto h-72 object-cover rounded-lg"
+                className="rounded-full h-20 w-20 p-1 border object-cover"
               />
-            </motion.div>
+              <div className="w-48">
+                <h1 className="truncate font-semibold">Nicholas Chandra</h1>
+                <h1 className="truncate text-sm text-gray-500">2540115465</h1>
+                <h1 className="truncate text-sm text-gray-500">
+                  Computer Science
+                </h1>
+              </div>
+            </div>
+          </div>
+          {showDevelopers ? (
+            <div className="relative flex-grow h-fit gap-7 py-3 justify-center items-start transition-all ease-in-out duration-500">
+              <div className="w-full h-full flex justify-start items-start">
+                <div
+                  className="hover:bg-gray-100 p-1.5 cursor-pointer rounded-full"
+                  onClick={() => setShowDevelopers(false)}
+                >
+                  <IoIosArrowRoundBack className="w-7 h-7" />
+                </div>
+                <div className="mx-3 flex flex-col gap-1 w-full">
+                  <h1 className="text-3xl font-bold">The Spotify</h1>
+                  <h3 className="text-sm text-gray-500">
+                    By Kelson Edbert S, Timothy Darren, Nicholas Chandra
+                  </h3>
+                  <div className="h-20 w-full">
+                    <h1>GitHub</h1>
+                    <h1>Website</h1>
+                    <h1>Foto Thumbnail</h1>
+                    <h1>Description</h1>
+                    <h1>Dokumentasi</h1>
+                  </div>
+                </div>
+              </div>
+              {/* <h1>Selected Project</h1> */}
+            </div>
+          ) : (
             <motion.div
-              transition={{ duration: 0.5, delay: 0 }}
-              variants={{ hidden: { opacity: 0 }, reveal: { opacity: 1 } }}
-              className="w-72  bg-white border rounded-lg shadow-sm hover:shadow-lg flex flex-col justify-center gap-4 overflow-hidden p-4 cursor-pointer hover:-translate-y-3 transition-transform duration-300 ease-in-out"
+              className={`grid ${
+                showDevelopers ? "grid-cols-3" : "grid-cols-4"
+              } flex-grow h-fit gap-7 justify-center items-start transition-all ease-in-out duration-500`}
+              initial="hidden"
+              whileInView="reveal"
+              transition={{ staggerChildren: 0.5 }}
             >
-              <img
-                src="/images/6.jpg"
-                className="w-auto h-72 object-cover rounded-lg"
-              />
+              <div onClick={() => setShowDevelopers(!showDevelopers)}>
+                <Card
+                  image="/images/1.jpg"
+                  delay={0}
+                  title="This Co"
+                  developers={["Kelson Edbert Susilo"]}
+                />
+              </div>
+              <div onClick={() => setShowDevelopers(!showDevelopers)}>
+                <Card
+                  image="/images/1.jpg"
+                  delay={0}
+                  title="This Co"
+                  developers={["Kelson Edbert Susilo"]}
+                />
+              </div>
+              <div onClick={() => setShowDevelopers(!showDevelopers)}>
+                <Card
+                  image="/images/1.jpg"
+                  delay={0}
+                  title="This Co"
+                  developers={["Kelson Edbert Susilo"]}
+                />
+              </div>
+              <div onClick={() => setShowDevelopers(!showDevelopers)}>
+                <Card
+                  image="/images/1.jpg"
+                  delay={0}
+                  title="This Co"
+                  developers={["Kelson Edbert Susilo"]}
+                />
+              </div>
+              <div onClick={() => setShowDevelopers(!showDevelopers)}>
+                <Card
+                  image="/images/1.jpg"
+                  delay={0}
+                  title="This Co"
+                  developers={["Kelson Edbert Susilo"]}
+                />
+              </div>
+              <div onClick={() => setShowDevelopers(!showDevelopers)}>
+                <Card
+                  image="/images/1.jpg"
+                  delay={0}
+                  title="This Co"
+                  developers={["Kelson Edbert Susilo"]}
+                />
+              </div>
+              <div onClick={() => setShowDevelopers(!showDevelopers)}>
+                <Card
+                  image="/images/1.jpg"
+                  delay={0}
+                  title="This Co"
+                  developers={["Kelson Edbert Susilo"]}
+                />
+              </div>
+              <div onClick={() => setShowDevelopers(!showDevelopers)}>
+                <Card
+                  image="/images/1.jpg"
+                  delay={0}
+                  title="This Co"
+                  developers={["Kelson Edbert Susilo"]}
+                />
+              </div>
+              <div onClick={() => setShowDevelopers(!showDevelopers)}>
+                <Card
+                  image="/images/1.jpg"
+                  delay={0}
+                  title="This Co"
+                  developers={["Kelson Edbert Susilo"]}
+                />
+              </div>
+              <div onClick={() => setShowDevelopers(!showDevelopers)}>
+                <Card
+                  image="/images/1.jpg"
+                  delay={0}
+                  title="This Co"
+                  developers={["Kelson Edbert Susilo"]}
+                />
+              </div>
+              <div onClick={() => setShowDevelopers(!showDevelopers)}>
+                <Card
+                  image="/images/1.jpg"
+                  delay={0}
+                  title="This Co"
+                  developers={["Kelson Edbert Susilo"]}
+                />
+              </div>
+              <div onClick={() => setShowDevelopers(!showDevelopers)}>
+                <Card
+                  image="/images/1.jpg"
+                  delay={0}
+                  title="This Co"
+                  developers={["Kelson Edbert Susilo"]}
+                />
+              </div>
+              <div onClick={() => setShowDevelopers(!showDevelopers)}>
+                <Card
+                  image="/images/1.jpg"
+                  delay={0}
+                  title="This Co"
+                  developers={["Kelson Edbert Susilo"]}
+                />
+              </div>
             </motion.div>
-            <motion.div
-              transition={{ duration: 0.5, delay: 0 }}
-              variants={{ hidden: { opacity: 0 }, reveal: { opacity: 1 } }}
-              className="w-72  bg-white border rounded-lg shadow-sm hover:shadow-lg flex flex-col justify-center gap-4 overflow-hidden p-4 cursor-pointer hover:-translate-y-3 transition-transform duration-300 ease-in-out"
-            >
-              <img
-                src="/images/7.jpg"
-                className="w-auto h-72 object-cover rounded-lg"
-              />
-            </motion.div>
-            <motion.div
-              transition={{ duration: 0.5, delay: 0 }}
-              variants={{ hidden: { opacity: 0 }, reveal: { opacity: 1 } }}
-              className="w-72  bg-white border rounded-lg shadow-sm hover:shadow-lg flex flex-col justify-center gap-4 overflow-hidden p-4 cursor-pointer hover:-translate-y-3 transition-transform duration-300 ease-in-out"
-            >
-              <img
-                src="/images/8.jpg"
-                className="w-auto h-72 object-cover rounded-lg"
-              />
-            </motion.div>
-          </motion.div>
+          )}
         </div>
-      </div>
+      </motion.div>
     </motion.div>
   );
 };
