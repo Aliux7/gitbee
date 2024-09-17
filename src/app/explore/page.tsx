@@ -8,6 +8,9 @@ import { TbCategory2 } from "react-icons/tb";
 import { IoBookOutline } from "react-icons/io5";
 import { CiCalendarDate } from "react-icons/ci";
 import { IoIosArrowRoundBack } from "react-icons/io";
+import { SiGithub } from "react-icons/si";
+import { BsGlobe2 } from "react-icons/bs";
+import Link from "next/link";
 
 const page = () => {
   const { scrollYProgress } = useScroll();
@@ -91,14 +94,12 @@ const page = () => {
             1705 Results Found
           </div>
         </div>
-        <div className="relative flex w-full h-fit mt-3 px-5">
+        <div className="relative flex justify-center items-start w-full min-h-[80vh] h-full mt-3 px-5">
           <div
-            className={`${
+            className={`sticky ${expand ? "top-52" : "top-32"} ${
               showDevelopers
-                ? "w-80 mr-4 border-r h-96 py-2 opacity-100"
+                ? "w-[30rem] h-full py-2 opacity-100"
                 : "w-0 opacity-0"
-            } sticky ${
-              expand ? "top-[16.75rem]" : "top-[11.25rem]"
             } flex flex-col gap-5 transition-all ease-in-out duration-500 overflow-hidden`}
           >
             {/* <h1 className="text-center py-10 text-gray-500">No Project Selected</h1> */}
@@ -128,44 +129,59 @@ const page = () => {
                 </h1>
               </div>
             </div>
-            <div className="flex justify-start items-center gap-5 border-b pb-5 mr-4">
-              <img
-                src="/images/5.jpg"
-                className="rounded-full h-20 w-20 p-1 border object-cover"
-              />
-              <div className="w-48">
-                <h1 className="truncate font-semibold">Nicholas Chandra</h1>
-                <h1 className="truncate text-sm text-gray-500">2540115465</h1>
-                <h1 className="truncate text-sm text-gray-500">
-                  Computer Science
-                </h1>
-              </div>
-            </div>
           </div>
+
           {showDevelopers ? (
-            <div className="relative flex-grow h-fit gap-7 py-3 justify-center items-start transition-all ease-in-out duration-500">
-              <div className="w-full h-full flex justify-start items-start">
-                <div
-                  className="hover:bg-gray-100 p-1.5 cursor-pointer rounded-full"
-                  onClick={() => setShowDevelopers(false)}
-                >
-                  <IoIosArrowRoundBack className="w-7 h-7" />
-                </div>
-                <div className="mx-3 flex flex-col gap-1 w-full">
-                  <h1 className="text-3xl font-bold">The Spotify</h1>
-                  <h3 className="text-sm text-gray-500">
-                    By Kelson Edbert S, Timothy Darren, Nicholas Chandra
-                  </h3>
-                  <div className="h-20 w-full">
-                    <h1>GitHub</h1>
-                    <h1>Website</h1>
-                    <h1>Foto Thumbnail</h1>
-                    <h1>Description</h1>
-                    <h1>Dokumentasi</h1>
+            <div className="relative w-full border-l pl-3 flex h-fit py-3 justify-start items-start transition-all ease-in-out duration-500">
+              <div
+                className="hover:bg-gray-100 p-1.5 cursor-pointer rounded-full"
+                onClick={() => setShowDevelopers(false)}
+              >
+                <IoIosArrowRoundBack className="w-7 h-7" />
+              </div>
+              <div className="w-full flex flex-col">
+                <div className="w-full flex justify-start items-start border-b pb-5">
+                  <div className="mx-3 flex flex-col gap-1 w-2/3">
+                    <h1 className="text-3xl font-bold">The Spotify</h1>
+                    <h3 className="text-sm text-gray-500">
+                      By Kelson Edbert S, Timothy Darren, Nicholas Chandra
+                    </h3>
+                    <div className="h-fit flex-grow my-3 pr-10">
+                      <h1 className="text-balance">
+                        Lorem ipsum dolor sit amet consectetur, adipisicing
+                        elit. At molestias possimus ipsum? Fuga architecto,
+                        ipsum nulla explicabo quas corrupti quia labore eum
+                        dolor ipsam obcaecati facere odio aliquam aspernatur
+                        perferendis. Lorem ipsum, dolor sit amet consectetur
+                        adipisicing elit. Veniam corrupti quod eos nulla vero
+                        debitis corporis ullam, earum laudantium praesentium
+                        asperiores ipsum ab voluptatem molestias atque mollitia
+                        quidem sint in!
+                      </h1>
+                    </div>
+                    <Link
+                      href="https://github.com/Aliux7/gitbee"
+                      className="flex justify-start items-center gap-2 text-sm my-1 text-gray-600"
+                    >
+                      <SiGithub /> https://github.com/Aliux7/gitbee
+                    </Link>
+                    <Link
+                      href="https://binusmaya.binus.ac.id/"
+                      className="flex justify-start items-center gap-2 text-sm my-1 text-gray-600"
+                    >
+                      <BsGlobe2 /> https://binusmaya.binus.ac.id/
+                    </Link>
+                  </div>
+                  <div className="w-1/3 mr-5">
+                    {/* <img
+                    src="/images/image-1.webp"
+                    className="w-full rounded-md"
+                  /> */}
+                    <img src="/images/3.jpg" className="w-full rounded-md border" />
                   </div>
                 </div>
+                <div className="w-full h-96 bg-green-50 my-3">Dokumentasi</div>
               </div>
-              {/* <h1>Selected Project</h1> */}
             </div>
           ) : (
             <motion.div
