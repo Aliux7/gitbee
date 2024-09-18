@@ -16,7 +16,7 @@ const page = () => {
   const { scrollYProgress } = useScroll();
   const prevScrollY = useRef(0);
   const [expand, setExpand] = useState(true);
-  const [showDevelopers, setShowDevelopers] = useState(true);
+  const [showDevelopers, setShowDevelopers] = useState(false);
 
   useEffect(() => {
     scrollYProgress.onChange((currentScrollY) => {
@@ -32,6 +32,13 @@ const page = () => {
       }
     });
   }, [scrollYProgress]);
+
+  const handleScrollToTop = () => {
+    window.scrollTo({
+      top: 0,
+      behavior: "smooth",
+    });
+  };
 
   return (
     <motion.div className="relative min-h-screen flex flex-col pt-28 px-16 bg-gray-50">
@@ -139,7 +146,7 @@ const page = () => {
               >
                 <IoIosArrowRoundBack className="w-7 h-7" />
               </div>
-              <div className="w-full flex flex-col">
+              <div className="w-full flex flex-col pr-5">
                 <div className="w-full flex justify-start items-start border-b pb-5">
                   <div className="mx-3 flex flex-col gap-1 w-2/3">
                     <h1 className="text-3xl font-bold">The Spotify</h1>
@@ -172,15 +179,35 @@ const page = () => {
                       <BsGlobe2 /> https://binusmaya.binus.ac.id/
                     </Link>
                   </div>
-                  <div className="w-1/3 mr-5">
+                  <div className="w-1/3">
                     {/* <img
                     src="/images/image-1.webp"
                     className="w-full rounded-md"
                   /> */}
-                    <img src="/images/3.jpg" className="w-full rounded-md border" />
+                    <img
+                      src="/images/3.jpg"
+                      className="w-full rounded-md border"
+                    />
                   </div>
                 </div>
-                <div className="w-full h-96 bg-green-50 my-3">Dokumentasi</div>
+                <div className="w-full h-96 bg-green-50 my-3 flex overflow-auto gap-3">
+                  <img
+                    src="/images/1.jpg"
+                    className="h-full rounded-md border"
+                  />
+                  <img
+                    src="/images/2.jpg"
+                    className="h-full rounded-md border"
+                  />
+                  <img
+                    src="/images/3.jpg"
+                    className="h-full rounded-md border"
+                  />
+                  <img
+                    src="/images/4.jpg"
+                    className="h-full rounded-md border"
+                  />
+                </div>
               </div>
             </div>
           ) : (
@@ -192,7 +219,12 @@ const page = () => {
               whileInView="reveal"
               transition={{ staggerChildren: 0.5 }}
             >
-              <div onClick={() => setShowDevelopers(!showDevelopers)}>
+              <div
+                onClick={() => {
+                  setShowDevelopers(!showDevelopers);
+                  handleScrollToTop();
+                }}
+              >
                 <Card
                   image="/images/1.jpg"
                   delay={0}
@@ -200,95 +232,155 @@ const page = () => {
                   developers={["Kelson Edbert Susilo"]}
                 />
               </div>
-              <div onClick={() => setShowDevelopers(!showDevelopers)}>
+              <div
+                onClick={() => {
+                  setShowDevelopers(!showDevelopers);
+                  handleScrollToTop();
+                }}
+              >
                 <Card
-                  image="/images/1.jpg"
+                  image="/images/2.jpg"
                   delay={0}
                   title="This Co"
                   developers={["Kelson Edbert Susilo"]}
                 />
               </div>
-              <div onClick={() => setShowDevelopers(!showDevelopers)}>
+              <div
+                onClick={() => {
+                  setShowDevelopers(!showDevelopers);
+                  handleScrollToTop();
+                }}
+              >
                 <Card
-                  image="/images/1.jpg"
+                  image="/images/3.jpg"
                   delay={0}
                   title="This Co"
                   developers={["Kelson Edbert Susilo"]}
                 />
               </div>
-              <div onClick={() => setShowDevelopers(!showDevelopers)}>
+              <div
+                onClick={() => {
+                  setShowDevelopers(!showDevelopers);
+                  handleScrollToTop();
+                }}
+              >
                 <Card
-                  image="/images/1.jpg"
+                  image="/images/4.jpg"
                   delay={0}
                   title="This Co"
                   developers={["Kelson Edbert Susilo"]}
                 />
               </div>
-              <div onClick={() => setShowDevelopers(!showDevelopers)}>
+              <div
+                onClick={() => {
+                  setShowDevelopers(!showDevelopers);
+                  handleScrollToTop();
+                }}
+              >
                 <Card
-                  image="/images/1.jpg"
+                  image="/images/5.jpg"
                   delay={0}
                   title="This Co"
                   developers={["Kelson Edbert Susilo"]}
                 />
               </div>
-              <div onClick={() => setShowDevelopers(!showDevelopers)}>
+              <div
+                onClick={() => {
+                  setShowDevelopers(!showDevelopers);
+                  handleScrollToTop();
+                }}
+              >
                 <Card
-                  image="/images/1.jpg"
+                  image="/images/6.jpg"
                   delay={0}
                   title="This Co"
                   developers={["Kelson Edbert Susilo"]}
                 />
               </div>
-              <div onClick={() => setShowDevelopers(!showDevelopers)}>
+              <div
+                onClick={() => {
+                  setShowDevelopers(!showDevelopers);
+                  handleScrollToTop();
+                }}
+              >
                 <Card
-                  image="/images/1.jpg"
+                  image="/images/7.jpg"
                   delay={0}
                   title="This Co"
                   developers={["Kelson Edbert Susilo"]}
                 />
               </div>
-              <div onClick={() => setShowDevelopers(!showDevelopers)}>
+              <div
+                onClick={() => {
+                  setShowDevelopers(!showDevelopers);
+                  handleScrollToTop();
+                }}
+              >
                 <Card
-                  image="/images/1.jpg"
+                  image="/images/8.jpg"
                   delay={0}
                   title="This Co"
                   developers={["Kelson Edbert Susilo"]}
                 />
               </div>
-              <div onClick={() => setShowDevelopers(!showDevelopers)}>
+              <div
+                onClick={() => {
+                  setShowDevelopers(!showDevelopers);
+                  handleScrollToTop();
+                }}
+              >
                 <Card
-                  image="/images/1.jpg"
+                  image="/images/9.jpg"
                   delay={0}
                   title="This Co"
                   developers={["Kelson Edbert Susilo"]}
                 />
               </div>
-              <div onClick={() => setShowDevelopers(!showDevelopers)}>
+              <div
+                onClick={() => {
+                  setShowDevelopers(!showDevelopers);
+                  handleScrollToTop();
+                }}
+              >
                 <Card
-                  image="/images/1.jpg"
+                  image="/images/10.jpg"
                   delay={0}
                   title="This Co"
                   developers={["Kelson Edbert Susilo"]}
                 />
               </div>
-              <div onClick={() => setShowDevelopers(!showDevelopers)}>
+              <div
+                onClick={() => {
+                  setShowDevelopers(!showDevelopers);
+                  handleScrollToTop();
+                }}
+              >
                 <Card
-                  image="/images/1.jpg"
+                  image="/images/11.jpg"
                   delay={0}
                   title="This Co"
                   developers={["Kelson Edbert Susilo"]}
                 />
               </div>
-              <div onClick={() => setShowDevelopers(!showDevelopers)}>
+              <div
+                onClick={() => {
+                  setShowDevelopers(!showDevelopers);
+                  handleScrollToTop();
+                }}
+              >
                 <Card
-                  image="/images/1.jpg"
+                  image="/images/12.jpg"
                   delay={0}
                   title="This Co"
                   developers={["Kelson Edbert Susilo"]}
                 />
               </div>
-              <div onClick={() => setShowDevelopers(!showDevelopers)}>
+              <div
+                onClick={() => {
+                  setShowDevelopers(!showDevelopers);
+                  handleScrollToTop();
+                }}
+              >
                 <Card
                   image="/images/1.jpg"
                   delay={0}
