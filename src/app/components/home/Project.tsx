@@ -61,19 +61,19 @@ const Project = () => {
           image="/images/1.jpg"
           title="Portashynska"
           developers={["Kelson", "Timothy Darren", "Nicholas Chandra"]}
-          delay={0.5}
+          delay={0.3}
         />
         <Card
           image="/images/10.jpg"
           title="Gallery Don't know"
           developers={["Kelson", "Timothy Darren", "Nicholas Chandra"]}
-          delay={1}
+          delay={0.6}
         />
         <Card
           image="/images/3.jpg"
           title="Veronique"
           developers={["Kelson", "Timothy Darren", "Nicholas Chandra"]}
-          delay={1.5}
+          delay={0.9}
         />
       </motion.div>
       <motion.div
@@ -83,14 +83,14 @@ const Project = () => {
         transition={{ staggerChildren: 0.75 }}
       >
         <motion.button
-          transition={{ duration: 0.5, delay: 0.75 }}
+          transition={{ duration: 0.5 }}
           variants={charVariants}
           className="w-32 relative border border-gray-800 bg-transparent px-5 py-2.5 hover:text-gray-800 transition-colors before:absolute before:left-0 before:top-0 before:-z-10 before:h-full before:w-full before:origin-bottom-left before:scale-y-100 before:bg-gray-800 before:transition-transform before:duration-300 before:content-[''] text-white before:hover:scale-y-0 rounded-md before:rounded-sm overflow-hidden"
         >
           Explore
         </motion.button>
         <motion.button
-          transition={{ duration: 0.5, delay: 1.5 }}
+          transition={{ duration: 0.5 }}
           variants={charVariants}
           className="w-32 relative border border-gray-800 bg-transparent px-5 py-2.5 text-gray-800 transition-colors before:absolute before:left-0 before:top-0 before:-z-10 before:h-full before:w-full before:origin-top-left before:scale-y-0 before:bg-gray-800 before:transition-transform before:duration-300 before:content-[''] hover:text-white before:hover:scale-y-100 rounded-md before:rounded-sm overflow-hidden"
         >

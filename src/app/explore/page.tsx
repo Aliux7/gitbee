@@ -212,14 +212,13 @@ const page = () => {
             </div>
           ) : (
             <motion.div
-              className={`grid ${
-                showDevelopers ? "grid-cols-3" : "grid-cols-4"
-              } flex-grow h-fit gap-7 justify-center items-start transition-all ease-in-out duration-500`}
+              className={`grid grid-cols-4 flex-grow h-fit gap-7 justify-center items-start transition-all ease-in-out duration-500`}
               initial="hidden"
               whileInView="reveal"
               transition={{ staggerChildren: 0.5 }}
             >
               <div
+                className="flex justify-center items-center"
                 onClick={() => {
                   setShowDevelopers(!showDevelopers);
                   handleScrollToTop();
@@ -233,6 +232,7 @@ const page = () => {
                 />
               </div>
               <div
+                className="flex justify-center items-center"
                 onClick={() => {
                   setShowDevelopers(!showDevelopers);
                   handleScrollToTop();
@@ -246,6 +246,7 @@ const page = () => {
                 />
               </div>
               <div
+                className="flex justify-center items-center"
                 onClick={() => {
                   setShowDevelopers(!showDevelopers);
                   handleScrollToTop();
@@ -259,6 +260,7 @@ const page = () => {
                 />
               </div>
               <div
+                className="flex justify-center items-center"
                 onClick={() => {
                   setShowDevelopers(!showDevelopers);
                   handleScrollToTop();
@@ -272,6 +274,7 @@ const page = () => {
                 />
               </div>
               <div
+                className="flex justify-center items-center"
                 onClick={() => {
                   setShowDevelopers(!showDevelopers);
                   handleScrollToTop();
@@ -285,6 +288,7 @@ const page = () => {
                 />
               </div>
               <div
+                className="flex justify-center items-center"
                 onClick={() => {
                   setShowDevelopers(!showDevelopers);
                   handleScrollToTop();
@@ -298,6 +302,7 @@ const page = () => {
                 />
               </div>
               <div
+                className="flex justify-center items-center"
                 onClick={() => {
                   setShowDevelopers(!showDevelopers);
                   handleScrollToTop();
@@ -311,6 +316,7 @@ const page = () => {
                 />
               </div>
               <div
+                className="flex justify-center items-center"
                 onClick={() => {
                   setShowDevelopers(!showDevelopers);
                   handleScrollToTop();
@@ -324,6 +330,7 @@ const page = () => {
                 />
               </div>
               <div
+                className="flex justify-center items-center"
                 onClick={() => {
                   setShowDevelopers(!showDevelopers);
                   handleScrollToTop();
@@ -337,6 +344,7 @@ const page = () => {
                 />
               </div>
               <div
+                className="flex justify-center items-center"
                 onClick={() => {
                   setShowDevelopers(!showDevelopers);
                   handleScrollToTop();
@@ -350,6 +358,7 @@ const page = () => {
                 />
               </div>
               <div
+                className="flex justify-center items-center"
                 onClick={() => {
                   setShowDevelopers(!showDevelopers);
                   handleScrollToTop();
@@ -363,6 +372,7 @@ const page = () => {
                 />
               </div>
               <div
+                className="flex justify-center items-center"
                 onClick={() => {
                   setShowDevelopers(!showDevelopers);
                   handleScrollToTop();
@@ -376,6 +386,7 @@ const page = () => {
                 />
               </div>
               <div
+                className="flex justify-center items-center"
                 onClick={() => {
                   setShowDevelopers(!showDevelopers);
                   handleScrollToTop();

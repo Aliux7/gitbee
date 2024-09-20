@@ -142,7 +142,7 @@ export const Hero = () => {
           </motion.button>
         </div>
       </div>
-      <div className="relative w-1/2 flex gap-7 h-full overflow-hidden rotate-3">
+      <div className="relative w-1/2 flex gap-7 h-full overflow-hidden rotate-3 justify-end items-end pe-[13rem] ">
         <motion.div
           variants={{
             hidden: { opacity: 0, y: -75 },
