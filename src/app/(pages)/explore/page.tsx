@@ -1,9 +1,9 @@
 "use client";
 import React, { useEffect, useRef, useState } from "react";
-import Card from "../components/Card";
+import Card from "../../components/Card";
 import { motion, useScroll } from "framer-motion";
 import { CiSearch } from "react-icons/ci";
-import DDMenu from "../components/DDMenu";
+import DDMenu from "../../components/DDMenu";
 import { TbCategory2 } from "react-icons/tb";
 import { IoBookOutline } from "react-icons/io5";
 import { CiCalendarDate } from "react-icons/ci";
@@ -67,7 +67,7 @@ const page = () => {
         </div>
         <div className="relative w-fit flex justify-end items-center h-full gap-5">
           <DDMenu
-            options={["Category 1", "Category 2", "Category 3"]}
+            options={["Website App", "Mobile App", "Desktop App"]}
             filter="Category"
             icon={<TbCategory2 className="w-4 h-4" />}
           />

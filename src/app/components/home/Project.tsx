@@ -82,13 +82,14 @@ const Project = () => {
         whileInView="reveal"
         transition={{ staggerChildren: 0.75 }}
       >
-        <motion.button
+        <motion.a
+          href="/explore"
           transition={{ duration: 0.5 }}
           variants={charVariants}
-          className="w-32 relative border border-gray-800 bg-transparent px-5 py-2.5 hover:text-gray-800 transition-colors before:absolute before:left-0 before:top-0 before:-z-10 before:h-full before:w-full before:origin-bottom-left before:scale-y-100 before:bg-gray-800 before:transition-transform before:duration-300 before:content-[''] text-white before:hover:scale-y-0 rounded-md before:rounded-sm overflow-hidden"
+          className="w-32 cursor-pointer relative flex justify-center items-center border border-gray-800 bg-transparent px-5 py-2.5 hover:text-gray-800 transition-colors before:absolute before:left-0 before:top-0 before:-z-10 before:h-full before:w-full before:origin-bottom-left before:scale-y-100 before:bg-gray-800 before:transition-transform before:duration-300 before:content-[''] text-white before:hover:scale-y-0 rounded-md before:rounded-sm overflow-hidden"
         >
           Explore
-        </motion.button>
+        </motion.a>
         <motion.button
           transition={{ duration: 0.5 }}
           variants={charVariants}

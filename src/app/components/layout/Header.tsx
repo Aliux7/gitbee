@@ -30,15 +30,15 @@ const Header = () => {
   return (
     <div
       className={`${
-        onTop ? "bg-gray-50 " : "bg-transparent"
-      } fixed top-0 left-0 w-screen h-20 flex justify-center items-center xl:px-16 transition-all ease-in-out duration-700 z-50`}
+        onTop ? "bg-gray-50" : "bg-transparent"
+      } fixed top-0 left-0 w-screen h-20 flex justify-center items-center xl:px-16 transition-all ease-in-out duration-700 z-50 pointer-events-none`}
     >
       <div
         className={`${
           expand ? "w-full px-10" : "w-40 px-3"
         } transition-all ease-in-out duration-700 flex justify-between items-center ${
           onTop ? "shadow-none" : "shadow-lg"
-        } py-3 rounded-md bg-gray-50 overflow-hidden z-50 -translate-x-1`}
+        } py-3 rounded-md bg-gray-50 overflow-hidden z-50 -translate-x-1 pointer-events-auto`}
         onMouseEnter={() => setExpand(true)}
       >
         <div
@@ -73,6 +73,11 @@ const Header = () => {
             <Link href="/explore">
               <li className="w-20 cursor-pointer py-2 px-1 relative after:absolute after:w-0 hover:after:w-full after:h-[2px] after:bottom-0 after:left-0 after:bg-gray-800 flex justify-center items-center after:transition-all after:ease-in-out after:duration-300">
                 Explore
+              </li>
+            </Link>
+            <Link href="/courses">
+              <li className="w-20 cursor-pointer py-2 px-1 relative after:absolute after:w-0 hover:after:w-full after:h-[2px] after:bottom-0 after:left-0 after:bg-gray-800 flex justify-center items-center after:transition-all after:ease-in-out after:duration-300">
+                Courses
               </li>
             </Link>
             {/* <Link href="/support">

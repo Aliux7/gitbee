@@ -116,7 +116,8 @@ export const Hero = () => {
         </motion.h3>
 
         <div className="flex gap-5">
-          <motion.button
+          <motion.a
+            href="/explore"
             variants={{
               hidden: { opacity: 0, x: -75 },
               visible: { opacity: 1, x: 0 },
@@ -124,11 +125,12 @@ export const Hero = () => {
             initial="hidden"
             whileInView="visible"
             transition={{ duration: 1, delay: 1 }}
-            className="relative border border-gray-800 bg-transparent px-5 py-2.5 text-gray-800 transition-colors before:absolute before:left-0 before:top-0 before:-z-10 before:h-full before:w-full before:origin-bottom-left before:scale-y-0 before:scale-x-0 before:bg-gray-800 before:transition-transform before:duration-300 before:content-[''] hover:text-white before:hover:scale-y-100 before:hover:scale-x-100 rounded-md before:rounded-sm overflow-hidden"
+            className="relative cursor-pointer border border-gray-800 bg-transparent px-5 py-2.5 text-gray-800 transition-colors before:absolute before:left-0 before:top-0 before:-z-10 before:h-full before:w-full before:origin-bottom-left before:scale-y-0 before:scale-x-0 before:bg-gray-800 before:transition-transform before:duration-300 before:content-[''] hover:text-white before:hover:scale-y-100 before:hover:scale-x-100 rounded-md before:rounded-sm overflow-hidden"
           >
             Explore
-          </motion.button>
-          <motion.button
+          </motion.a>
+          <motion.a
+            href="/classes"
             variants={{
               hidden: { opacity: 0, x: -175 },
               visible: { opacity: 1, x: 0 },
@@ -136,10 +138,10 @@ export const Hero = () => {
             initial="hidden"
             whileInView="visible"
             transition={{ duration: 1, delay: 1.5 }}
-            className="py-2 px-1 relative after:absolute after:w-0 hover:after:w-full after:h-[1px] after:bottom-0 after:left-0 after:bg-gray-800 flex justify-center items-center after:transition-all after:ease-in-out after:duration-300"
+            className="cursor-pointer py-2 px-1 relative after:absolute after:w-0 hover:after:w-full after:h-[1px] after:bottom-0 after:left-0 after:bg-gray-800 flex justify-center items-center after:transition-all after:ease-in-out after:duration-300"
           >
             Submit a project
-          </motion.button>
+          </motion.a>
         </div>
       </div>
       <div className="relative w-1/2 flex gap-7 h-full overflow-hidden rotate-3 justify-end items-end pe-[13rem] ">
