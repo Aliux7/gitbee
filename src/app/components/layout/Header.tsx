@@ -51,8 +51,8 @@ const Header = () => {
               expand ? "text-start" : "text-center"
             } w-40`}
           >
-            <Link href="/">
-              <span className="bg-gray-800 text-white px-2 rounded-md mr-1">
+            <Link href="/" className="text-primary-binus">
+              <span className="bg-primary-binus text-white px-2 rounded-md mr-1">
                 Git
               </span>
               Bee
@@ -66,18 +66,18 @@ const Header = () => {
         >
           <ul className="flex justify-center items-center gap-5">
             <Link href="/">
-              <li className="w-20 cursor-pointer py-2 px-1 relative after:absolute after:w-0 hover:after:w-full after:h-[2px] after:bottom-0 after:left-0 after:bg-gray-800 flex justify-center items-center after:transition-all after:ease-in-out after:duration-300">
+              <li className="w-20 cursor-pointer py-2 px-1 relative after:absolute after:w-0 hover:after:w-full after:h-[2px] after:bottom-0 after:left-0 after:bg-primary-binus flex justify-center items-center after:transition-all after:ease-in-out after:duration-300">
                 Home
               </li>
             </Link>
             <Link href="/explore">
-              <li className="w-20 cursor-pointer py-2 px-1 relative after:absolute after:w-0 hover:after:w-full after:h-[2px] after:bottom-0 after:left-0 after:bg-gray-800 flex justify-center items-center after:transition-all after:ease-in-out after:duration-300">
+              <li className="w-20 cursor-pointer py-2 px-1 relative after:absolute after:w-0 hover:after:w-full after:h-[2px] after:bottom-0 after:left-0 after:bg-primary-binus flex justify-center items-center after:transition-all after:ease-in-out after:duration-300">
                 Explore
               </li>
             </Link>
-            <Link href="/courses">
-              <li className="w-20 cursor-pointer py-2 px-1 relative after:absolute after:w-0 hover:after:w-full after:h-[2px] after:bottom-0 after:left-0 after:bg-gray-800 flex justify-center items-center after:transition-all after:ease-in-out after:duration-300">
-                Courses
+            <Link href="/dashboard">
+              <li className="w-28 cursor-pointer py-2 px-1 relative after:absolute after:w-0 hover:after:w-full after:h-[2px] after:bottom-0 after:left-0 after:bg-primary-binus flex justify-center items-center after:transition-all after:ease-in-out after:duration-300">
+                Dashboard
               </li>
             </Link>
             {/* <Link href="/support">
@@ -85,7 +85,7 @@ const Header = () => {
                 Support
               </li>
             </Link> */}
-            <button className="relative border border-gray-800 bg-transparent ml-1 px-5 py-2.5 text-gray-800 transition-colors before:absolute before:left-0 before:top-0 before:-z-10 before:h-full before:w-full before:origin-bottom-right before:scale-y-0 before:scale-x-0 before:bg-gray-800 before:transition-transform before:duration-300 before:content-[''] hover:text-white before:hover:scale-y-100 before:hover:scale-x-100 rounded-md before:rounded-sm overflow-hidden">
+            <button className="relative border border-primary-orange bg-transparent ml-1 px-5 py-2.5 text-primary-orange transition-colors before:absolute before:left-0 before:top-0 before:-z-10 before:h-full before:w-full before:origin-bottom-right before:scale-y-0 before:scale-x-0 before:bg-primary-orange before:transition-transform before:duration-300 before:content-[''] hover:text-white before:hover:scale-y-100 before:hover:scale-x-100 rounded-md before:rounded-sm overflow-hidden">
               Login
             </button>
           </ul>

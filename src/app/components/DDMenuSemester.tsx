@@ -29,7 +29,7 @@ const DDMenuSemester: React.FC<DDMenuSemesterProps> = ({ filter, options, icon }
           className="h-10 w-72 flex justify-between items-center gap-3 py-3"
         >
           <div className="pr-2 border-r h-full flex justify-center items-center">{icon}</div>
-          <div className="truncate text-gray-500 hover:text-[#1f2937] font-poppins font-normal">
+          <div className="truncate text-primary-binus hover:text-primary-orange font-poppins font-normal">
             {position}
           </div>
         </Button>

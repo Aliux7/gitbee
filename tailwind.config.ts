@@ -12,8 +12,10 @@ const config: Config = {
   		colors: {
   			background: 'hsl(var(--background))',
   			foreground: 'hsl(var(--foreground))',
-  			'primary-binus': '#008ED0',
-  			'secondary-binus': '#D4F7FB',
+			'blue-background': '#E2F4FF',
+  			'primary-binus': '#026CA6',
+  			'secondary-binus': '#BAE8FF',
+			'primary-orange': '#EB9327',
   			card: {
   				DEFAULT: 'hsl(var(--card))',
   				foreground: 'hsl(var(--card-foreground))'

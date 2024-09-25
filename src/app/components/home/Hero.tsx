@@ -10,8 +10,10 @@ import {
 import useMeasure from "react-use-measure";
 import splitStringUsingRegex from "../../utlis/splitStringUsingRegex";
 
-const heading = "BINUS Project Gallery:";
-const subHeading = "Show the Best in Innovation";
+const heading = "BINUS Project Gallery";
+const subHeadingStart = "Show the ";
+const subHeadingHighlighted = "Best";
+const subHeadingEnd = " in Innovation";
 const description =
   "Discover the innovation of BINUS SOCS students through our curated platform, showcasing the best projects that highlight creativity, technical skills, and problem-solving. Explore works that shape the future of technology at BINUS.";
 
@@ -27,7 +29,11 @@ export const Hero = () => {
   let [ref1, { height: height1 }] = useMeasure();
   let [ref2, { height: height2 }] = useMeasure();
   const headingChars = splitStringUsingRegex(heading);
-  const subHeadingChars = splitStringUsingRegex(subHeading);
+  const subHeadingStartChars = splitStringUsingRegex(subHeadingStart);
+  const subHeadingHighlightedChars = splitStringUsingRegex(
+    subHeadingHighlighted
+  );
+  const subHeadingEndChars = splitStringUsingRegex(subHeadingEnd);
   const descriptionChars = splitStringUsingRegex(description);
   const opacity = useTransform(scrollYProgress, [0, 0.5], [1, 0.3]);
 
@@ -88,7 +94,32 @@ export const Hero = () => {
           ))}
           <br />
           <span className="font-semibold font-montserrat text-4xl">
-            {subHeadingChars.map((char, index) => (
+            {subHeadingStartChars.map((char, index) => (
+              <motion.span
+                key={index}
+                transition={{ duration: 0.5 }}
+                variants={charVariants}
+              >
+                {char}
+              </motion.span>
+            ))}
+            <motion.span
+              transition={{ duration: 0.5 }}
+              variants={charVariants}
+              className="relative after:bg-primary-orange after:absolute after:h-[0.15rem] after:w-full after:bottom-0 after:left-0"
+            >
+              {subHeadingHighlightedChars.map((char, index) => (
+                <motion.span
+                  className=""
+                  key={index}
+                  transition={{ duration: 0.5 }}
+                  variants={charVariants}
+                >
+                  {char}
+                </motion.span>
+              ))}
+            </motion.span>
+            {subHeadingEndChars.map((char, index) => (
               <motion.span
                 key={index}
                 transition={{ duration: 0.5 }}
@@ -125,7 +156,7 @@ export const Hero = () => {
             initial="hidden"
             whileInView="visible"
             transition={{ duration: 1, delay: 1 }}
-            className="relative cursor-pointer border border-gray-800 bg-transparent px-5 py-2.5 text-gray-800 transition-colors before:absolute before:left-0 before:top-0 before:-z-10 before:h-full before:w-full before:origin-bottom-left before:scale-y-0 before:scale-x-0 before:bg-gray-800 before:transition-transform before:duration-300 before:content-[''] hover:text-white before:hover:scale-y-100 before:hover:scale-x-100 rounded-md before:rounded-sm overflow-hidden"
+            className="relative cursor-pointer border border-primary-orange bg-transparent px-5 py-2.5 text-primary-orange transition-colors before:absolute before:left-0 before:top-0 before:-z-10 before:h-full before:w-full before:origin-bottom-left before:scale-y-0 before:scale-x-0 before:bg-primary-orange before:transition-transform before:duration-300 before:content-[''] hover:text-white before:hover:scale-y-100 before:hover:scale-x-100 rounded-md before:rounded-sm overflow-hidden"
           >
             Explore
           </motion.a>
@@ -138,7 +169,7 @@ export const Hero = () => {
             initial="hidden"
             whileInView="visible"
             transition={{ duration: 1, delay: 1.5 }}
-            className="cursor-pointer py-2 px-1 relative after:absolute after:w-0 hover:after:w-full after:h-[1px] after:bottom-0 after:left-0 after:bg-gray-800 flex justify-center items-center after:transition-all after:ease-in-out after:duration-300"
+            className="cursor-pointer py-2 px-1 relative after:absolute after:w-0 hover:after:w-full after:h-[1px] after:bottom-0 after:left-0 after:bg-primary-binus flex justify-center items-center after:transition-all after:ease-in-out after:duration-300"
           >
             Submit a project
           </motion.a>

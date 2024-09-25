@@ -16,7 +16,7 @@ const page = () => {
   const { scrollYProgress } = useScroll();
   const prevScrollY = useRef(0);
   const [expand, setExpand] = useState(true);
-  const [showDevelopers, setShowDevelopers] = useState(false);
+  const [showDevelopers, setShowDevelopers] = useState(true);
 
   useEffect(() => {
     scrollYProgress.onChange((currentScrollY) => {
@@ -77,8 +77,8 @@ const page = () => {
             icon={<IoBookOutline className="w-4 h-4" />}
           />
           <DDMenu
-            options={["2024", "2023", "2022", "2021", "2020"]}
-            filter="Year"
+            options={["70", "69", "68", "67", "66"]}
+            filter="Graduation"
             icon={<CiCalendarDate className="w-5 h-5" />}
           />
         </div>
@@ -154,7 +154,7 @@ const page = () => {
                       By Kelson Edbert S, Timothy Darren, Nicholas Chandra
                     </h3>
                     <div className="h-fit flex-grow my-3 pr-10">
-                      <h1 className="text-balance">
+                      <h1 className="text-balance text-gray-700">
                         Lorem ipsum dolor sit amet consectetur, adipisicing
                         elit. At molestias possimus ipsum? Fuga architecto,
                         ipsum nulla explicabo quas corrupti quia labore eum
@@ -168,15 +168,16 @@ const page = () => {
                     </div>
                     <Link
                       href="https://github.com/Aliux7/gitbee"
-                      className="flex justify-start items-center gap-2 text-sm my-1 text-gray-600"
+                      className="flex justify-start items-center gap-2 text-sm my-1 text-primary-binus"
                     >
-                      <SiGithub /> https://github.com/Aliux7/gitbee
+                      <SiGithub fill="#EB9327" />
+                      https://github.com/Aliux7/gitbee
                     </Link>
                     <Link
                       href="https://binusmaya.binus.ac.id/"
-                      className="flex justify-start items-center gap-2 text-sm my-1 text-gray-600"
+                      className="flex justify-start items-center gap-2 text-sm my-1 text-primary-binus"
                     >
-                      <BsGlobe2 /> https://binusmaya.binus.ac.id/
+                      <BsGlobe2 fill="#EB9327" /> https://binusmaya.binus.ac.id/
                     </Link>
                   </div>
                   <div className="w-1/3">
@@ -190,7 +191,7 @@ const page = () => {
                     />
                   </div>
                 </div>
-                <div className="w-full h-96 bg-green-50 my-3 flex overflow-auto gap-3">
+                <div className="w-full h-96 my-3 flex overflow-auto gap-3">
                   <img
                     src="/images/1.jpg"
                     className="h-full rounded-md border"
@@ -212,7 +213,7 @@ const page = () => {
             </div>
           ) : (
             <motion.div
-              className={`grid grid-cols-4 flex-grow h-fit gap-7 justify-center items-start transition-all ease-in-out duration-500`}
+              className={`grid grid-cols-3 flex-grow h-fit gap-7 justify-center items-start transition-all ease-in-out duration-500`}
               initial="hidden"
               whileInView="reveal"
               transition={{ staggerChildren: 0.5 }}

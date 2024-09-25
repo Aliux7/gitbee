@@ -5,7 +5,7 @@
 * {
   box-sizing: border-box;
   font-family: "Poppins", "sans-serif";
-  color: #1f2937;
+  color: #026CA6;
   margin: 0;
   padding: 0;
 }
@@ -16,16 +16,16 @@
 }
 
 ::-webkit-scrollbar-track {
-  background: #f9fafb;
+  background: #E2F4FF;
 }
 
 ::-webkit-scrollbar-thumb {
-  background: #eee;
+  background: #badef5;
   border-radius: 5px;
 }
 
 ::-webkit-scrollbar-thumb:hover {
-  background: #ccc;
+  background: #a4d6f5;
 }
 
 html {
@@ -35,6 +35,7 @@ html {
 *::selection {
   /* background-color: #008ed0; */
   background-color: #d4f7fb;
+  /* background-color: white; */
 }
 
 @layer base {

@@ -36,8 +36,9 @@ const page = () => {
       >
         <div className="w-full border-b flex justify-between items-center pb-3">
           <div className={` ${expand ? "w-1/2" : "w-[calc(50%-5rem)]"}`}>
-            <h1 className="font-montserrat text-3xl font-semibold">
-              My Courses
+            <h1 className="font-montserrat text-xl text-primary-binus font-semibold">
+              <span className="text-primary-orange text-lg">COMP6100001</span> -
+              Software Engineering
             </h1>
           </div>
           <div
@@ -50,20 +51,13 @@ const page = () => {
               expand ? "w-1/2" : "w-[calc(50%-5rem)]"
             } flex justify-end items-center`}
           >
-            <DDMenuSemester
-              options={[
-                "Even Semester 2023/2024",
-                "Odd Semester 2023/2024",
-                "Even Semester 2022/2023",
-                "Odd Semester 2022/2023",
-                "Even Semester 2021/2022",
-              ]}
-              filter="Semester"
-              icon={<BsCalendar4Range className="w-4 h-4" />}
-            />
+            <div className="bg-secondary-binus text-xl font-semibold rounded-lg px-2 ">
+              BG01
+            </div>
           </div>
         </div>
       </div>
+
       <div className="h-screen"></div>
       <div className="h-screen"></div>
     </motion.div>

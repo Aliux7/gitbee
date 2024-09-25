@@ -38,10 +38,10 @@ const Project = () => {
           initial="hidden"
           whileInView="reveal"
           transition={{ staggerChildren: 0.03 }}
-          className="text-gray-600"
         >
           {subHeadingChars.map((char, index) => (
             <motion.span
+              className="text-primary-orange"
               key={index}
               transition={{ duration: 0.5 }}
               variants={charVariants}
@@ -86,14 +86,14 @@ const Project = () => {
           href="/explore"
           transition={{ duration: 0.5 }}
           variants={charVariants}
-          className="w-32 cursor-pointer relative flex justify-center items-center border border-gray-800 bg-transparent px-5 py-2.5 hover:text-gray-800 transition-colors before:absolute before:left-0 before:top-0 before:-z-10 before:h-full before:w-full before:origin-bottom-left before:scale-y-100 before:bg-gray-800 before:transition-transform before:duration-300 before:content-[''] text-white before:hover:scale-y-0 rounded-md before:rounded-sm overflow-hidden"
+          className="w-32 cursor-pointer relative flex justify-center items-center border border-primary-binus bg-transparent px-5 py-2.5 hover:text-primary-binus transition-colors before:absolute before:left-0 before:top-0 before:-z-10 before:h-full before:w-full before:origin-bottom-left before:scale-y-100 before:bg-primary-binus before:transition-transform before:duration-300 before:content-[''] text-white before:hover:scale-y-0 rounded-md before:rounded-sm overflow-hidden"
         >
           Explore
         </motion.a>
         <motion.button
           transition={{ duration: 0.5 }}
           variants={charVariants}
-          className="w-32 relative border border-gray-800 bg-transparent px-5 py-2.5 text-gray-800 transition-colors before:absolute before:left-0 before:top-0 before:-z-10 before:h-full before:w-full before:origin-top-left before:scale-y-0 before:bg-gray-800 before:transition-transform before:duration-300 before:content-[''] hover:text-white before:hover:scale-y-100 rounded-md before:rounded-sm overflow-hidden"
+          className="w-32 relative border border-primary-binus bg-transparent px-5 py-2.5 text-primary-binus transition-colors before:absolute before:left-0 before:top-0 before:-z-10 before:h-full before:w-full before:origin-top-left before:scale-y-0 before:bg-primary-binus before:transition-transform before:duration-300 before:content-[''] hover:text-white before:hover:scale-y-100 rounded-md before:rounded-sm overflow-hidden"
         >
           Contact
         </motion.button>
