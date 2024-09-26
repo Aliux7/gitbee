@@ -1,11 +1,24 @@
 "use client";
 import React, { useEffect, useRef, useState } from "react";
 import { motion, useScroll } from "framer-motion";
-import DDMenu from "@/app/components/DDMenu";
-import { BsCalendar4Range } from "react-icons/bs";
-import DDMenuSemester from "@/app/components/DDMenuSemester";
-import Card from "@/app/components/Card";
-import Link from "next/link";
+import {
+  Breadcrumb,
+  BreadcrumbItem,
+  BreadcrumbLink,
+  BreadcrumbList,
+  BreadcrumbPage,
+  BreadcrumbSeparator,
+} from "@/components/ui/breadcrumb";
+
+import {
+  Table,
+  TableBody,
+  TableCaption,
+  TableCell,
+  TableHead,
+  TableHeader,
+  TableRow,
+} from "@/components/ui/table";
 
 const page = () => {
   const { scrollYProgress } = useScroll();
@@ -30,14 +43,14 @@ const page = () => {
   return (
     <motion.div className="relative min-h-screen flex flex-col justify-start items-center px-[6.25rem] ">
       <div
-        className={`fixed top-0 w-full flex justify-center items-center transition-all ease-in-out duration-300 px-24 ${
+        className={`fixed top-0 w-full flex justify-center items-center transition-all ease-in-out duration-300 px-24 z-10 ${
           expand ? "pt-24" : "pt-10"
         } bg-gray-50`}
       >
         <div className="w-full border-b flex justify-between items-center pb-3">
           <div className={` ${expand ? "w-1/2" : "w-[calc(50%-5rem)]"}`}>
             <h1 className="font-montserrat text-xl text-primary-binus font-semibold">
-              <span className="text-primary-orange text-lg">COMP6100001</span> -
+              <span className="text-primary-orange text-xl">COMP6100001</span> -
               Software Engineering
             </h1>
           </div>
@@ -58,8 +71,143 @@ const page = () => {
         </div>
       </div>
 
-      <div className="h-screen"></div>
-      <div className="h-screen"></div>
+      <div
+        className={`fixed top-0 w-full h-fit flex justify-start items-center transition-all ease-in-out duration-300 px-24 pb-3 ${
+          expand ? "pt-36" : "pt-[5.5rem]"
+        } bg-gray-50`}
+      >
+        <Breadcrumb>
+          <BreadcrumbList>
+            <BreadcrumbItem>
+              <BreadcrumbLink
+                href="/dashboard"
+                className="relative text-primary-binus hover:text-primary-binus after:absolute after:bottom-0 after:left-0 after:w-0 hover:after:w-full after:h-px after:bg-primary-orange after:transition-all after:duration-300"
+              >
+                Dashboard
+              </BreadcrumbLink>
+            </BreadcrumbItem>
+            <BreadcrumbSeparator />
+            <BreadcrumbItem>
+              <BreadcrumbPage className="text-primary-orange">
+                COMP6100001 - Software Engineering
+              </BreadcrumbPage>
+            </BreadcrumbItem>
+          </BreadcrumbList>
+        </Breadcrumb>
+      </div>
+      <div className="h-fit w-full pt-48 pb-10 flex gap-5">
+        <div className="w-[31rem] max-h-[21rem] h-fit overflow-y-auto shadow-xl border rounded-xl p-5">
+          <h1 className="text-xl">Group Forming</h1>
+          <Table>
+            <TableHeader>
+              <TableRow>
+                <TableHead className="w-[35px]">NO</TableHead>
+                <TableHead className="w-32">NIM</TableHead>
+                <TableHead className="w-96">NAME</TableHead>
+              </TableRow>
+            </TableHeader>
+            <TableBody>
+              <TableRow>
+                <TableCell className="font-medium text-center">1</TableCell>
+                <TableCell className="w-32">2540115465</TableCell>
+                <TableCell className="w-96 truncate">
+                  Kelson Edbert Susilo
+                </TableCell>
+              </TableRow>
+              <TableRow>
+                <TableCell className="font-medium text-center">2</TableCell>
+                <TableCell className="w-32">2540115465</TableCell>
+                <TableCell>
+                  <h1 className="w-64 truncate">Kelson Edbert Susilo</h1>
+                </TableCell>
+              </TableRow>
+              <TableRow>
+                <TableCell className="font-medium text-center">3</TableCell>
+                <TableCell className="w-32">2540115465</TableCell>
+                <TableCell>
+                  <h1 className="w-64 truncate">Kelson Edbert Susilo</h1>
+                </TableCell>
+              </TableRow>
+              <TableRow>
+                <TableCell className="font-medium text-center">4</TableCell>
+                <TableCell className="w-32">2540115465</TableCell>
+                <TableCell>
+                  <h1 className="w-64 truncate">Kelson Edbert Susilo</h1>
+                </TableCell>
+              </TableRow>
+            </TableBody>
+          </Table>
+        </div>
+        <div className="flex-grow max-h-[21rem] h-fit overflow-y-auto shadow-xl border rounded-xl p-5">
+          <h1 className="text-xl">Submitted Answer</h1>
+          <Table>
+            <TableHeader>
+              <TableRow>
+                <TableHead className="text-center">TYPE</TableHead>
+                <TableHead className="text-center">UPLOADED BY</TableHead>
+                <TableHead className="text-center">UPLOADED DATE</TableHead>
+              </TableRow>
+            </TableHeader>
+            <TableBody>
+              <TableRow>
+                <TableCell className="font-medium text-center">
+                  Assignment-1
+                </TableCell>
+                <TableCell className="text-center">
+                  Kelson Edbert Susilo
+                </TableCell>
+                <TableCell className="text-center">
+                  10 October 2023, 18:17:12
+                </TableCell>
+              </TableRow>
+              {/* <TableRow>
+                <TableCell className="font-medium text-center">
+                  Assignment-1
+                </TableCell>
+                <TableCell className="text-center">
+                  Kelson Edbert Susilo
+                </TableCell>
+                <TableCell className="text-center">
+                  10 October 2023, 18:17:12
+                </TableCell>
+              </TableRow>
+              <TableRow>
+                <TableCell className="font-medium text-center">
+                  Assignment-1
+                </TableCell>
+                <TableCell className="text-center">
+                  Kelson Edbert Susilo
+                </TableCell>
+                <TableCell className="text-center">
+                  10 October 2023, 18:17:12
+                </TableCell>
+              </TableRow>
+              <TableRow>
+                <TableCell className="font-medium text-center">
+                  Assignment-1
+                </TableCell>
+                <TableCell className="text-center">
+                  Kelson Edbert Susilo
+                </TableCell>
+                <TableCell className="text-center">
+                  10 October 2023, 18:17:12
+                </TableCell>
+              </TableRow>
+              <TableRow>
+                <TableCell className="font-medium text-center">
+                  Assignment-1
+                </TableCell>
+                <TableCell className="text-center">
+                  Kelson Edbert Susilo
+                </TableCell>
+                <TableCell className="text-center">
+                  10 October 2023, 18:17:12
+                </TableCell>
+              </TableRow> */}
+            </TableBody>
+          </Table>
+        </div>
+      </div>
     </motion.div>
   );
 };

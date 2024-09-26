@@ -16,7 +16,7 @@ const page = () => {
   const { scrollYProgress } = useScroll();
   const prevScrollY = useRef(0);
   const [expand, setExpand] = useState(true);
-  const [showDevelopers, setShowDevelopers] = useState(true);
+  const [showDevelopers, setShowDevelopers] = useState(false);
 
   useEffect(() => {
     scrollYProgress.onChange((currentScrollY) => {
