@@ -30,7 +30,7 @@ const page = () => {
   return (
     <motion.div className="relative min-h-screen flex flex-col justify-start items-center px-[6.25rem] ">
       <div
-        className={`fixed top-0 w-full flex justify-center items-center transition-all ease-in-out duration-300 px-24 ${
+        className={`fixed top-0 w-full flex justify-center items-center transition-all ease-in-out duration-300 px-24 z-20 ${
           expand ? "pt-24" : "pt-10"
         } bg-gray-50`}
       >
