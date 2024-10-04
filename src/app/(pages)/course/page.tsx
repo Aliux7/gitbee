@@ -19,11 +19,13 @@ import {
   TableHeader,
   TableRow,
 } from "@/components/ui/table";
+import PopUpInsert from "@/app/components/course/PopUpInsert";
 
 const page = () => {
   const { scrollYProgress } = useScroll();
   const prevScrollY = useRef(0);
   const [expand, setExpand] = useState(true);
+  const [showInsertForm, setShowInsertForm] = useState(true);
 
   useEffect(() => {
     scrollYProgress.onChange((currentScrollY) => {
@@ -72,7 +74,7 @@ const page = () => {
       </div>
 
       <div
-        className={`fixed top-0 w-full h-fit flex justify-start items-center transition-all ease-in-out duration-300 px-24 pb-3 ${
+        className={`fixed top-0 w-full h-fit flex justify-start items-center transition-all ease-in-out duration-300 px-24 pb-3 z-[5] ${
           expand ? "pt-36" : "pt-[5.5rem]"
         } bg-gray-50`}
       >
@@ -95,7 +97,67 @@ const page = () => {
           </BreadcrumbList>
         </Breadcrumb>
       </div>
-      <div className="h-fit w-full pt-48 pb-10 flex gap-5">
+      <div className="h-fit w-full pt-48 pb-10 flex flex-col gap-5">
+        <div className="flex-grow max-h-[21rem] h-fit overflow-y-auto shadow-xl border rounded-xl p-5">
+          <h1 className="text-xl">Submitted Answer</h1>
+          <Table>
+            <TableHeader>
+              <TableRow>
+                <TableHead className="text-center">TYPE</TableHead>
+                <TableHead className="text-center">UPLOADED BY</TableHead>
+                <TableHead className="text-center">UPLOADED DATE</TableHead>
+                <TableHead className="text-center">STATUS</TableHead>
+                <TableHead className="text-center">ACTION</TableHead>
+              </TableRow>
+            </TableHeader>
+            <TableBody>
+              <TableRow>
+                <TableCell className="font-medium text-center">
+                  Assignment-1
+                </TableCell>
+                <TableCell className="text-center">
+                  Kelson Edbert Susilo
+                </TableCell>
+                <TableCell className="text-center">
+                  10 October 2023, 18:17:12
+                </TableCell>
+                <TableCell className="font-medium text-center">
+                  <span>Submitted</span>
+                </TableCell>
+                <TableCell className="font-medium text-center">
+                  <button
+                    className="bg-primary-binus text-white px-2 py-1 rounded-md hover:bg-primary-orange"
+                    onClick={() => setShowInsertForm(true)}
+                  >
+                    Upload
+                  </button>
+                </TableCell>
+              </TableRow>
+              <TableRow>
+                <TableCell className="font-medium text-center">
+                  Project-1
+                </TableCell>
+                <TableCell className="text-center">
+                  Kelson Edbert Susilo
+                </TableCell>
+                <TableCell className="text-center">
+                  10 October 2023, 18:17:12
+                </TableCell>
+                <TableCell className="font-medium text-center">
+                  Graded
+                </TableCell>
+                <TableCell className="font-medium text-center">
+                  <button
+                    className="bg-primary-binus text-white px-2 py-1 rounded-md hover:bg-primary-orange"
+                    onClick={() => setShowInsertForm(true)}
+                  >
+                    Upload
+                  </button>
+                </TableCell>
+              </TableRow>
+            </TableBody>
+          </Table>
+        </div>
         <div className="w-[31rem] max-h-[21rem] h-fit overflow-y-auto shadow-xl border rounded-xl p-5">
           <h1 className="text-xl">Group Forming</h1>
           <Table>
@@ -138,76 +200,8 @@ const page = () => {
             </TableBody>
           </Table>
         </div>
-        <div className="flex-grow max-h-[21rem] h-fit overflow-y-auto shadow-xl border rounded-xl p-5">
-          <h1 className="text-xl">Submitted Answer</h1>
-          <Table>
-            <TableHeader>
-              <TableRow>
-                <TableHead className="text-center">TYPE</TableHead>
-                <TableHead className="text-center">UPLOADED BY</TableHead>
-                <TableHead className="text-center">UPLOADED DATE</TableHead>
-              </TableRow>
-            </TableHeader>
-            <TableBody>
-              <TableRow>
-                <TableCell className="font-medium text-center">
-                  Assignment-1
-                </TableCell>
-                <TableCell className="text-center">
-                  Kelson Edbert Susilo
-                </TableCell>
-                <TableCell className="text-center">
-                  10 October 2023, 18:17:12
-                </TableCell>
-              </TableRow>
-              {/* <TableRow>
-                <TableCell className="font-medium text-center">
-                  Assignment-1
-                </TableCell>
-                <TableCell className="text-center">
-                  Kelson Edbert Susilo
-                </TableCell>
-                <TableCell className="text-center">
-                  10 October 2023, 18:17:12
-                </TableCell>
-              </TableRow>
-              <TableRow>
-                <TableCell className="font-medium text-center">
-                  Assignment-1
-                </TableCell>
-                <TableCell className="text-center">
-                  Kelson Edbert Susilo
-                </TableCell>
-                <TableCell className="text-center">
-                  10 October 2023, 18:17:12
-                </TableCell>
-              </TableRow>
-              <TableRow>
-                <TableCell className="font-medium text-center">
-                  Assignment-1
-                </TableCell>
-                <TableCell className="text-center">
-                  Kelson Edbert Susilo
-                </TableCell>
-                <TableCell className="text-center">
-                  10 October 2023, 18:17:12
-                </TableCell>
-              </TableRow>
-              <TableRow>
-                <TableCell className="font-medium text-center">
-                  Assignment-1
-                </TableCell>
-                <TableCell className="text-center">
-                  Kelson Edbert Susilo
-                </TableCell>
-                <TableCell className="text-center">
-                  10 October 2023, 18:17:12
-                </TableCell>
-              </TableRow> */}
-            </TableBody>
-          </Table>
-        </div>
       </div>
+      {showInsertForm && <PopUpInsert setShowInsertForm={setShowInsertForm} />}
     </motion.div>
   );
 };
