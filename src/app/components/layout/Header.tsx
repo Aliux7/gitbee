@@ -1,13 +1,25 @@
 "use client";
+import { useAuth } from "@/app/context/AuthContext";
+import { useMsal } from "@azure/msal-react";
 import { useScroll } from "framer-motion";
 import Link from "next/link";
 import React, { useEffect, useRef, useState } from "react";
+import Cookies from "js-cookie";
+import { Avatar, AvatarFallback, AvatarImage } from "@/components/ui/avatar";
+import {
+  Popover,
+  PopoverContent,
+  PopoverTrigger,
+} from "@/components/ui/popover";
 
 const Header = () => {
+  const { userData } = useAuth();
+  const { instance, inProgress, accounts } = useMsal();
   const { scrollYProgress } = useScroll();
   const prevScrollY = useRef(0);
   const [expand, setExpand] = useState(true);
   const [onTop, setOnTop] = useState(true);
+  const [loading, setLoading] = useState(false);
 
   useEffect(() => {
     scrollYProgress.onChange((currentScrollY) => {
@@ -26,6 +38,22 @@ const Header = () => {
       }
     });
   }, [scrollYProgress]);
+
+  const loginMicrosoft = async () => {
+    const loginRequest = {
+      scopes: ["user.read"],
+      prompt: "select_account",
+    };
+
+    instance.loginRedirect(loginRequest).catch((error: any) => {
+      console.error(error);
+    });
+  };
+
+  const logoutMircosoft = async () => {
+    instance.logoutRedirect();
+    Cookies.remove("token");
+  };
 
   return (
     <div
@@ -85,9 +113,30 @@ const Header = () => {
                 Support
               </li>
             </Link> */}
-            <button className="relative border border-primary-orange bg-transparent ml-1 px-5 py-2.5 text-primary-orange transition-colors before:absolute before:left-0 before:top-0 before:-z-10 before:h-full before:w-full before:origin-bottom-right before:scale-y-0 before:scale-x-0 before:bg-primary-orange before:transition-transform before:duration-300 before:content-[''] hover:text-white before:hover:scale-y-100 before:hover:scale-x-100 rounded-md before:rounded-sm overflow-hidden">
-              Login
-            </button>
+            {!userData ? (
+              <button
+                onClick={() => loginMicrosoft()}
+                className="relative border border-primary-orange bg-transparent ml-1 px-5 py-2.5 text-primary-orange transition-colors before:absolute before:left-0 before:top-0 before:-z-10 before:h-full before:w-full before:origin-bottom-right before:scale-y-0 before:scale-x-0 before:bg-primary-orange before:transition-transform before:duration-300 before:content-[''] hover:text-white before:hover:scale-y-100 before:hover:scale-x-100 rounded-md before:rounded-sm overflow-hidden"
+              >
+                Login
+              </button>
+            ) : (
+              <Popover>
+                <PopoverTrigger className="relative border border-primary-orange p-[0.1rem] rounded-full before:absolute before:left-0 before:top-0 before:-z-10 before:h-full before:w-full before:origin-bottom-right before:scale-y-0 before:scale-x-0 before:bg-primary-orange before:transition-transform before:duration-300 before:content-[''] hover:text-white before:hover:scale-y-100 before:hover:scale-x-100 before:rounded-sm overflow-hidden">
+                  <div className="bg-white rounded-full p-0.5">
+                    <Avatar>
+                      <AvatarImage src="https://github.com/shadcn.png" />
+                    </Avatar>
+                  </div>
+                </PopoverTrigger>
+                {expand && (
+                  <PopoverContent className="flex flex-col">
+                    {userData.name}
+                    <button onClick={() => logoutMircosoft()}>Logout</button>
+                  </PopoverContent>
+                )}
+              </Popover>
+            )}
           </ul>
         </div>
       </div>

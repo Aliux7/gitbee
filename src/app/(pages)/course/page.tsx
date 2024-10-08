@@ -25,7 +25,7 @@ const page = () => {
   const { scrollYProgress } = useScroll();
   const prevScrollY = useRef(0);
   const [expand, setExpand] = useState(true);
-  const [showInsertForm, setShowInsertForm] = useState(true);
+  const [showInsertForm, setShowInsertForm] = useState(false);
 
   useEffect(() => {
     scrollYProgress.onChange((currentScrollY) => {
@@ -104,6 +104,7 @@ const page = () => {
             <TableHeader>
               <TableRow>
                 <TableHead className="text-center">TYPE</TableHead>
+                <TableHead className="text-center">DEADLINE</TableHead>
                 <TableHead className="text-center">UPLOADED BY</TableHead>
                 <TableHead className="text-center">UPLOADED DATE</TableHead>
                 <TableHead className="text-center">STATUS</TableHead>
@@ -111,7 +112,7 @@ const page = () => {
               </TableRow>
             </TableHeader>
             <TableBody>
-              <TableRow>
+              {/* <TableRow>
                 <TableCell className="font-medium text-center">
                   Assignment-1
                 </TableCell>
@@ -132,10 +133,13 @@ const page = () => {
                     Upload
                   </button>
                 </TableCell>
-              </TableRow>
+              </TableRow> */}
               <TableRow>
                 <TableCell className="font-medium text-center">
                   Project-1
+                </TableCell>
+                <TableCell className="text-center">
+                  10 October 2023, 18:17:12
                 </TableCell>
                 <TableCell className="text-center">
                   Kelson Edbert Susilo
@@ -144,7 +148,57 @@ const page = () => {
                   10 October 2023, 18:17:12
                 </TableCell>
                 <TableCell className="font-medium text-center">
-                  Graded
+                  <span className="bg-purple-300 text-purple-700 px-2 py-0.5 rounded-md">Submitted</span>
+                </TableCell>
+                <TableCell className="font-medium text-center">
+                  <button
+                    className="bg-primary-binus text-white px-2 py-1 rounded-md hover:bg-primary-orange"
+                    onClick={() => setShowInsertForm(true)}
+                  >
+                    Upload
+                  </button>
+                </TableCell>
+              </TableRow>
+              <TableRow>
+                <TableCell className="font-medium text-center">
+                  Project-1
+                </TableCell>
+                <TableCell className="text-center">
+                  10 October 2023, 18:17:12
+                </TableCell>
+                <TableCell className="text-center">
+                  Kelson Edbert Susilo
+                </TableCell>
+                <TableCell className="text-center">
+                  10 October 2023, 18:17:12
+                </TableCell>
+                <TableCell className="font-medium text-center">
+                  <span className="bg-green-300 text-green-700 px-2 py-0.5 rounded-md">Graded</span>
+                </TableCell>
+                <TableCell className="font-medium text-center">
+                  <button
+                    className="bg-primary-binus text-white px-2 py-1 rounded-md hover:bg-primary-orange"
+                    onClick={() => setShowInsertForm(true)}
+                  >
+                    Upload
+                  </button>
+                </TableCell>
+              </TableRow>
+              <TableRow>
+                <TableCell className="font-medium text-center">
+                  Project-1
+                </TableCell>
+                <TableCell className="text-center">
+                  10 October 2023, 18:17:12
+                </TableCell>
+                <TableCell className="text-center">
+                  Kelson Edbert Susilo
+                </TableCell>
+                <TableCell className="text-center">
+                  10 October 2023, 18:17:12
+                </TableCell>
+                <TableCell className="font-medium text-center">
+                  <span className="bg-blue-300 text-blue-700 px-2 py-0.5 rounded-md">Review</span>
                 </TableCell>
                 <TableCell className="font-medium text-center">
                   <button
