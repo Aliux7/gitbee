@@ -16,7 +16,7 @@ const Project = () => {
   const subHeadingChars = splitStringUsingRegex(subHeading);
 
   return (
-    <div className="relative min-h-[calc(100vh-5rem)] overflow-hidden flex flex-col justify-center items-center gap-10 bg-white mb-10 mx-16 rounded-xl shadow-xl">
+    <div className="relative min-h-[42.5rem] h-[calc(100vh-5rem)] overflow-hidden flex flex-col justify-center items-center gap-10 bg-white mb-10 mx-16 rounded-xl shadow-xl">
       <div className="flex flex-col justify-center items-center gap-2">
         <motion.h1
           initial="hidden"

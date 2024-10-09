@@ -11,6 +11,9 @@ import {
   PopoverContent,
   PopoverTrigger,
 } from "@/components/ui/popover";
+import { FaUser } from "react-icons/fa";
+import { IoLogOut } from "react-icons/io5";
+import { MdSupportAgent } from "react-icons/md";
 
 const Header = () => {
   const { userData } = useAuth();
@@ -93,26 +96,48 @@ const Header = () => {
           } lg:block hidden`}
         >
           <ul className="flex justify-center items-center gap-5">
-            <Link href="/">
-              <li className="w-20 cursor-pointer py-2 px-1 relative after:absolute after:w-0 hover:after:w-full after:h-[2px] after:bottom-0 after:left-0 after:bg-primary-binus flex justify-center items-center after:transition-all after:ease-in-out after:duration-300">
-                Home
-              </li>
-            </Link>
-            <Link href="/explore">
-              <li className="w-20 cursor-pointer py-2 px-1 relative after:absolute after:w-0 hover:after:w-full after:h-[2px] after:bottom-0 after:left-0 after:bg-primary-binus flex justify-center items-center after:transition-all after:ease-in-out after:duration-300">
-                Explore
-              </li>
-            </Link>
-            <Link href="/dashboard">
-              <li className="w-28 cursor-pointer py-2 px-1 relative after:absolute after:w-0 hover:after:w-full after:h-[2px] after:bottom-0 after:left-0 after:bg-primary-binus flex justify-center items-center after:transition-all after:ease-in-out after:duration-300">
-                Dashboard
-              </li>
-            </Link>
-            {/* <Link href="/support">
-              <li className="w-20 cursor-pointer py-2 px-1 relative after:absolute after:w-0 hover:after:w-full after:h-[2px] after:bottom-0 after:left-0 after:bg-gray-800 flex justify-center items-center after:transition-all after:ease-in-out after:duration-300">
-                Support
-              </li>
-            </Link> */}
+            {!userData && (
+              <ul className="flex justify-center items-center gap-5">
+                <Link href="/">
+                  <li className="w-20 cursor-pointer py-2 px-1 relative after:absolute after:w-0 hover:after:w-full after:h-[2px] after:bottom-0 after:left-0 after:bg-primary-binus flex justify-center items-center after:transition-all after:ease-in-out after:duration-300">
+                    Home
+                  </li>
+                </Link>
+                <Link href="/explore">
+                  <li className="w-20 cursor-pointer py-2 px-1 relative after:absolute after:w-0 hover:after:w-full after:h-[2px] after:bottom-0 after:left-0 after:bg-primary-binus flex justify-center items-center after:transition-all after:ease-in-out after:duration-300">
+                    Explore
+                  </li>
+                </Link>
+              </ul>
+            )}
+            {userData && userData.role === "Student" && (
+              <ul className="flex justify-center items-center gap-5">
+                <Link href="/dashboard">
+                  <li className="w-28 cursor-pointer py-2 px-1 relative after:absolute after:w-0 hover:after:w-full after:h-[2px] after:bottom-0 after:left-0 after:bg-primary-binus flex justify-center items-center after:transition-all after:ease-in-out after:duration-300">
+                    Dashboard
+                  </li>
+                </Link>
+                <Link href="/explore">
+                  <li className="w-20 cursor-pointer py-2 px-1 relative after:absolute after:w-0 hover:after:w-full after:h-[2px] after:bottom-0 after:left-0 after:bg-primary-binus flex justify-center items-center after:transition-all after:ease-in-out after:duration-300">
+                    Explore
+                  </li>
+                </Link>
+              </ul>
+            )}
+            {userData && userData.role === "Lecturer" && (
+              <ul className="flex justify-center items-center gap-5">
+                <Link href="/dashboard-lecturer">
+                  <li className="w-28 cursor-pointer py-2 px-1 relative after:absolute after:w-0 hover:after:w-full after:h-[2px] after:bottom-0 after:left-0 after:bg-primary-binus flex justify-center items-center after:transition-all after:ease-in-out after:duration-300">
+                    Dashboard
+                  </li>
+                </Link>
+                <Link href="/explore">
+                  <li className="w-20 cursor-pointer py-2 px-1 relative after:absolute after:w-0 hover:after:w-full after:h-[2px] after:bottom-0 after:left-0 after:bg-primary-binus flex justify-center items-center after:transition-all after:ease-in-out after:duration-300">
+                    History
+                  </li>
+                </Link>
+              </ul>
+            )}
             {!userData ? (
               <button
                 onClick={() => loginMicrosoft()}
@@ -131,8 +156,42 @@ const Header = () => {
                 </PopoverTrigger>
                 {expand && (
                   <PopoverContent className="flex flex-col">
-                    {userData.name}
-                    <button onClick={() => logoutMircosoft()}>Logout</button>
+                    <div className="flex justify-between items-center border-b pb-3 px-1">
+                      <div className="border border-primary-orange rounded-full p-1">
+                        <Avatar>
+                          <AvatarImage src="https://github.com/shadcn.png" />
+                        </Avatar>
+                      </div>
+                      <div className="text-end">
+                        <h1 className="truncate w-32">{userData.name}</h1>
+                        <h3 className="truncate w-32 text-sm text-primary-orange">
+                          {userData.nim}
+                        </h3>
+                      </div>
+                    </div>
+                    <div className="bg-gray-50 py-2 px-2 rounded-md my-3">
+                      <ul className="flex flex-col justify-center items-center gap-1">
+                        <Link href="/profile" className="w-full">
+                          <li className="hover:bg-white/90 rounded-md w-full cursor-pointer py-2 flex justify-between items-center px-3 hover:text-primary-orange group ">
+                            <FaUser className="group-hover:fill-primary-orange" />
+                            Profile
+                          </li>
+                        </Link>
+                        <Link href="/support" className="w-full">
+                          <li className="hover:bg-white/90 rounded-md w-full cursor-pointer py-2 flex justify-between items-center px-3 hover:text-primary-orange group ">
+                            <MdSupportAgent className="group-hover:fill-primary-orange" />
+                            Support
+                          </li>
+                        </Link>
+                        <li
+                          className="hover:bg-white/90 rounded-md w-full cursor-pointer py-2 flex justify-between items-center px-3 hover:text-primary-orange group "
+                          onClick={() => logoutMircosoft()}
+                        >
+                          <IoLogOut className="w-5 h-5 group-hover:fill-primary-orange" />
+                          Logout
+                        </li>
+                      </ul>
+                    </div>
                   </PopoverContent>
                 )}
               </Popover>

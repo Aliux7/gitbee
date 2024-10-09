@@ -26,10 +26,15 @@ const DDMenu: React.FC<DDMenuProps> = ({ filter, options, icon }) => {
       <DropdownMenuTrigger asChild>
         <Button
           variant="outline"
-          className="h-full w-44 flex justify-between items-center gap-3 py-3"
+          className="h-full w-44 flex justify-between items-center gap-3 py-3 group"
         >
-          <div className="pr-2 border-r h-full flex justify-center items-center">{icon}</div>
-          <div className="truncate text-primary-binus hover:text-primary-orange font-poppins font-normal">
+          <div className="pr-2 border-r h-full flex justify-center items-center">
+            {React.cloneElement(icon, {
+              className:
+                "w-4 h-4 group-hover:stroke-primary-orange group-hover:fill-primary-orange group-hover:border-primary-orange",
+            })}
+          </div>
+          <div className="truncate text-primary-binus group-hover:text-primary-orange font-poppins font-normal">
             {position}
           </div>
         </Button>

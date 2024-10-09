@@ -26,8 +26,8 @@ export const Hero = () => {
   const { scrollYProgress } = useScroll();
   const yTranslationUp = useMotionValue(0);
   const yTranslationDown = useMotionValue(0);
-  let [ref1, { height: height1 }] = useMeasure();
-  let [ref2, { height: height2 }] = useMeasure();
+  let [ref1, { height: height1 }] = useMeasure({ debounce: 100 });
+  let [ref2, { height: height2 }] = useMeasure({ debounce: 100 });
   const headingChars = splitStringUsingRegex(heading);
   const subHeadingStartChars = splitStringUsingRegex(subHeadingStart);
   const subHeadingHighlightedChars = splitStringUsingRegex(

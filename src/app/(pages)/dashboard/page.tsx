@@ -35,7 +35,7 @@ const page = () => {
         } bg-gray-50`}
       >
         <div className="w-full border-b flex justify-between items-center pb-3">
-          <div className={` ${expand ? "w-1/2" : "w-[calc(50%-5rem)]"}`}>
+          <div className={`px-1 ${expand ? "w-1/2" : "w-[calc(50%-5rem)]"}`}>
             <h1 className="font-montserrat text-3xl font-semibold text-primary-binus">
               My Courses
             </h1>

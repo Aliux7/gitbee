@@ -34,7 +34,7 @@ const page = () => {
             });
 
             if (result.data.role == "Student") router.push("/dashboard");
-            if (result.data.role == "Lecturer") router.push("/profile");
+            if (result.data.role == "Lecturer") router.push("/dashboard-lecturer");
           } else {
             router.push("/");
           }

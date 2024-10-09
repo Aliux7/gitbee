@@ -13,7 +13,7 @@ const page = () => {
   const { scrollYProgress } = useScroll();
   const prevScrollY = useRef(0);
   const [expand, setExpand] = useState(true);
-  const [showDevelopers, setShowDevelopers] = useState(false); 
+  const [showDevelopers, setShowDevelopers] = useState(false);
 
   useEffect(() => {
     scrollYProgress.onChange((currentScrollY) => {
@@ -84,7 +84,7 @@ const page = () => {
         <ProjectDetailComponent
           setShowDevelopers={setShowDevelopers}
           showDevelopers={showDevelopers}
-          expand={expand} 
+          expand={expand}
         />
       ) : (
         <ExploreComponent

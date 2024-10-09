@@ -50,7 +50,7 @@ const page = () => {
         } bg-gray-50`}
       >
         <div className="w-full border-b flex justify-between items-center pb-3">
-          <div className={` ${expand ? "w-1/2" : "w-[calc(50%-5rem)]"}`}>
+          <div className={`px-1 ${expand ? "w-1/2" : "w-[calc(50%-5rem)]"}`}>
             <h1 className="font-montserrat text-xl text-primary-binus font-semibold">
               <span className="text-primary-orange text-xl">COMP6100001</span> -
               Software Engineering
@@ -78,7 +78,7 @@ const page = () => {
           expand ? "pt-36" : "pt-[5.5rem]"
         } bg-gray-50`}
       >
-        <Breadcrumb>
+        <Breadcrumb className="px-1">
           <BreadcrumbList>
             <BreadcrumbItem>
               <BreadcrumbLink
@@ -148,7 +148,9 @@ const page = () => {
                   10 October 2023, 18:17:12
                 </TableCell>
                 <TableCell className="font-medium text-center">
-                  <span className="bg-purple-300 text-purple-700 px-2 py-0.5 rounded-md">Submitted</span>
+                  <span className="bg-purple-300 text-purple-700 px-2 py-0.5 rounded-md">
+                    Submitted
+                  </span>
                 </TableCell>
                 <TableCell className="font-medium text-center">
                   <button
@@ -173,7 +175,9 @@ const page = () => {
                   10 October 2023, 18:17:12
                 </TableCell>
                 <TableCell className="font-medium text-center">
-                  <span className="bg-green-300 text-green-700 px-2 py-0.5 rounded-md">Graded</span>
+                  <span className="bg-green-300 text-green-700 px-2 py-0.5 rounded-md">
+                    Graded
+                  </span>
                 </TableCell>
                 <TableCell className="font-medium text-center">
                   <button
@@ -198,7 +202,9 @@ const page = () => {
                   10 October 2023, 18:17:12
                 </TableCell>
                 <TableCell className="font-medium text-center">
-                  <span className="bg-blue-300 text-blue-700 px-2 py-0.5 rounded-md">Review</span>
+                  <span className="bg-blue-300 text-blue-700 px-2 py-0.5 rounded-md">
+                    Review
+                  </span>
                 </TableCell>
                 <TableCell className="font-medium text-center">
                   <button
