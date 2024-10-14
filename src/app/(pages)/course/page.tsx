@@ -20,12 +20,14 @@ import {
   TableRow,
 } from "@/components/ui/table";
 import PopUpInsert from "@/app/components/course/PopUpInsert";
+import PopUpJoinGroup from "@/app/components/course/PopUpJoinGroup";
 
 const page = () => {
   const { scrollYProgress } = useScroll();
   const prevScrollY = useRef(0);
   const [expand, setExpand] = useState(true);
   const [showInsertForm, setShowInsertForm] = useState(false);
+  const [showJoinGroup, setShowJoinGroup] = useState(false);
 
   useEffect(() => {
     scrollYProgress.onChange((currentScrollY) => {
@@ -112,28 +114,6 @@ const page = () => {
               </TableRow>
             </TableHeader>
             <TableBody>
-              {/* <TableRow>
-                <TableCell className="font-medium text-center">
-                  Assignment-1
-                </TableCell>
-                <TableCell className="text-center">
-                  Kelson Edbert Susilo
-                </TableCell>
-                <TableCell className="text-center">
-                  10 October 2023, 18:17:12
-                </TableCell>
-                <TableCell className="font-medium text-center">
-                  <span>Submitted</span>
-                </TableCell>
-                <TableCell className="font-medium text-center">
-                  <button
-                    className="bg-primary-binus text-white px-2 py-1 rounded-md hover:bg-primary-orange"
-                    onClick={() => setShowInsertForm(true)}
-                  >
-                    Upload
-                  </button>
-                </TableCell>
-              </TableRow> */}
               <TableRow>
                 <TableCell className="font-medium text-center">
                   Project-1
@@ -148,7 +128,7 @@ const page = () => {
                   10 October 2023, 18:17:12
                 </TableCell>
                 <TableCell className="font-medium text-center">
-                  <span className="bg-purple-300 text-purple-700 px-2 py-0.5 rounded-md">
+                  <span className="bg-purple-100 text-purple-700 px-2 py-0.5 rounded-md">
                     Submitted
                   </span>
                 </TableCell>
@@ -175,7 +155,7 @@ const page = () => {
                   10 October 2023, 18:17:12
                 </TableCell>
                 <TableCell className="font-medium text-center">
-                  <span className="bg-green-300 text-green-700 px-2 py-0.5 rounded-md">
+                  <span className="bg-green-100 text-green-700 px-2 py-0.5 rounded-md">
                     Graded
                   </span>
                 </TableCell>
@@ -202,7 +182,7 @@ const page = () => {
                   10 October 2023, 18:17:12
                 </TableCell>
                 <TableCell className="font-medium text-center">
-                  <span className="bg-blue-300 text-blue-700 px-2 py-0.5 rounded-md">
+                  <span className="bg-blue-100 text-blue-700 px-2 py-0.5 rounded-md">
                     Review
                   </span>
                 </TableCell>
@@ -228,8 +208,16 @@ const page = () => {
                 <TableHead className="w-96">NAME</TableHead>
               </TableRow>
             </TableHeader>
+            <TableCaption className="">
+              <br />
+              <button className="px-3 py-1 rounded-xl bg-primary-orange text-white" onClick={() => setShowJoinGroup(true)}>
+                Join a group +
+              </button>
+              <br />
+              <br />
+            </TableCaption>
             <TableBody>
-              <TableRow>
+              {/* <TableRow>
                 <TableCell className="font-medium text-center">1</TableCell>
                 <TableCell className="w-32">2540115465</TableCell>
                 <TableCell className="w-96 truncate">
@@ -256,12 +244,13 @@ const page = () => {
                 <TableCell>
                   <h1 className="w-64 truncate">Kelson Edbert Susilo</h1>
                 </TableCell>
-              </TableRow>
+              </TableRow> */}
             </TableBody>
           </Table>
         </div>
       </div>
       {showInsertForm && <PopUpInsert setShowInsertForm={setShowInsertForm} />}
+      {showJoinGroup && <PopUpJoinGroup setShowJoinGroup={setShowJoinGroup} />}
     </motion.div>
   );
 };

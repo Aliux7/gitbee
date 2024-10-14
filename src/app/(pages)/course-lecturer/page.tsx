@@ -6,6 +6,9 @@ import { FaCheck } from "react-icons/fa";
 import { IoIosArrowRoundBack } from "react-icons/io";
 import Link from "next/link";
 import { RiStarSFill } from "react-icons/ri";
+import { Rating } from "@material-tailwind/react";
+import { LiaStarSolid } from "react-icons/lia";
+import { RiStarSLine } from "react-icons/ri";
 
 import {
   Breadcrumb,
@@ -15,7 +18,6 @@ import {
   BreadcrumbPage,
   BreadcrumbSeparator,
 } from "@/components/ui/breadcrumb";
-import { RiStarSLine } from "react-icons/ri";
 
 import {
   Table,
@@ -32,14 +34,28 @@ import { Label } from "@/components/ui/label";
 import { SiGithub } from "react-icons/si";
 import { BsGlobe2 } from "react-icons/bs";
 import PreviewDetailComponent from "@/app/components/course-lecturer/PreviewDetailComponent";
+import { StarIcon } from "lucide-react";
+import { Textarea } from "@/components/ui/textarea";
+import ConfirmationFinalized from "@/app/components/course-lecturer/ConfirmationFinalized";
 
 const page = () => {
   const { scrollYProgress } = useScroll();
   const prevScrollY = useRef(0);
   const [expand, setExpand] = useState(true);
   const looping = [1, 2, 3, 4];
+  const [ratings, setRatings] = useState([
+    5, 3, 2, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0,
+  ]);
   const [showPreviewDetailProject, setShowPreviewDetailProject] =
     useState(false);
+  const [showConfirmationFinalized, setShowConfirmationFinalized] =
+    useState(false);
+
+  const handleRatingChange = (newRating: number, index: number) => {
+    const updatedRatings = [...ratings];
+    updatedRatings[index] = newRating;
+    setRatings(updatedRatings);
+  };
 
   useEffect(() => {
     scrollYProgress.onChange((currentScrollY) => {
@@ -153,7 +169,10 @@ const page = () => {
               </h1>
             </div>
             <div>
-              <button className="bg-purple-600 text-white px-4 py-2 rounded-md flex justify-center items-center gap-2">
+              <button
+                className="bg-purple-600 text-white px-4 py-2 rounded-md flex justify-center items-center gap-2"
+                onClick={() => setShowConfirmationFinalized(true)}
+              >
                 <FaCheck fill="white" /> Finalized
               </button>
             </div>
@@ -217,32 +236,32 @@ const page = () => {
                     </TableRow>
                   </TableBody>
                 </Table>
-                <div className="w-full flex justify-between items-end gap-5 border-t pt-3">
+                <div className="w-full flex justify-between items-end gap-5 border-t pt-3 min-h-[6.5rem]">
                   <div className="w-1/2">
-                    <Label className="text-lg">Score:</Label>
-                    <Input
-                      type="number"
-                      max={100}
-                      min={0}
-                      className="w-auto"
-                      placeholder="0 - 100"
-                    />
+                    {ratings[index] > 3 && (
+                      <Label className="text-lg">Reason:</Label>
+                    )}
+                    {ratings[index] > 3 && <Textarea className="w-auto" />}
                   </div>
-                  {/* <div className="w-1/2 flex justify-end items-center text-gray-500 gap-2">
-                    <RiStarSFill
-                      fill="white"
-                      stroke="#6b7280"
-                      style={{ strokeWidth: "2" }}
+                  <div className="w-1/2 flex flex-col justify-end items-end text-primary-binus  cursor-pointer">
+                    <Rating
+                      value={ratings[index]}
+                      ratedIcon={
+                        <LiaStarSolid className="fill-yellow-600 w-6 h-6" />
+                      }
+                      unratedIcon={
+                        <RiStarSLine className="fill-yellow-700 w-6 h-6" />
+                      }
+                      ratedColor="yellow"
+                      unratedColor="gray"
+                      placeholder={undefined}
+                      onPointerEnterCapture={undefined}
+                      onPointerLeaveCapture={undefined}
+                      onChange={(newRating) =>
+                        handleRatingChange(newRating, index)
+                      }
                     />
-                    Not Recommended
-                  </div> */}
-                  <div className="w-1/2 flex justify-end items-center text-yellow-500 gap-2 cursor-pointer">
-                    <RiStarSFill
-                      fill="#eab308"
-                      stroke="#eab308"
-                      style={{ strokeWidth: "2" }}
-                    />
-                    Recommended
+                    {ratings[index]} of 5
                   </div>
                 </div>
               </div>
@@ -309,6 +328,12 @@ const page = () => {
             expand={expand}
           />
         </div>
+      )}
+      {showConfirmationFinalized && (
+        <ConfirmationFinalized
+          setShowConfirmationFinalized={setShowConfirmationFinalized}
+          ratings={ratings}
+        />
       )}
     </motion.div>
   );

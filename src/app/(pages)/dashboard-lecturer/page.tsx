@@ -83,7 +83,8 @@ const page = () => {
               <TableHead className="text-center">Start Correction</TableHead>
               <TableHead className="text-center">End Correction</TableHead>
               <TableHead className="text-center">Lecturer</TableHead>
-              <TableHead className="text-center">Student</TableHead> 
+              <TableHead className="text-center">Student</TableHead>
+              <TableHead className="text-center">Submit</TableHead>
               <TableHead className="text-center">Action</TableHead>
             </TableRow>
           </TableHeader>
@@ -99,7 +100,8 @@ const page = () => {
               <TableCell className="text-center">
                 D3015 - Kelson Edbert Susilo
               </TableCell>
-              <TableCell className="text-center">32</TableCell> 
+              <TableCell className="text-center">32</TableCell>
+              <TableCell className="text-center">4/5</TableCell>
               <TableCell className="text-center">
                 <Link
                   href="course-lecturer"
@@ -119,8 +121,9 @@ const page = () => {
               <TableCell className="text-center">20 Sept 2024</TableCell>
               <TableCell className="text-center">
                 D3015 - Kelson Edbert Susilo
-              </TableCell> 
-              <TableCell className="text-center">32</TableCell> 
+              </TableCell>
+              <TableCell className="text-center">32</TableCell>
+              <TableCell className="text-center">3/5</TableCell>
               <TableCell className="text-center">
                 <Link
                   href="course-lecturer"
@@ -140,8 +143,9 @@ const page = () => {
               <TableCell className="text-center">20 Sept 2024</TableCell>
               <TableCell className="text-center">
                 D3015 - Kelson Edbert Susilo
-              </TableCell> 
-              <TableCell className="text-center">32</TableCell> 
+              </TableCell>
+              <TableCell className="text-center">32</TableCell>
+              <TableCell className="text-center">1/5</TableCell>
               <TableCell className="text-center">
                 <Link
                   href="course-lecturer"
