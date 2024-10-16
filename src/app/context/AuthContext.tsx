@@ -55,8 +55,7 @@ export const AuthProvider = ({ children }: AuthProviderProps) => {
       name: decoded.name,
       email: decoded.email,
       role: decoded.role,
-    });
-    console.log(userData);
+    }); 
     setLoading(false);
   }, []);
 

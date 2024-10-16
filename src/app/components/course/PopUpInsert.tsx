@@ -1,4 +1,5 @@
-import React from "react";
+"use client";
+import React, { useState } from "react";
 import { Input } from "@/components/ui/input";
 import { Label } from "@/components/ui/label";
 import { Textarea } from "@/components/ui/textarea";
@@ -9,12 +10,51 @@ import {
   TooltipProvider,
   TooltipTrigger,
 } from "@/components/ui/tooltip";
+import { insertProject } from "@/app/(pages)/course/actions";
 
 interface PopUpInsertProps {
   setShowInsertForm: (value: boolean) => void;
 }
 
 function PopUpInsert(props: PopUpInsertProps) {
+  const [lecturerId, setLecturerId] = useState("");
+  const [studentLeaderId, setStudentLeaderId] = useState("");
+  const [title, setTitle] = useState("");
+  const [description, setDescription] = useState("");
+  const [semesterId, setSemesterId] = useState("");
+  const [courseId, setCourseId] = useState("");
+  const [className, setClassName] = useState("");
+  const [githubLink, setGithubLink] = useState("");
+  const [projectLink, setProjectLink] = useState("");
+  const [thumbnail, setThumbnail] = useState<File | undefined>(undefined);
+  const [documentation, setDocumentation] = useState<File | undefined>(
+    undefined
+  );
+  const [gallery, setGallery] = useState<File[]>([]);
+  const [statusId, setStatusId] = useState(0);
+  const [categoryId, setCategoryId] = useState(0);
+  const [majorId, setMajorId] = useState(0);
+
+  const handleSubmit = async () => {
+    await insertProject({
+      lecturerId,
+      studentLeaderId,
+      title,
+      description,
+      semesterId,
+      courseId,
+      className,
+      githubLink,
+      projectLink,
+      thumbnail,
+      documentation,
+      gallery,
+      statusId,
+      categoryId,
+      majorId,
+    });
+  };
+
   return (
     <div
       className="fixed w-full h-full top-0 left-0 bg-black/50 flex justify-center items-center z-50"
@@ -38,7 +78,12 @@ function PopUpInsert(props: PopUpInsertProps) {
               </Tooltip>
             </TooltipProvider>
           </div>
-          <Input type="text" placeholder="Project Name" />
+          <Input
+            type="text"
+            placeholder="Project Name"
+            value={title}
+            onChange={(e) => setTitle(e.target.value)}
+          />
         </div>
         <div className="flex flex-col gap-3">
           <div className="flex justify-start items-center gap-1">
@@ -57,7 +102,11 @@ function PopUpInsert(props: PopUpInsertProps) {
               </Tooltip>
             </TooltipProvider>
           </div>
-          <Textarea placeholder="Describe Your Project . . ." />
+          <Textarea
+            placeholder="Describe Your Project . . ."
+            value={description}
+            onChange={(e) => setDescription(e.target.value)}
+          />
         </div>
         <div className="flex flex-col gap-3">
           <div className="flex justify-start items-center gap-1">
@@ -76,7 +125,12 @@ function PopUpInsert(props: PopUpInsertProps) {
               </Tooltip>
             </TooltipProvider>
           </div>
-          <Input type="text" placeholder="GitHub Link" />
+          <Input
+            type="text"
+            placeholder="GitHub Link"
+            value={githubLink}
+            onChange={(e) => setGithubLink(e.target.value)}
+          />
         </div>
         <div className="flex flex-col gap-3">
           <div className="flex justify-start items-center gap-1">
@@ -96,7 +150,12 @@ function PopUpInsert(props: PopUpInsertProps) {
               </Tooltip>
             </TooltipProvider>
           </div>
-          <Input type="email" placeholder="Email" />
+          <Input
+            type="email"
+            placeholder="Email"
+            value={projectLink}
+            onChange={(e) => setProjectLink(e.target.value)}
+          />
         </div>
         <div className="flex flex-col gap-3">
           <div className="flex justify-start items-center gap-1">
@@ -121,7 +180,13 @@ function PopUpInsert(props: PopUpInsertProps) {
             </TooltipProvider>
           </div>
           <div>
-            <Input type="file" accept="image/jpeg, image/png" />
+            <Input
+              type="file"
+              accept="image/jpeg, image/png"
+              onChange={(event) => {
+                setThumbnail(event.target.files?.[0]);
+              }}
+            />
             <span className="text-[0.7rem] text-primary-orange">
               * 1 File Only (.jpg .jpeg .png)
             </span>
@@ -152,7 +217,27 @@ function PopUpInsert(props: PopUpInsertProps) {
             </TooltipProvider>
           </div>
           <div>
-            <Input type="file" multiple accept="image/jpeg, image/png" />
+            <Input
+              type="file"
+              multiple
+              accept="image/jpeg, image/png"
+              onChange={(event) => {
+                const selectedFiles = event.target.files
+                  ? Array.from(event.target.files)
+                  : [];
+
+                if (selectedFiles.length <= 4) {
+                  setGallery(selectedFiles);
+                  return;
+                }
+
+                if (selectedFiles.length > 4) {
+                  event.target.value = "";
+                  alert("You can only upload a maximum of 4 files.");
+                  return;
+                }
+              }}
+            />
             <span className="text-[0.7rem] text-primary-orange">
               * Max 4 File Only (.jpg .jpeg .png)
             </span>
@@ -177,13 +262,20 @@ function PopUpInsert(props: PopUpInsertProps) {
             </TooltipProvider>
           </div>
           <div>
-            <Input type="file" accept="application/pdf" />
+            <Input
+              type="file"
+              accept="application/pdf"
+              onChange={(event) => {
+                setDocumentation(event.target.files?.[0]);
+              }}
+            />
             <span className="text-[0.7rem] text-primary-orange">
               * 1 File Only (.pdf)
             </span>
           </div>
         </div>
         <button
+          onClick={handleSubmit}
           type="submit"
           className="bg-primary-binus text-white px-2 py-1 rounded-md"
         >

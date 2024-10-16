@@ -7,17 +7,10 @@ type CardProps = {
   developers: string[];
   delay: number;
 };
-
-const charVariants = {
-  hidden: { opacity: 0 },
-  reveal: { opacity: 1 },
-};
-
+ 
 const Card: React.FC<CardProps> = ({ image, title, developers, delay }) => {
   return (
-    <motion.div
-      transition={{ duration: 0.5, delay: delay }}
-      variants={charVariants}
+    <motion.div 
       className="w-full max-w-96 h-[25rem] bg-white border rounded-lg shadow-sm hover:shadow-lg flex flex-col justify-center gap-4 overflow-hidden px-4 cursor-pointer hover:-translate-y-3 transition-transform duration-300 ease-in-out"
     >
       <img src={image} className="w-auto h-72 object-cover rounded-lg" />

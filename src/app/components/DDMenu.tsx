@@ -14,7 +14,7 @@ import {
 
 type DDMenuProps = {
   filter: string;
-  options: string[];
+  options: { id: number; name: string }[];
   icon: React.ReactElement;
 };
 
@@ -35,15 +35,16 @@ const DDMenu: React.FC<DDMenuProps> = ({ filter, options, icon }) => {
             })}
           </div>
           <div className="truncate text-primary-binus group-hover:text-primary-orange font-poppins font-normal">
-            {position}
+            {options.find((option) => option.id === Number(position))?.name ||
+              filter}
           </div>
         </Button>
       </DropdownMenuTrigger>
       <DropdownMenuContent className="w-44">
         <DropdownMenuRadioGroup value={position} onValueChange={setPosition}>
           {options.map((option, index) => (
-            <DropdownMenuRadioItem key={index} value={option}>
-              {option}
+            <DropdownMenuRadioItem key={index} value={option.id.toString()}>
+              {option.name}
             </DropdownMenuRadioItem>
           ))}
         </DropdownMenuRadioGroup>

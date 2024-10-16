@@ -5,15 +5,45 @@ import { CiSearch } from "react-icons/ci";
 import DDMenu from "../../components/DDMenu";
 import { TbCategory2 } from "react-icons/tb";
 import { IoBookOutline } from "react-icons/io5";
-import { CiCalendarDate } from "react-icons/ci";
+import { FaCode } from "react-icons/fa";
 import ProjectDetailComponent from "@/app/components/explore/ProjectDetailComponent";
 import ExploreComponent from "@/app/components/explore/ExploreComponent";
+import {
+  getAllCategory,
+  getAllMajor,
+  getAllProjects,
+  getAllTech,
+} from "./actions";
 
 const page = () => {
   const { scrollYProgress } = useScroll();
   const prevScrollY = useRef(0);
   const [expand, setExpand] = useState(true);
   const [showDevelopers, setShowDevelopers] = useState(false);
+  const [categories, setCategories] = useState<{ id: number; name: string }[]>(
+    []
+  );
+  const [search, setSearch] = useState("");
+  const [majors, setMajors] = useState<{ id: number; name: string }[]>([]);
+  const [techs, setTechs] = useState<{ id: number; name: string }[]>([]);
+  const [projects, setProjects] = useState<any[]>([]);
+
+  const fetchData = async () => {
+    const resultCategory = await getAllCategory();
+    if (resultCategory?.success) setCategories(resultCategory.data);
+
+    const resultMajor = await getAllMajor();
+    if (resultMajor?.success) setMajors(resultMajor.data);
+
+    const resultTech = await getAllTech();
+    if (resultTech?.success) setTechs(resultTech.data);
+  };
+
+  const fetchProjectData = async () => {
+    const resultProject = await getAllProjects(search);
+    if (resultProject?.success) setProjects(resultProject.data);
+    console.log(resultProject?.data);
+  };
 
   useEffect(() => {
     scrollYProgress.onChange((currentScrollY) => {
@@ -29,6 +59,15 @@ const page = () => {
       }
     });
   }, [scrollYProgress]);
+
+  useEffect(() => {
+    fetchProjectData();
+    console.log(search);
+  }, [search]);
+
+  useEffect(() => {
+    fetchData();
+  }, []);
 
   const handleScrollToTop = () => {
     window.scrollTo({
@@ -57,6 +96,8 @@ const page = () => {
           <input
             type="text"
             placeholder="Search"
+            value={search}
+            onChange={(e) => setSearch(e.target.value)}
             className={`border ${
               expand ? "w-full" : "w-[35.5rem]"
             } h-full p-3 px-12 rounded-md`}
@@ -64,19 +105,19 @@ const page = () => {
         </div>
         <div className="relative w-fit flex justify-end items-center h-full gap-5">
           <DDMenu
-            options={["Website App", "Mobile App", "Desktop App"]}
+            options={categories}
             filter="Category"
             icon={<TbCategory2 className="w-4 h-4" />}
           />
           <DDMenu
-            options={["Computer Science", "Sistem Information"]}
+            options={majors}
             filter="Major"
             icon={<IoBookOutline className="w-4 h-4" />}
           />
           <DDMenu
-            options={["70", "69", "68", "67", "66"]}
-            filter="Graduation"
-            icon={<CiCalendarDate className="w-5 h-5" />}
+            options={techs}
+            filter="Technology"
+            icon={<FaCode className="w-5 h-5" />}
           />
         </div>
       </div>
@@ -92,6 +133,7 @@ const page = () => {
           showDevelopers={showDevelopers}
           expand={expand}
           handleScrollToTop={handleScrollToTop}
+          projects={projects}
         />
       )}
     </motion.div>

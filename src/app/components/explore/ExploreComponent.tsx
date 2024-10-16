@@ -1,4 +1,5 @@
-import React from "react";
+"use client";
+import React, { useEffect } from "react";
 import { motion } from "framer-motion";
 import Card from "../Card";
 
@@ -6,10 +7,20 @@ interface ExploreProps {
   setShowDevelopers: (value: boolean) => void;
   showDevelopers: boolean;
   expand: boolean;
+  projects: any;
   handleScrollToTop: () => void;
 }
 
 function ExploreComponent(props: ExploreProps) {
+  const charVariants = {
+    hidden: { opacity: 0 },
+    reveal: { opacity: 1 },
+  };
+
+  useEffect(() => {
+    console.log(props.projects);
+  }, [props.projects]);
+
   return (
     <motion.div
       variants={{
@@ -25,197 +36,34 @@ function ExploreComponent(props: ExploreProps) {
           props.expand ? "top-[12.25rem]" : "top-28"
         }`}
       >
-        <div className="p-2 rounded-md my-4 border ">1705 Results Found</div>
+        <div className="p-2 rounded-md my-4 border ">
+          {props.projects.length} Results Found
+        </div>
       </div>
 
       <motion.div
         className={`grid grid-cols-3 flex-grow h-fit gap-7 justify-center items-start transition-all ease-in-out duration-500 pt-3`}
         initial="hidden"
         whileInView="reveal"
-        transition={{ staggerChildren: 0.5 }}
+        variants={charVariants}
+        transition={{ staggerChildren: 0.5, duration: 1 }}
       >
-        <div
-          className="flex justify-center items-center"
-          onClick={() => {
-            props.setShowDevelopers(!props.showDevelopers);
-            props.handleScrollToTop();
-          }}
-        >
-          <Card
-            image="/images/1.jpg"
-            delay={0}
-            title="This Co"
-            developers={["Kelson Edbert Susilo"]}
-          />
-        </div>
-        <div
-          className="flex justify-center items-center"
-          onClick={() => {
-            props.setShowDevelopers(!props.showDevelopers);
-            props.handleScrollToTop();
-          }}
-        >
-          <Card
-            image="/images/2.jpg"
-            delay={0}
-            title="This Co"
-            developers={["Kelson Edbert Susilo"]}
-          />
-        </div>
-        <div
-          className="flex justify-center items-center"
-          onClick={() => {
-            props.setShowDevelopers(!props.showDevelopers);
-            props.handleScrollToTop();
-          }}
-        >
-          <Card
-            image="/images/3.jpg"
-            delay={0}
-            title="This Co"
-            developers={["Kelson Edbert Susilo"]}
-          />
-        </div>
-        <div
-          className="flex justify-center items-center"
-          onClick={() => {
-            props.setShowDevelopers(!props.showDevelopers);
-            props.handleScrollToTop();
-          }}
-        >
-          <Card
-            image="/images/4.jpg"
-            delay={0}
-            title="This Co"
-            developers={["Kelson Edbert Susilo"]}
-          />
-        </div>
-        <div
-          className="flex justify-center items-center"
-          onClick={() => {
-            props.setShowDevelopers(!props.showDevelopers);
-            props.handleScrollToTop();
-          }}
-        >
-          <Card
-            image="/images/5.jpg"
-            delay={0}
-            title="This Co"
-            developers={["Kelson Edbert Susilo"]}
-          />
-        </div>
-        <div
-          className="flex justify-center items-center"
-          onClick={() => {
-            props.setShowDevelopers(!props.showDevelopers);
-            props.handleScrollToTop();
-          }}
-        >
-          <Card
-            image="/images/6.jpg"
-            delay={0}
-            title="This Co"
-            developers={["Kelson Edbert Susilo"]}
-          />
-        </div>
-        <div
-          className="flex justify-center items-center"
-          onClick={() => {
-            props.setShowDevelopers(!props.showDevelopers);
-            props.handleScrollToTop();
-          }}
-        >
-          <Card
-            image="/images/7.jpg"
-            delay={0}
-            title="This Co"
-            developers={["Kelson Edbert Susilo"]}
-          />
-        </div>
-        <div
-          className="flex justify-center items-center"
-          onClick={() => {
-            props.setShowDevelopers(!props.showDevelopers);
-            props.handleScrollToTop();
-          }}
-        >
-          <Card
-            image="/images/8.jpg"
-            delay={0}
-            title="This Co"
-            developers={["Kelson Edbert Susilo"]}
-          />
-        </div>
-        <div
-          className="flex justify-center items-center"
-          onClick={() => {
-            props.setShowDevelopers(!props.showDevelopers);
-            props.handleScrollToTop();
-          }}
-        >
-          <Card
-            image="/images/9.jpg"
-            delay={0}
-            title="This Co"
-            developers={["Kelson Edbert Susilo"]}
-          />
-        </div>
-        <div
-          className="flex justify-center items-center"
-          onClick={() => {
-            props.setShowDevelopers(!props.showDevelopers);
-            props.handleScrollToTop();
-          }}
-        >
-          <Card
-            image="/images/10.jpg"
-            delay={0}
-            title="This Co"
-            developers={["Kelson Edbert Susilo"]}
-          />
-        </div>
-        <div
-          className="flex justify-center items-center"
-          onClick={() => {
-            props.setShowDevelopers(!props.showDevelopers);
-            props.handleScrollToTop();
-          }}
-        >
-          <Card
-            image="/images/11.jpg"
-            delay={0}
-            title="This Co"
-            developers={["Kelson Edbert Susilo"]}
-          />
-        </div>
-        <div
-          className="flex justify-center items-center"
-          onClick={() => {
-            props.setShowDevelopers(!props.showDevelopers);
-            props.handleScrollToTop();
-          }}
-        >
-          <Card
-            image="/images/12.jpg"
-            delay={0}
-            title="This Co"
-            developers={["Kelson Edbert Susilo"]}
-          />
-        </div>
-        <div
-          className="flex justify-center items-center"
-          onClick={() => {
-            props.setShowDevelopers(!props.showDevelopers);
-            props.handleScrollToTop();
-          }}
-        >
-          <Card
-            image="/images/1.jpg"
-            delay={0}
-            title="This Co"
-            developers={["Kelson Edbert Susilo"]}
-          />
-        </div>
+        {props.projects.map((project: any, index: number) => (
+          <div
+            className="flex justify-center items-center"
+            onClick={() => {
+              props.setShowDevelopers(!props.showDevelopers);
+              props.handleScrollToTop();
+            }}
+          >
+            <Card
+              image={project?.projectDetail?.thumbnail}
+              delay={0}
+              title={project?.projectDetail?.title}
+              developers={["Kelson Edbert Susilo"]}
+            />
+          </div>
+        ))}
       </motion.div>
     </motion.div>
   );

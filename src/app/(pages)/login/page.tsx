@@ -24,17 +24,17 @@ const page = () => {
           }
 
           const idToken = accounts[0]?.idToken ? accounts[0].idToken : "";
-          const result = await login(idToken);
+          const result = await login(idToken); 
           if (result?.success) {
             setUserData({
-              nim: result.data.nim,
-              name: result.data.name,
-              email: result.data.email,
-              role: result.data.role,
+              nim: result.data.Nim,
+              name: result.data.Name,
+              email: result.data.Email,
+              role: result.data.Role,
             });
 
-            if (result.data.role == "Student") router.push("/dashboard");
-            if (result.data.role == "Lecturer") router.push("/dashboard-lecturer");
+            if (result.data.Role == "Student") router.push("/dashboard");
+            if (result.data.Role == "Lecturer") router.push("/dashboard-lecturer");
           } else {
             router.push("/");
           }
