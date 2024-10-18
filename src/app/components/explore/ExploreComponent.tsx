@@ -60,7 +60,7 @@ function ExploreComponent(props: ExploreProps) {
               image={project?.projectDetail?.thumbnail}
               delay={0}
               title={project?.projectDetail?.title}
-              developers={["Kelson Edbert Susilo"]}
+              developers={project?.projectGroups}
             />
           </div>
         ))}

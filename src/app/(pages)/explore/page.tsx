@@ -27,6 +27,9 @@ const page = () => {
   const [majors, setMajors] = useState<{ id: number; name: string }[]>([]);
   const [techs, setTechs] = useState<{ id: number; name: string }[]>([]);
   const [projects, setProjects] = useState<any[]>([]);
+  const [selectedCategoryFilter, setSelectedCategoryFilter] = useState("");
+  const [selectedMajorFilter, setSelectedMajorFilter] = useState("");
+  const [selectedTechnologyFilter, setSelectedTechnologyFilter] = useState("");
 
   const fetchData = async () => {
     const resultCategory = await getAllCategory();
@@ -40,7 +43,12 @@ const page = () => {
   };
 
   const fetchProjectData = async () => {
-    const resultProject = await getAllProjects(search);
+    const resultProject = await getAllProjects(
+      search,
+      selectedCategoryFilter,
+      selectedMajorFilter,
+      selectedTechnologyFilter
+    );
     if (resultProject?.success) setProjects(resultProject.data);
     console.log(resultProject?.data);
   };
@@ -62,8 +70,12 @@ const page = () => {
 
   useEffect(() => {
     fetchProjectData();
-    console.log(search);
-  }, [search]);
+  }, [
+    search,
+    selectedCategoryFilter,
+    selectedMajorFilter,
+    selectedTechnologyFilter,
+  ]);
 
   useEffect(() => {
     fetchData();
@@ -107,16 +119,19 @@ const page = () => {
           <DDMenu
             options={categories}
             filter="Category"
+            setSelectedValue={setSelectedCategoryFilter}
             icon={<TbCategory2 className="w-4 h-4" />}
           />
           <DDMenu
             options={majors}
             filter="Major"
+            setSelectedValue={setSelectedMajorFilter}
             icon={<IoBookOutline className="w-4 h-4" />}
           />
           <DDMenu
             options={techs}
             filter="Technology"
+            setSelectedValue={setSelectedTechnologyFilter}
             icon={<FaCode className="w-5 h-5" />}
           />
         </div>

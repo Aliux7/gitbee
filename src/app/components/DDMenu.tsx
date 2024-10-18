@@ -15,11 +15,22 @@ import {
 type DDMenuProps = {
   filter: string;
   options: { id: number; name: string }[];
+  setSelectedValue: (value: string) => void;
   icon: React.ReactElement;
 };
 
-const DDMenu: React.FC<DDMenuProps> = ({ filter, options, icon }) => {
-  const [position, setPosition] = React.useState(filter);
+const DDMenu: React.FC<DDMenuProps> = ({
+  filter,
+  options,
+  icon,
+  setSelectedValue,
+}) => {
+  const [position, setPosition] = React.useState("");
+
+  const handleValueChange = (value: string) => {
+    setPosition(value);
+    setSelectedValue(value.toString());
+  };
 
   return (
     <DropdownMenu>
@@ -41,7 +52,13 @@ const DDMenu: React.FC<DDMenuProps> = ({ filter, options, icon }) => {
         </Button>
       </DropdownMenuTrigger>
       <DropdownMenuContent className="w-44">
-        <DropdownMenuRadioGroup value={position} onValueChange={setPosition}>
+        <DropdownMenuRadioGroup
+          value={position}
+          onValueChange={handleValueChange}
+        >
+          <DropdownMenuRadioItem key={0} value="">
+            {filter}
+          </DropdownMenuRadioItem>
           {options.map((option, index) => (
             <DropdownMenuRadioItem key={index} value={option.id.toString()}>
               {option.name}

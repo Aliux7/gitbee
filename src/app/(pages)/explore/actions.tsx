@@ -49,10 +49,15 @@ export const getAllTech = async () => {
   }
 };
 
-export const getAllProjects = async (search: string) => {
+export const getAllProjects = async (
+  search: string,
+  categoryFilter: string,
+  majorFilter: string,
+  technologyFilter: string
+) => {
   try {
     const response = await fetch(
-      `${process.env.NEXT_PUBLIC_BACKEND_API}project/all?search=${search}`
+      `${process.env.NEXT_PUBLIC_BACKEND_API}project/all?search=${search}&categoryFilter=${categoryFilter}&majorFilter=${majorFilter}&technologyFilter=${technologyFilter}`
     );
     const result = await response.json();
 

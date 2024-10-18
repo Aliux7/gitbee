@@ -214,7 +214,7 @@ const page = () => {
                 className="px-3 py-1 rounded-xl bg-primary-orange text-white"
                 onClick={() => setShowJoinGroup(true)}
               >
-                Join a group +
+                Create a group +
               </button>
               <br />
               <br />
