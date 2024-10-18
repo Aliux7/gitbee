@@ -250,7 +250,7 @@ const page = () => {
                         <LiaStarSolid className="fill-yellow-600 w-6 h-6" />
                       }
                       unratedIcon={
-                        <RiStarSLine className="fill-yellow-700 w-6 h-6" />
+                        <RiStarSLine className="fill-yellow-600 w-6 h-6" />
                       }
                       ratedColor="yellow"
                       unratedColor="gray"
