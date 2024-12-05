@@ -50,12 +50,20 @@ export const AuthProvider = ({ children }: AuthProviderProps) => {
     }
 
     const decoded = jwt.decode(token) as JwtPayload;
+    console.log(decoded)
     setUserData({
       nim: decoded.nim,
       name: decoded.name,
       email: decoded.email,
       role: decoded.role,
-    }); 
+    });
+
+    // setUserData({
+    //   nim: "2540115465",
+    //   name: "Kelson Edbert Susilo",
+    //   email: "kelson.susilo@binus.ac.id ",
+    //   role: "Lecturer",
+    // });
     setLoading(false);
   }, []);
 

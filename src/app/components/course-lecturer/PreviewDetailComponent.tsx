@@ -1,11 +1,13 @@
 import Link from "next/link";
-import React from "react";
+import React, { useEffect } from "react";
 import { BsGlobe2 } from "react-icons/bs";
 import { motion } from "framer-motion";
 import { IoIosArrowRoundBack } from "react-icons/io";
 import { SiGithub } from "react-icons/si";
+import { AiOutlineDownload } from "react-icons/ai";
 
 interface PreviewDetailProps {
+  selectedPreviewProject: any;
   setShowPreviewDetailProject: (value: boolean) => void;
   expand: boolean;
 }
@@ -15,6 +17,10 @@ function PreviewDetailComponent(props: PreviewDetailProps) {
     hidden: { opacity: 0 },
     visible: { opacity: 1, transition: { duration: 1 } },
   };
+
+  useEffect(() => {
+    console.log(props.selectedPreviewProject);
+  }, [props.selectedPreviewProject]);
 
   return (
     <motion.div
@@ -30,34 +36,30 @@ function PreviewDetailComponent(props: PreviewDetailProps) {
         variants={containerVariants}
       >
         {/* <h1 className="text-center py-10 text-gray-500">No Project Selected</h1> */}
-        <Link
-          href={"/portofolio/123"}
-          className="flex justify-start items-center gap-5 border-b pb-5 mr-4 cursor-pointer"
-        >
-          <img
-            src="/images/1.jpg"
-            className="rounded-full h-20 w-20 p-1 border object-cover"
-          />
-          <div className="w-48">
-            <h1 className="truncate font-semibold">Kelson Edbert S</h1>
-            <h1 className="truncate text-sm text-gray-500">2540115465</h1>
-            <h1 className="truncate text-sm text-gray-500">Computer Science</h1>
-          </div>
-        </Link>
-        <Link
-          href={"/portofolio/123"}
-          className="flex justify-start items-center gap-5 border-b pb-5 mr-4 cursor-pointer"
-        >
-          <img
-            src="/images/3.jpg"
-            className="rounded-full h-20 w-20 p-1 border object-cover"
-          />
-          <div className="w-48">
-            <h1 className="truncate font-semibold">Timothy Darren</h1>
-            <h1 className="truncate text-sm text-gray-500">2540115465</h1>
-            <h1 className="truncate text-sm text-gray-500">Computer Science</h1>
-          </div>
-        </Link>
+        {props.selectedPreviewProject?.projectGroups.map(
+          (student: any, index: number) => (
+            <Link
+              href={"/portofolio/123"}
+              className="flex justify-start items-center gap-5 border-b pb-5 mr-4 cursor-pointer"
+            >
+              <img
+                src="https://github.com/shadcn.png"
+                className="rounded-full h-20 w-20 p-1 border object-cover"
+              />
+              <div className="w-48">
+                <h1 className="truncate font-semibold">
+                  {student?.student_name}
+                </h1>
+                <h1 className="truncate text-sm text-gray-500">
+                  {student?.student_binusian_id}
+                </h1>
+                <h1 className="truncate text-sm text-gray-500">
+                  {student?.student_id}
+                </h1>
+              </div>
+            </Link>
+          )
+        )}
       </motion.div>
       <motion.div
         className="relative w-full border-l pl-3 flex h-fit py-3 justify-start items-start transition-all ease-in-out duration-500"
@@ -72,34 +74,30 @@ function PreviewDetailComponent(props: PreviewDetailProps) {
         <div className="w-full flex flex-col pr-5">
           <div className="w-full flex justify-start items-start border-b pb-5">
             <div className="mx-3 flex flex-col gap-1 w-2/3">
-              <h1 className="text-3xl font-bold">The Spotify</h1>
+              <h1 className="text-3xl font-bold">
+                {props.selectedPreviewProject?.projectDetail?.title}
+              </h1>
               <h3 className="text-sm text-gray-500">
                 By Kelson Edbert S, Timothy Darren, Nicholas Chandra
               </h3>
               <div className="h-fit flex-grow my-3 pr-10">
                 <h1 className="text-balance text-gray-700">
-                  Lorem ipsum dolor sit amet consectetur, adipisicing elit. At
-                  molestias possimus ipsum? Fuga architecto, ipsum nulla
-                  explicabo quas corrupti quia labore eum dolor ipsam obcaecati
-                  facere odio aliquam aspernatur perferendis. Lorem ipsum, dolor
-                  sit amet consectetur adipisicing elit. Veniam corrupti quod
-                  eos nulla vero debitis corporis ullam, earum laudantium
-                  praesentium asperiores ipsum ab voluptatem molestias atque
-                  mollitia quidem sint in!
+                  {props.selectedPreviewProject?.projectDetail?.description}
                 </h1>
               </div>
               <Link
-                href="https://github.com/Aliux7/gitbee"
+                href={props.selectedPreviewProject?.projectDetail?.github_link}
                 className="flex justify-start items-center gap-2 text-sm my-1 text-primary-binus"
               >
                 <SiGithub fill="#EB9327" />
-                https://github.com/Aliux7/gitbee
+                {props.selectedPreviewProject?.projectDetail?.github_link}
               </Link>
               <Link
-                href="https://binusmaya.binus.ac.id/"
+                href={props.selectedPreviewProject?.projectDetail?.project_link}
                 className="flex justify-start items-center gap-2 text-sm my-1 text-primary-binus"
               >
-                <BsGlobe2 fill="#EB9327" /> https://binusmaya.binus.ac.id/
+                <BsGlobe2 fill="#EB9327" />{" "}
+                {props.selectedPreviewProject?.projectDetail?.project_link}
               </Link>
             </div>
             <div className="w-1/3">
@@ -107,14 +105,29 @@ function PreviewDetailComponent(props: PreviewDetailProps) {
                     src="/images/image-1.webp"
                     className="w-full rounded-md"
                     /> */}
-              <img src="/images/3.jpg" className="w-full rounded-md border" />
+              <img
+                src={props.selectedPreviewProject?.projectDetail?.thumbnail}
+                className="w-full rounded-md border"
+              />
             </div>
           </div>
           <div className="w-full h-96 my-3 flex overflow-auto gap-3">
-            <img src="/images/1.jpg" className="h-full rounded-md border" />
-            <img src="/images/2.jpg" className="h-full rounded-md border" />
-            <img src="/images/3.jpg" className="h-full rounded-md border" />
-            <img src="/images/4.jpg" className="h-full rounded-md border" />
+            {props.selectedPreviewProject?.galleries.map((gallery: any) => (
+              <img src={gallery?.image} className="h-full rounded-md border" />
+            ))}
+          </div>
+          <div className="w-full h-[30rem] overflow-auto flex flex-col">
+            <a
+              className="flex justify-end items-center gap-1 my-2 hover:underline"
+              href={props.selectedPreviewProject?.projectDetail?.documentation}
+            >
+              Download Documentation
+              <AiOutlineDownload className="w-5 h-5" />
+            </a>
+            <iframe
+              src={props.selectedPreviewProject?.projectDetail?.documentation}
+              className="w-full h-96"
+            />
           </div>
         </div>
       </motion.div>

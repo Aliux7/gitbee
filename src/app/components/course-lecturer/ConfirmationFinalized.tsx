@@ -3,6 +3,7 @@ import React from "react";
 interface ConfirmationFinalzedProps {
   setShowConfirmationFinalized: (value: boolean) => void;
   ratings: any;
+  groupsClassData: any;
 }
 
 const ConfirmationFinalized = (props: ConfirmationFinalzedProps) => {
@@ -17,61 +18,39 @@ const ConfirmationFinalized = (props: ConfirmationFinalzedProps) => {
       >
         <h1 className="text-5xl">Are you sure you want to finalized?</h1>
         <ul>
-          <li className="border-b-2 w-full">
-            <div className="flex justify-between items-center">
-              <h3 className="text-lg">Group 1 - The Spotify</h3>
-              <h3 className="text-lg">
-                Rating{" "}
-                <span className="text-primary-orange">{props.ratings[1]}</span>{" "}
-                of 5
-              </h3>
-            </div>
-          </li>
-          <li className="border-b-2 w-full">
-            <div className="flex justify-between items-center">
-              <h3 className="text-lg">Group 2 - The Spotify</h3>
-              <h3 className="text-lg">
-                Rating{" "}
-                <span className="text-primary-orange">{props.ratings[2]}</span>{" "}
-                of 5
-              </h3>
-            </div>
-          </li>
-          <li className="border-b-2 w-full">
-            <div className="flex justify-between items-center">
-              <h3 className="text-lg">Group 3 - The Spotify</h3>
-              <h3 className="text-lg">
-                Rating{" "}
-                <span className="text-primary-orange">{props.ratings[3]}</span>{" "}
-                of 5
-              </h3>
-            </div>
-          </li>
-          <li className="border-b-2 w-full">
-            <div className="flex justify-between items-center">
-              <h3 className="text-lg">Group 4 - The Spotify</h3>
-              <h3 className="text-lg">
-                Rating{" "}
-                <span className="text-primary-orange">{props.ratings[4]}</span>{" "}
-                of 5
-              </h3>
-            </div>
-          </li>
-          <li className="border-b-2 w-full">
-            <div className="flex justify-between items-center">
-              <h3 className="text-lg">Group 5 - The Spotify</h3>
-              <h3 className="text-lg">
-                Rating{" "}
-                <span className="text-primary-orange">{props.ratings[5]}</span>{" "}
-                of 5
-              </h3>
-            </div>
-          </li>
+          {props.groupsClassData?.updatedProjects.map((groupDetail: any, index: number) => (
+            <li className="border-b-2 w-full">
+              <div className="flex justify-between items-center">
+                <h3 className="text-lg">
+                  Group {groupDetail?.projectDetail?.group} - {groupDetail?.projectDetail?.title}
+                </h3>
+                <h3 className="text-lg">
+                  Rating{" "}
+                  <span className="text-primary-orange">
+                    {props.ratings[index]}
+                  </span>{" "}
+                  of 5
+                </h3>
+              </div>
+            </li>
+          ))}
         </ul>
         <div className="text-xl">
-          There are no group that's above{" "}
-          <span className="text-primary-orange">4 stars</span>.{" "}
-          <span className="underline">Are You Sure?</span>
+          {props.ratings.some((rating: any) => rating > 3) ? (
+            <div>
+              There are{" "}
+              <span className="text-primary-orange">
+                {props.ratings.filter((rating: any) => rating > 3).length}
+              </span>{" "}
+              Outstanding Project. Are You Sure?
+            </div>
+          ) : (
+            <div>
+              There are no group that's above{" "}
+              <span className="text-primary-orange">3 stars</span>.{" "}
+              <span className="underline">Are You Sure?</span>
+            </div>
+          )}
         </div>
         <button
           type="submit"

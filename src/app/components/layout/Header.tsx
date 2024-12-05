@@ -131,9 +131,23 @@ const Header = () => {
                     Dashboard
                   </li>
                 </Link>
-                <Link href="/explore">
+                <Link href="/history-lecturer">
                   <li className="w-20 cursor-pointer py-2 px-1 relative after:absolute after:w-0 hover:after:w-full after:h-[2px] after:bottom-0 after:left-0 after:bg-primary-binus flex justify-center items-center after:transition-all after:ease-in-out after:duration-300">
                     History
+                  </li>
+                </Link>
+              </ul>
+            )}
+            {userData && userData.role === "HOP" && (
+              <ul className="flex justify-center items-center gap-5">
+                <Link href="/dashboard-lecturer">
+                  <li className="w-28 cursor-pointer py-2 px-1 relative after:absolute after:w-0 hover:after:w-full after:h-[2px] after:bottom-0 after:left-0 after:bg-primary-binus flex justify-center items-center after:transition-all after:ease-in-out after:duration-300">
+                    Unreview
+                  </li>
+                </Link>
+                <Link href="/history-lecturer">
+                  <li className="w-20 cursor-pointer py-2 px-1 relative after:absolute after:w-0 hover:after:w-full after:h-[2px] after:bottom-0 after:left-0 after:bg-primary-binus flex justify-center items-center after:transition-all after:ease-in-out after:duration-300">
+                    Reviewed
                   </li>
                 </Link>
               </ul>

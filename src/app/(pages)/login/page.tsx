@@ -24,10 +24,12 @@ const page = () => {
           }
 
           const idToken = accounts[0]?.idToken ? accounts[0].idToken : "";
+          console.log(idToken)
           const result = await login(idToken); 
           if (result?.success) {
+            console.log(result)
             setUserData({
-              nim: result.data.Nim,
+              nim: result.data.nim,
               name: result.data.Name,
               email: result.data.Email,
               role: result.data.Role,

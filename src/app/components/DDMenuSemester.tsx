@@ -14,21 +14,37 @@ import {
 
 type DDMenuSemesterProps = {
   filter: string;
-  options: string[];
+  options: any;
   icon: React.ReactElement;
+  className?: string;
+  currentSemester: any;
 };
 
-const DDMenuSemester: React.FC<DDMenuSemesterProps> = ({ filter, options, icon }) => {
-  const [position, setPosition] = React.useState(filter);
+const DDMenuSemester: React.FC<DDMenuSemesterProps> = ({
+  filter,
+  options,
+  icon,
+  className,
+  currentSemester,
+}) => {
+  const [position, setPosition] = React.useState("");
 
+  React.useEffect(() => {
+    setPosition(currentSemester?.data?.Description);
+    console.log(currentSemester?.data?.Description);
+  }, [currentSemester])
   return (
     <DropdownMenu>
       <DropdownMenuTrigger asChild>
         <Button
           variant="outline"
-          className="h-10 w-72 flex justify-between items-center gap-3 py-3"
+          className={`h-full w-72 flex justify-between items-center gap-3 py-3 ${
+            className == null ? "max-h-10" : ""
+          }`}
         >
-          <div className="pr-2 border-r h-full flex justify-center items-center">{icon}</div>
+          <div className="pr-2 border-r h-full flex justify-center items-center">
+            {icon}
+          </div>
           <div className="truncate text-primary-binus hover:text-primary-orange font-poppins font-normal">
             {position}
           </div>
@@ -36,9 +52,9 @@ const DDMenuSemester: React.FC<DDMenuSemesterProps> = ({ filter, options, icon }
       </DropdownMenuTrigger>
       <DropdownMenuContent className="w-72">
         <DropdownMenuRadioGroup value={position} onValueChange={setPosition}>
-          {options.map((option, index) => (
-            <DropdownMenuRadioItem key={index} value={option}>
-              {option}
+          {options?.data?.map((option: any, index: number) => (
+            <DropdownMenuRadioItem key={option?.SemesterId ? option.SemesterId : index} value={option.Description}>
+              {option.Description}
             </DropdownMenuRadioItem>
           ))}
         </DropdownMenuRadioGroup>

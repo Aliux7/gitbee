@@ -6,11 +6,16 @@ import { BsCalendar4Range } from "react-icons/bs";
 import DDMenuSemester from "@/app/components/DDMenuSemester";
 import Card from "@/app/components/Card";
 import Link from "next/link";
+import { getAllSemester, getCurrentSemester } from "./action";
+import Loading from "@/app/components/Loading";
 
 const page = () => {
   const { scrollYProgress } = useScroll();
   const prevScrollY = useRef(0);
   const [expand, setExpand] = useState(true);
+  const [listSemester, setListSemester] = useState<any>([]);
+  const [currentSemester, setCurrentSemester] = useState<any>();
+  const [loading, setLoading] = useState(false);
 
   useEffect(() => {
     scrollYProgress.onChange((currentScrollY) => {
@@ -26,6 +31,20 @@ const page = () => {
       }
     });
   }, [scrollYProgress]);
+
+  const fetchData = async () => {
+    setLoading(true);
+    const resultListSemester = await getAllSemester();
+    setListSemester(resultListSemester);
+    
+    const resultCurrentSemester = await getCurrentSemester();
+    setCurrentSemester(resultCurrentSemester);
+    setLoading(false);
+  };
+
+  useEffect(() => {
+    fetchData();
+  }, []);
 
   return (
     <motion.div className="relative min-h-screen flex flex-col justify-start items-center px-[6.25rem] ">
@@ -51,15 +70,10 @@ const page = () => {
             } flex justify-end items-center`}
           >
             <DDMenuSemester
-              options={[
-                "Even Semester 2023/2024",
-                "Odd Semester 2023/2024",
-                "Even Semester 2022/2023",
-                "Odd Semester 2022/2023",
-                "Even Semester 2021/2022",
-              ]}
+              options={listSemester}
               filter="Semester"
               icon={<BsCalendar4Range className="w-4 h-4" />}
+              currentSemester={currentSemester}
             />
           </div>
         </div>
@@ -199,7 +213,7 @@ const page = () => {
         </Link>
       </div>
 
-      <div className="h-screen"></div>
+      {loading && <Loading />}
     </motion.div>
   );
 };
