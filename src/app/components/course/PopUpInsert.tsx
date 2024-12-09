@@ -4,6 +4,7 @@ import { Input } from "@/components/ui/input";
 import { Label } from "@/components/ui/label";
 import { Textarea } from "@/components/ui/textarea";
 import { CiCircleQuestion } from "react-icons/ci";
+import { TiTick } from "react-icons/ti";
 import {
   Tooltip,
   TooltipContent,
@@ -18,6 +19,16 @@ import { SiGithub } from "react-icons/si";
 import { BsGlobe2 } from "react-icons/bs";
 import { useAuth } from "@/app/context/AuthContext";
 import { IoArrowBack } from "react-icons/io5";
+import PopUpJoinGroup from "./PopUpJoinGroup";
+import {
+  Table,
+  TableBody,
+  TableCell,
+  TableHead,
+  TableHeader,
+  TableRow,
+} from "@/components/ui/table";
+import { off } from "process";
 
 interface PopUpInsertProps {
   fetchData: any;
@@ -29,11 +40,18 @@ interface PopUpInsertProps {
     description: string;
     variant?: "default" | "destructive" | null;
   }) => void;
+  userId?: string;
 }
 
 function PopUpInsert(props: PopUpInsertProps) {
-  const { userData } = useAuth();
-  const [showPreview, setShowPreview] = useState(false);
+  const steps = [
+    "Create Group",
+    "Preview Group",
+    "Insert Project",
+    "Preview Project",
+  ];
+  const [currentStep, setCurrentStep] = useState(1); 
+  const { userData } = useAuth(); 
   const [loading, setLoading] = useState(false);
   const [lecturerId, setLecturerId] = useState("KS23-1");
   const [title, setTitle] = useState("");
@@ -55,6 +73,13 @@ function PopUpInsert(props: PopUpInsertProps) {
   const [categoryId, setCategoryId] = useState(0);
   const [majorId, setMajorId] = useState(0);
   const [formErrors, setFormErrors] = useState<Record<string, string>>({});
+
+  useEffect(() => {
+    console.log(props.groupMembers.length);
+    if (props.groupMembers.length > 0) {
+      setCurrentStep(2);
+    }
+  }, [props.groupMembers]);
 
   const isValidUrl = (urlString: string) => {
     var urlPattern = new RegExp(
@@ -112,7 +137,7 @@ function PopUpInsert(props: PopUpInsertProps) {
   };
 
   const handleSubmit = async () => {
-    if (validateForm()) setShowPreview(true);
+    if (validateForm()) setCurrentStep(4);
     const fileToBase64 = (file: File): Promise<string> => {
       return new Promise((resolve, reject) => {
         const reader = new FileReader();
@@ -173,88 +198,92 @@ function PopUpInsert(props: PopUpInsertProps) {
 
   return (
     <div
-      className="fixed w-full h-full top-0 left-0 bg-black/50 flex justify-center items-center z-50"
+      className="fixed w-full h-full top-0 left-0 bg-black/50 flex flex-col justify-center items-center z-50"
       onClick={() => props.setShowInsertForm(false)}
     >
-      {showPreview && !loading ? (
-        <motion.div
-          onClick={(e) => e.stopPropagation()}
-          className="relative bg-gray-50 border rounded-md min-w-96 w-[60rem] max-w-[80vw] h-auto max-h-[85vh] flex flex-col px-10 py-7 gap-5 overflow-y-auto"
-          initial="hidden"
-          animate="visible"
-          exit="hidden"
-        >
-          <div
-            className="absolute top-5 left-5 cursor-pointer bg-gray-100 hover:bg-gray-300 p-1 rounded-full"
-            onClick={() => setShowPreview(false)}
-          >
-            <IoArrowBack className="w-5 h-5" />
-          </div>
-          <motion.div
-            className="relative w-full pl-3 flex h-fit py-3 justify-start items-start transition-all ease-in-out duration-500"
-            variants={containerVariants}
-          >
-            <div className="w-full flex flex-col pr-5">
-              <div className="w-full flex justify-start items-start border-b pb-5">
-                <div className="mx-3 flex flex-col gap-1 w-2/3">
-                  <h1 className="text-3xl font-bold">{title}</h1>
-                  <h3 className="text-sm text-gray-500">
-                    By Kelson Edbert S, Timothy Darren, Nicholas Chandra
-                  </h3>
-                  <div className="h-fit flex-grow my-3 pr-10">
-                    <h1 className="text-balance text-gray-700">
-                      {description}
-                    </h1>
-                  </div>
-                  <Link
-                    href={githubLink}
-                    className="flex justify-start items-center gap-2 text-sm my-1 text-primary-binus"
-                  >
-                    <SiGithub fill="#EB9327" />
-                    {githubLink}
-                  </Link>
-                  <Link
-                    href={projectLink}
-                    className="flex justify-start items-center gap-2 text-sm my-1 text-primary-binus"
-                  >
-                    <BsGlobe2 fill="#EB9327" /> {projectLink}
-                  </Link>
-                </div>
-                <div className="w-1/3">
-                  <img
-                    src={thumbnail ? URL.createObjectURL(thumbnail) : undefined}
-                    className="w-full rounded-md border h-96 object-cover"
-                  />
-                </div>
-              </div>
-              <div className="w-full h-96 my-3 flex overflow-auto gap-3">
-                {gallery.map((file, index) => (
-                  <img
-                    key={index}
-                    src={URL.createObjectURL(file)}
-                    alt={`Gallery Image ${index + 1}`}
-                    className="w-full rounded-md border h-full object-cover"
-                  />
-                ))}
-              </div>
-              <h1 className="mt-10">
-                {documentation?.name} ~ {documentation?.size}
-              </h1>
-              <iframe src={pdfUrl} className="w-full h-96" />
+      <div
+        className="bg-gray-50 border-x border-t rounded-t-md min-w-96 w-full max-w-[80vw] h-32 flex flex-col px-10 pt-7 overflow-y-auto"
+        onClick={(e) => e.stopPropagation()}
+      >
+        <div className="w-full flex gap-5">
+          {steps?.map((step, i) => (
+            <div
+              key={i}
+              className={`w-full flex flex-col ${
+                currentStep >= i + 1 && i !== 0
+                  ? "cursor-pointer"
+                  : "cursor-not-allowed"
+              }`}
+              onClick={() => {
+                currentStep >= i + 1 && i !== 0 ? setCurrentStep(i + 1) : null;
+              }}
+            >
+              <div
+                className={`w-full h-2 bg-gray-300 relative rounded-md overflow-hidden after:absolute after:bg-primary-binus after:h-full after:transition-all after:duration-700 after:ease-in-out transition-all duration-700 ease-in-out ${
+                  currentStep >= i + 1 ? "after:w-full" : "after:w-0"
+                } `}
+              ></div>
+              <span
+                className={` mt-3 ${
+                  currentStep >= i + 1 ? "text-primary-binus" : "text-gray-500"
+                }`}
+              >
+                Step {i + 1}
+              </span>
+              <span className="text-black">{step}</span>
             </div>
-          </motion.div>
-          <button
-            onClick={handleFinalized}
-            type="submit"
-            className="w-full bg-purple-600 text-white py-2 rounded-md"
-          >
-            Submit
-          </button>
-        </motion.div>
-      ) : !showPreview && !loading ? (
+          ))}
+        </div>
+        <div className="w-full h-px bg-gray-200 mt-7"></div>
+      </div>
+      {currentStep === 1 && !loading && (
+        <PopUpJoinGroup
+          fetchData={props.fetchData}
+          toast={props.toast}
+          userId={userData?.nim}
+          setCurrentStep={setCurrentStep}
+        />
+      )}
+      {currentStep === 2 && !loading && (
         <div
           onClick={(e) => e.stopPropagation()}
-          className="bg-gray-50 border rounded-md min-w-96 w-[60rem] max-w-[80vw] h-auto max-h-[85vh] flex flex-col px-10 py-7 gap-5 overflow-y-auto"
+          className="bg-gray-50 border-x border-b min-w-96 w-full max-w-[80vw] rounded-b-md h-auto max-h-[calc(80vh-8rem)] flex flex-col px-10 pt-3 pb-7 gap-5 overflow-y-auto"
+        >
+          <h1 className="text-xl">Group Forming</h1>
+          <Table>
+            <TableHeader>
+              <TableRow>
+                <TableHead className="w-[35px]">NO</TableHead>
+                <TableHead className="w-32">NIM</TableHead>
+                <TableHead className="w-96">NAME</TableHead>
+              </TableRow>
+            </TableHeader>
+            <TableBody>
+              {props.groupMembers.map((row: any, index: number) => (
+                <TableRow key={index}>
+                  <TableCell className="font-medium text-center">
+                    {index + 1}
+                  </TableCell>
+                  <TableCell className="w-32">{row?.student_id}</TableCell>
+                  <TableCell className="w-96 truncate">
+                    {row?.student_name}
+                  </TableCell>
+                </TableRow>
+              ))}
+            </TableBody>
+          </Table>
+          <div
+            className="bg-primary-binus w-full text-white text-center py-2 rounded-md text-xl cursor-pointer"
+            onClick={() => setCurrentStep(3)}
+          >
+            Next
+          </div>
+        </div>
+      )}
+      {currentStep === 3 && !loading && (
+        <div
+          onClick={(e) => e.stopPropagation()}
+          className="bg-gray-50 border-x border-b rounded-b-md min-w-96 w-full max-w-[80vw] h-auto max-h-[calc(80vh-8rem)] flex flex-col px-10 py-7 gap-5 overflow-y-auto"
         >
           <div className="flex flex-col gap-3">
             <div className="flex justify-start items-center gap-1">
@@ -520,8 +549,79 @@ function PopUpInsert(props: PopUpInsertProps) {
             Preview
           </button>
         </div>
-      ) : (
-        <div>
+      )}
+      {currentStep === 4 && !loading && (
+        <motion.div
+          onClick={(e) => e.stopPropagation()}
+          className="bg-gray-50 border-x border-b rounded-b-md min-w-96 w-full max-w-[80vw] h-auto max-h-[calc(80vh-8rem)] flex flex-col px-10 py-7 gap-5 overflow-y-auto"
+          initial="hidden"
+          animate="visible"
+          exit="hidden"
+        >
+          <motion.div
+            className="relative w-full pl-3 flex h-fit py-3 justify-start items-start transition-all ease-in-out duration-500"
+            variants={containerVariants}
+          >
+            <div className="w-full flex flex-col pr-5">
+              <div className="w-full flex justify-start items-start border-b pb-5">
+                <div className="mx-3 flex flex-col gap-1 w-2/3">
+                  <h1 className="text-3xl font-bold">{title}</h1>
+                  <h3 className="text-sm text-gray-500">
+                    By Kelson Edbert S, Timothy Darren, Nicholas Chandra
+                  </h3>
+                  <div className="h-fit flex-grow my-3 pr-10">
+                    <h1 className="text-balance text-gray-700">
+                      {description}
+                    </h1>
+                  </div>
+                  <Link
+                    href={githubLink}
+                    className="flex justify-start items-center gap-2 text-sm my-1 text-primary-binus"
+                  >
+                    <SiGithub fill="#EB9327" />
+                    {githubLink}
+                  </Link>
+                  <Link
+                    href={projectLink}
+                    className="flex justify-start items-center gap-2 text-sm my-1 text-primary-binus"
+                  >
+                    <BsGlobe2 fill="#EB9327" /> {projectLink}
+                  </Link>
+                </div>
+                <div className="w-1/3">
+                  <img
+                    src={thumbnail ? URL.createObjectURL(thumbnail) : undefined}
+                    className="w-full rounded-md border h-96 object-cover"
+                  />
+                </div>
+              </div>
+              <div className="w-full h-96 my-3 flex overflow-auto gap-3">
+                {gallery.map((file, index) => (
+                  <img
+                    key={index}
+                    src={URL.createObjectURL(file)}
+                    alt={`Gallery Image ${index + 1}`}
+                    className="w-full rounded-md border h-full object-cover"
+                  />
+                ))}
+              </div>
+              <h1 className="mt-10">
+                {documentation?.name} ~ {documentation?.size}
+              </h1>
+              <iframe src={pdfUrl} className="w-full h-96" />
+            </div>
+          </motion.div>
+          <button
+            onClick={handleFinalized}
+            type="submit"
+            className="w-full bg-purple-600 text-white py-2 rounded-md"
+          >
+            Submit
+          </button>
+        </motion.div>
+      )}
+      {loading && (
+        <div className="bg-gray-50 border-x border-b rounded-b-md min-w-96 w-full max-w-[80vw] h-auto max-h-[calc(80vh-8rem)] flex flex-col px-10 py-7 gap-5 overflow-y-auto justify-center items-center">
           <div className="w-36 h-36 border-8 text-primary-orange text-4xl animate-spin border-gray-300 flex items-center justify-center border-t-primary-orange rounded-full"></div>
         </div>
       )}

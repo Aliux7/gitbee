@@ -19,14 +19,14 @@ import { cn } from "@/lib/utils";
 import { createGroup } from "@/app/(pages)/(student)/course/actions";
 
 interface PopUpJoinGroupProps {
-  fetchData: any;
-  setShowJoinGroup: (value: boolean) => void;
+  fetchData: any; 
   toast: (options: {
     title: string;
     description: string;
     variant?: "default" | "destructive" | null;
   }) => void;
   userId?: string;
+  setCurrentStep: (value: number) => void;
 }
 
 const students = [
@@ -90,111 +90,100 @@ function PopUpJoinGroup(props: PopUpJoinGroupProps) {
     }
     props.fetchData();
     setLoading(false);
-    props.setShowJoinGroup(false);
+    props.setCurrentStep(2);
   };
 
   return (
     <div
-      className="fixed w-full h-full top-0 left-0 bg-black/50 flex justify-center items-center z-50"
-      onClick={() => props.setShowJoinGroup(false)}
+      onClick={(e) => e.stopPropagation()}
+      className="bg-gray-50 border-x border-b min-w-96 w-full max-w-[80vw] rounded-b-md h-auto max-h-[calc(80vh-8rem)] flex flex-col px-10 pt-3 pb-7 gap-5 overflow-y-auto"
     >
-      {!loading ? (
+      <div className="w-full flex justify-between items-center">
+        <div className="text-center py-3 rounded-md text-xl">
+          Group Class B012
+        </div>
         <div
-          onClick={(e) => e.stopPropagation()}
-          className="bg-gray-50 border rounded-md min-w-96 w-[60rem] max-w-[80vw] h-auto max-h-[85vh] flex flex-col px-10 py-7 gap-5 overflow-y-auto"
+          className="text-end text-primary-orange cursor-pointer"
+          onClick={addMember}
         >
-          <div className="w-full flex justify-between items-center">
-            <div className="text-center py-3 rounded-md text-xl">
-              Group Class B012
-            </div>
-            <div
-              className="text-end text-primary-orange cursor-pointer"
-              onClick={addMember}
-            >
-              + Add member
-            </div>
-          </div>
-          <div className="w-full h-fit flex flex-col gap-5">
-            {Array.from({ length: totalMember }).map((_, i) => (
-              <Popover
-                key={i}
-                open={openStates[i]}
-                onOpenChange={(isOpen) => togglePopover(i, isOpen)}
-              >
-                <PopoverTrigger asChild>
-                  <Button
-                    variant="outline"
-                    role="combobox"
-                    aria-expanded={openStates[i]}
-                    className="w-full justify-between"
-                    disabled={i === 0}
-                  >
-                    {selectedStudents[i]
-                      ? `${
-                          students.find(
-                            (student) => student.value === selectedStudents[i]
-                          )?.value
-                        } - ${
-                          students.find(
-                            (student) => student.value === selectedStudents[i]
-                          )?.label
-                        }`
-                      : "Select student..."}
-
-                    <ChevronsUpDown className="ml-2 h-4 w-4 shrink-0 opacity-50" />
-                  </Button>
-                </PopoverTrigger>
-                <PopoverContent className="min-w-96 w-[50rem] max-w-[80vw] p-0">
-                  <Command>
-                    <CommandInput placeholder="Search student..." />
-                    <CommandList>
-                      <CommandEmpty>No student found.</CommandEmpty>
-                      <CommandGroup>
-                        {students.map((student) => (
-                          <CommandItem
-                            key={student.value}
-                            value={student.value}
-                            onSelect={(currentValue: string) => {
-                              handleSelect(
-                                i,
-                                currentValue === selectedStudents[i]
-                                  ? ""
-                                  : currentValue
-                              );
-                              togglePopover(i, false);
-                            }}
-                            disabled={selectedStudents.includes(student.value)}
-                          >
-                            <Check
-                              className={cn(
-                                "mr-2 h-4 w-4",
-                                selectedStudents[i] === student.value
-                                  ? "opacity-100"
-                                  : "opacity-0"
-                              )}
-                            />
-                            {student.value} - {student.label}
-                          </CommandItem>
-                        ))}
-                      </CommandGroup>
-                    </CommandList>
-                  </Command>
-                </PopoverContent>
-              </Popover>
-            ))}
-          </div>
-          <div
-            className="bg-primary-binus w-full text-white text-center py-2 rounded-md text-xl cursor-pointer"
-            onClick={handleCreate}
+          + Add member
+        </div>
+      </div>
+      <div className="w-full h-fit flex flex-col gap-5">
+        {Array.from({ length: totalMember }).map((_, i) => (
+          <Popover
+            key={i}
+            open={openStates[i]}
+            onOpenChange={(isOpen) => togglePopover(i, isOpen)}
           >
-            Create Group
-          </div>
-        </div>
-      ) : (
-        <div>
-          <div className="w-36 h-36 border-8 text-primary-orange text-4xl animate-spin border-gray-300 flex items-center justify-center border-t-primary-orange rounded-full"></div>
-        </div>
-      )}
+            <PopoverTrigger asChild>
+              <Button
+                variant="outline"
+                role="combobox"
+                aria-expanded={openStates[i]}
+                className="w-full justify-between"
+                disabled={i === 0}
+              >
+                {selectedStudents[i]
+                  ? `${
+                      students.find(
+                        (student) => student.value === selectedStudents[i]
+                      )?.value
+                    } - ${
+                      students.find(
+                        (student) => student.value === selectedStudents[i]
+                      )?.label
+                    }`
+                  : "Select student..."}
+
+                <ChevronsUpDown className="ml-2 h-4 w-4 shrink-0 opacity-50" />
+              </Button>
+            </PopoverTrigger>
+            <PopoverContent className="min-w-96 w-[50rem] max-w-[80vw] p-0">
+              <Command>
+                <CommandInput placeholder="Search student..." />
+                <CommandList>
+                  <CommandEmpty>No student found.</CommandEmpty>
+                  <CommandGroup>
+                    {students.map((student) => (
+                      <CommandItem
+                        key={student.value}
+                        value={student.value}
+                        onSelect={(currentValue: string) => {
+                          handleSelect(
+                            i,
+                            currentValue === selectedStudents[i]
+                              ? ""
+                              : currentValue
+                          );
+                          togglePopover(i, false);
+                        }}
+                        disabled={selectedStudents.includes(student.value)}
+                      >
+                        <Check
+                          className={cn(
+                            "mr-2 h-4 w-4",
+                            selectedStudents[i] === student.value
+                              ? "opacity-100"
+                              : "opacity-0"
+                          )}
+                        />
+                        {student.value} - {student.label}
+                      </CommandItem>
+                    ))}
+                  </CommandGroup>
+                </CommandList>
+              </Command>
+            </PopoverContent>
+          </Popover>
+        ))}
+      </div>
+      <div
+        className="bg-primary-binus w-full text-white text-center py-2 rounded-md text-xl cursor-pointer"
+        onClick={handleCreate}
+      >
+        Create Group
+      </div>
     </div>
   );
 }

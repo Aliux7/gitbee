@@ -221,12 +221,7 @@ const page = () => {
                   <TableCell className="font-medium text-center">-</TableCell>
                   <TableCell className="font-medium text-center">
                     <button
-                      disabled={groupDetail?.length < 1}
-                      className={`${
-                        groupDetail?.length >= 1
-                          ? "bg-primary-binus hover:bg-primary-orange"
-                          : "bg-gray-500 cursor-not-allowed"
-                      } text-white px-2 py-1 rounded-md `}
+                      className={`bg-primary-binus hover:bg-primary-orange text-white px-2 py-1 rounded-md `}
                       onClick={() => setShowInsertForm(true)}
                     >
                       Upload
@@ -237,17 +232,17 @@ const page = () => {
             </TableBody>
           </Table>
         </div>
-        <div className="w-[31rem] max-h-[21rem] h-fit overflow-y-auto shadow-xl border rounded-xl p-5">
-          <h1 className="text-xl">Group Forming</h1>
-          <Table>
-            <TableHeader>
-              <TableRow>
-                <TableHead className="w-[35px]">NO</TableHead>
-                <TableHead className="w-32">NIM</TableHead>
-                <TableHead className="w-96">NAME</TableHead>
-              </TableRow>
-            </TableHeader>
-            {groupDetail?.length >= 1 ? (
+        {groupDetail?.length >= 1 && (
+          <div className="w-[31rem] max-h-[21rem] h-fit overflow-y-auto shadow-xl border rounded-xl p-5">
+            <h1 className="text-xl">Group Forming</h1>
+            <Table>
+              <TableHeader>
+                <TableRow>
+                  <TableHead className="w-[35px]">NO</TableHead>
+                  <TableHead className="w-32">NIM</TableHead>
+                  <TableHead className="w-96">NAME</TableHead>
+                </TableRow>
+              </TableHeader>
               <TableBody>
                 {groupDetail.map((row: any, index: number) => (
                   <TableRow key={index}>
@@ -261,21 +256,9 @@ const page = () => {
                   </TableRow>
                 ))}
               </TableBody>
-            ) : (
-              <TableCaption className="">
-                <br />
-                <button
-                  className="px-3 py-1 rounded-xl bg-primary-orange text-white"
-                  onClick={() => setShowJoinGroup(true)}
-                >
-                  Create a group +
-                </button>
-                <br />
-                <br />
-              </TableCaption>
-            )}
-          </Table>
-        </div>
+            </Table>
+          </div>
+        )}
       </div>
       <Toaster />
       {showInsertForm && (
@@ -285,16 +268,9 @@ const page = () => {
           fetchData={fetchData}
           setShowInsertForm={setShowInsertForm}
           toast={toast}
-        />
-      )}
-      {showJoinGroup && (
-        <PopUpJoinGroup
-          fetchData={fetchData}
-          setShowJoinGroup={setShowJoinGroup}
-          toast={toast}
           userId={userData?.nim}
         />
-      )}
+      )} 
       {loading && <Loading />}
     </motion.div>
   );
