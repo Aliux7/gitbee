@@ -50,8 +50,8 @@ function PopUpInsert(props: PopUpInsertProps) {
     "Insert Project",
     "Preview Project",
   ];
-  const [currentStep, setCurrentStep] = useState(1); 
-  const { userData } = useAuth(); 
+  const [currentStep, setCurrentStep] = useState(1);
+  const { userData } = useAuth();
   const [loading, setLoading] = useState(false);
   const [lecturerId, setLecturerId] = useState("KS23-1");
   const [title, setTitle] = useState("");
@@ -238,6 +238,7 @@ function PopUpInsert(props: PopUpInsertProps) {
       </div>
       {currentStep === 1 && !loading && (
         <PopUpJoinGroup
+          setLoading={setLoading}
           fetchData={props.fetchData}
           toast={props.toast}
           userId={userData?.nim}

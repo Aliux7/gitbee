@@ -19,7 +19,7 @@ import { cn } from "@/lib/utils";
 import { createGroup } from "@/app/(pages)/(student)/course/actions";
 
 interface PopUpJoinGroupProps {
-  fetchData: any; 
+  fetchData: any;
   toast: (options: {
     title: string;
     description: string;
@@ -27,6 +27,7 @@ interface PopUpJoinGroupProps {
   }) => void;
   userId?: string;
   setCurrentStep: (value: number) => void;
+  setLoading: (value: boolean) => void;
 }
 
 const students = [
@@ -43,12 +44,12 @@ const students = [
 ];
 
 function PopUpJoinGroup(props: PopUpJoinGroupProps) {
-  const [totalMember, setTotalMember] = useState(2);
-  const [loading, setLoading] = useState(false);
+  const [totalMember, setTotalMember] = useState(2); 
   const [openStates, setOpenStates] = useState<boolean[]>([false]);
   const [selectedStudents, setSelectedStudents] = useState<string[]>([
     props.userId || "",
   ]);
+  const [isAgreementChecked, setIsAgreementChecked] = useState(false);
 
   const handleSelect = (index: number, value: string) => {
     const newSelection = [...selectedStudents];
@@ -68,9 +69,20 @@ function PopUpJoinGroup(props: PopUpJoinGroupProps) {
     setSelectedStudents([...selectedStudents, ""]);
   };
 
+  const handleCheckboxChange = (event: React.ChangeEvent<HTMLInputElement>) => {
+    setIsAgreementChecked(event.target.checked);
+  };
+
   const handleCreate = async () => {
-    setLoading(true);
-    console.log(selectedStudents);
+    if (!isAgreementChecked) {
+      props.toast({
+        title: "Agreement Required",
+        description: "You must agree to the terms before creating the group.",
+      });
+      return;
+    }
+
+    props.setLoading(true); 
     const result = await createGroup({
       semester_id: "be992b30-4b38-4361-8404-25f2d6912754",
       course_id: "COMP6100001",
@@ -89,7 +101,7 @@ function PopUpJoinGroup(props: PopUpJoinGroupProps) {
       });
     }
     props.fetchData();
-    setLoading(false);
+    props.setLoading(false);
     props.setCurrentStep(2);
   };
 
@@ -177,6 +189,20 @@ function PopUpJoinGroup(props: PopUpJoinGroupProps) {
             </PopoverContent>
           </Popover>
         ))}
+      </div>
+      <div className="px-1 cursor-pointer flex justify-start items-center gap-2">
+        <input
+          type="checkbox"
+          name="agreement"
+          id="agreement"
+          value="Agree"
+          checked={isAgreementChecked}
+          onChange={handleCheckboxChange}
+        />
+        <label htmlFor="agreement" className="cursor-pointer">
+          I acknowledge that I am responsible for moderating the group and
+          ensuring discussions remain respectful and lawful.
+        </label>
       </div>
       <div
         className="bg-primary-binus w-full text-white text-center py-2 rounded-md text-xl cursor-pointer"

@@ -16,7 +16,11 @@ import {
   TableRow,
 } from "@/components/ui/table";
 import { SiGithub } from "react-icons/si";
-import { getAllSemester, getCurrentSemester } from "./action";
+import {
+  getAllSemester,
+  getCurrentSemester,
+  getHistoryByLecturer,
+} from "./action";
 
 const page = () => {
   const { scrollYProgress } = useScroll();
@@ -25,6 +29,9 @@ const page = () => {
   const [previewGroup, setPreviewGroup] = useState(false);
   const [listSemester, setListSemester] = useState<any>([]);
   const [currentSemester, setCurrentSemester] = useState<any>();
+  const [historyOutstandingProject, setHistoryOutstandingProject] =
+    useState<any>();
+  const [selectedPreviewProject, setSelectedPreviewProject] = useState<any>();
 
   const containerVariants = {
     hidden: { opacity: 0 },
@@ -52,6 +59,10 @@ const page = () => {
 
     const resultCurrentSemester = await getCurrentSemester();
     setCurrentSemester(resultCurrentSemester);
+
+    const resultHistoryOutstandingData = await getHistoryByLecturer("KS23-1");
+    setHistoryOutstandingProject(resultHistoryOutstandingData?.data);
+    console.log(resultHistoryOutstandingData?.data);
   };
 
   useEffect(() => {
@@ -96,162 +107,164 @@ const page = () => {
             <TableRow>
               <TableHead className="text-start">Class ID</TableHead>
               <TableHead className="text-center">Course ID</TableHead>
-              <TableHead className="text-center">Course Name</TableHead>
               <TableHead className="text-center">Group ID</TableHead>
               <TableHead className="text-center">Project Title</TableHead>
               <TableHead className="text-center">Rating</TableHead>
+              <TableHead className="text-center">Reason</TableHead>
               <TableHead className="text-center">Finalized Date</TableHead>
               <TableHead className="text-center">Action</TableHead>
             </TableRow>
           </TableHeader>
           <TableBody>
-            <TableRow>
-              <TableCell className="text-start font-medium">BG01</TableCell>
-              <TableCell className="text-center">COMP6100001</TableCell>
-              <TableCell className="text-center">
-                Software Engineering
-              </TableCell>
-              <TableCell className="text-center">1</TableCell>
-              <TableCell className="text-center">
-                The Spotify The Spotify
-              </TableCell>
-              <TableCell className="text-center">5</TableCell>
-              <TableCell className="text-center">20 Sept 2024</TableCell>
-              <TableCell className="text-center">
-                <div
-                  onClick={() => setPreviewGroup(true)}
-                  className="bg-primary-binus py-0.5 text-white rounded-md"
-                >
-                  Preview
-                </div>
-              </TableCell>
-            </TableRow>
-            <TableRow>
-              <TableCell className="text-start font-medium">BK01</TableCell>
-              <TableCell className="text-center">COMP6100001</TableCell>
-              <TableCell className="text-center">
-                Software Engineering
-              </TableCell>
-              <TableCell className="text-center">1</TableCell>
-              <TableCell className="text-center">
-                The Spotify The Spotify
-              </TableCell>
-              <TableCell className="text-center">5</TableCell>
-              <TableCell className="text-center">20 Sept 2024</TableCell>
-              <TableCell className="text-center">
-                <div
-                  onClick={() => setPreviewGroup(true)}
-                  className="bg-primary-binus py-0.5 text-white rounded-md"
-                >
-                  Preview
-                </div>
-              </TableCell>
-            </TableRow>
-            <TableRow>
-              <TableCell className="text-start font-medium">BB01</TableCell>
-              <TableCell className="text-center">COMP6100001</TableCell>
-              <TableCell className="text-center">
-                Software Engineering
-              </TableCell>
-              <TableCell className="text-center">1</TableCell>
-              <TableCell className="text-center">
-                The Spotify The Spotify
-              </TableCell>
-              <TableCell className="text-center">5</TableCell>
-              <TableCell className="text-center">20 Sept 2024</TableCell>
-              <TableCell className="text-center">
-                <div
-                  onClick={() => setPreviewGroup(true)}
-                  className="bg-primary-binus py-0.5 text-white rounded-md"
-                >
-                  Preview
-                </div>
-              </TableCell>
-            </TableRow>
+            {historyOutstandingProject?.map((project: any, index: number) => (
+              <TableRow>
+                <TableCell className="text-start font-medium">
+                  {project?.projectDetail?.class}
+                </TableCell>
+                <TableCell className="text-center">
+                  {project?.projectDetail?.course_id}
+                </TableCell>
+                <TableCell className="text-center">
+                  {project?.assessment?.id}
+                </TableCell>
+                <TableCell className="text-center">
+                  {project?.projectDetail?.title}
+                </TableCell>
+                <TableCell className="text-center">
+                  {project?.assessment?.grade}
+                </TableCell>
+                <TableCell className="text-center">
+                  {project?.assessment?.reason}
+                </TableCell>
+                <TableCell className="text-center">
+                  {project?.assessment?.created_at
+                    ? new Date(project?.assessment?.created_at).toLocaleString(
+                        "en-US",
+                        {
+                          year: "numeric",
+                          month: "long",
+                          day: "2-digit",
+                          hour: "2-digit",
+                          minute: "2-digit",
+                          hour12: false,
+                        }
+                      )
+                    : "N/A"}
+                </TableCell>
+                <TableCell className="text-center">
+                  <div
+                    onClick={() => {
+                      setPreviewGroup(true), setSelectedPreviewProject(project);
+                    }}
+                    className="bg-primary-binus py-0.5 text-white rounded-md cursor-pointer"
+                  >
+                    Preview
+                  </div>
+                </TableCell>
+              </TableRow>
+            ))}
           </TableBody>
         </Table>
       </div>
 
-      {previewGroup && (
-        <div
-          className="fixed w-full h-full top-0 left-0 bg-black/50 flex justify-center items-center z-50"
-          onClick={() => setPreviewGroup(false)}
-        >
-          <motion.div
-            onClick={(e) => e.stopPropagation()}
-            className="bg-gray-50 border rounded-md min-w-96 w-[60rem] max-w-[80vw] h-auto max-h-[85vh] flex flex-col px-10 py-7 gap-5 overflow-y-auto"
-            initial="hidden"
-            animate="visible"
-            exit="hidden"
+      {previewGroup &&
+        selectedPreviewProject != undefined &&
+        selectedPreviewProject != null && (
+          <div
+            className="fixed w-full h-full top-0 left-0 bg-black/50 flex justify-center items-center z-50"
+            onClick={() => {
+              setPreviewGroup(false), setSelectedPreviewProject(null);
+            }}
           >
             <motion.div
-              className="relative w-full pl-3 flex h-fit py-3 justify-start items-start transition-all ease-in-out duration-500"
-              variants={containerVariants}
+              onClick={(e) => e.stopPropagation()}
+              className="bg-gray-50 border rounded-md min-w-96 w-[60rem] max-w-[80vw] h-auto max-h-[85vh] flex flex-col px-10 py-7 gap-5 overflow-y-auto"
+              initial="hidden"
+              animate="visible"
+              exit="hidden"
             >
-              <div className="w-full flex flex-col pr-5">
-                <div className="w-full flex justify-start items-start border-b pb-5">
-                  <div className="mx-3 flex flex-col gap-1 w-2/3">
-                    <h1 className="text-3xl font-bold">The Spotify</h1>
-                    <h3 className="text-sm text-gray-500">
-                      By Kelson Edbert S, Timothy Darren, Nicholas Chandra
-                    </h3>
-                    <div className="h-fit flex-grow my-3 pr-10">
-                      <h1 className="text-balance text-gray-700">
-                        Lorem ipsum dolor sit amet consectetur, adipisicing
-                        elit. At molestias possimus ipsum? Fuga architecto,
-                        ipsum nulla explicabo quas corrupti quia labore eum
-                        dolor ipsam obcaecati facere odio aliquam aspernatur
-                        perferendis. Lorem ipsum, dolor sit amet consectetur
-                        adipisicing elit. Veniam corrupti quod eos nulla vero
-                        debitis corporis ullam, earum laudantium praesentium
-                        asperiores ipsum ab voluptatem molestias atque mollitia
-                        quidem sint in!
+              <motion.div
+                className="relative w-full pl-3 flex h-fit py-3 justify-start items-start transition-all ease-in-out duration-500"
+                variants={containerVariants}
+              >
+                <div className="w-full flex flex-col pr-5">
+                  <div className="w-full flex justify-start items-start border-b pb-5">
+                    <div className="mx-3 flex flex-col gap-1 w-2/3">
+                      <h1 className="text-3xl font-bold">
+                        {selectedPreviewProject?.projectDetail?.title}
                       </h1>
+                      <h3 className="text-sm text-gray-500">
+                        By.{" "}
+                        {selectedPreviewProject?.projectGroups?.map(
+                          (student: any) => (
+                            <span className="text-sm text-gray-500 capitalize">
+                              {student?.student_name.toLowerCase()},{" "}
+                            </span>
+                          )
+                        )}
+                      </h3>
+                      <div className="h-fit flex-grow my-3 pr-10">
+                        <h1 className="text-balance text-gray-700">
+                          {selectedPreviewProject?.projectDetail?.description}
+                        </h1>
+                      </div>
+                      <Link
+                        href={
+                          selectedPreviewProject?.projectDetail?.github_link
+                        }
+                        className="flex justify-start items-center gap-2 text-sm my-1 text-primary-binus"
+                      >
+                        <SiGithub fill="#EB9327" />
+                        {selectedPreviewProject?.projectDetail?.github_link}
+                      </Link>
+                      <Link
+                        href={
+                          selectedPreviewProject?.projectDetail?.project_link
+                        }
+                        className="flex justify-start items-center gap-2 text-sm my-1 text-primary-binus"
+                      >
+                        <BsGlobe2 fill="#EB9327" />{" "}
+                        {selectedPreviewProject?.projectDetail?.project_link}
+                      </Link>
                     </div>
-                    <Link
-                      href="https://github.com/Aliux7/gitbee"
-                      className="flex justify-start items-center gap-2 text-sm my-1 text-primary-binus"
-                    >
-                      <SiGithub fill="#EB9327" />
-                      https://github.com/Aliux7/gitbee
-                    </Link>
-                    <Link
-                      href="https://binusmaya.binus.ac.id/"
-                      className="flex justify-start items-center gap-2 text-sm my-1 text-primary-binus"
-                    >
-                      <BsGlobe2 fill="#EB9327" /> https://binusmaya.binus.ac.id/
-                    </Link>
+                    <div className="w-1/3">
+                      <img
+                        src={selectedPreviewProject?.projectDetail?.thumbnail}
+                        className="w-full rounded-md border"
+                      />
+                    </div>
                   </div>
-                  <div className="w-1/3">
-                    <img
-                      src="/images/3.jpg"
-                      className="w-full rounded-md border"
-                    />
+                  <div className="w-full h-96 my-3 flex overflow-auto gap-3">
+                    {selectedPreviewProject?.galleries?.map((gallery: any) => (
+                      <img
+                        src={gallery?.image}
+                        className="h-full rounded-md border"
+                      />
+                    ))}
                   </div>
-                </div>
-                <div className="w-full h-96 my-3 flex overflow-auto gap-3">
-                  <img
-                    src="/images/1.jpg"
-                    className="h-full rounded-md border"
-                  />
-                  <img
-                    src="/images/2.jpg"
-                    className="h-full rounded-md border"
-                  />
-                  <img
-                    src="/images/3.jpg"
-                    className="h-full rounded-md border"
-                  />
-                  <img
-                    src="/images/4.jpg"
-                    className="h-full rounded-md border"
+                  <Link
+                    href={
+                      selectedPreviewProject?.projectDetail?.documentation
+                        ? selectedPreviewProject?.projectDetail?.documentation
+                        : ""
+                    }
+                    className="mt-10 w-96 truncate"
+                  >
+                    Download PDF File
+                  </Link>
+                  <iframe
+                    src={
+                      selectedPreviewProject?.projectDetail?.documentation
+                        ? selectedPreviewProject?.projectDetail?.documentation
+                        : ""
+                    }
+                    className="w-full h-96"
                   />
                 </div>
-              </div>
+              </motion.div>
             </motion.div>
-          </motion.div>
-        </div>
-      )}
+          </div>
+        )}
     </motion.div>
   );
 };

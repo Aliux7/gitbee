@@ -4,6 +4,7 @@ interface ConfirmationFinalzedProps {
   setShowConfirmationFinalized: (value: boolean) => void;
   ratings: any;
   groupsClassData: any;
+  handleFinalize: any;
 }
 
 const ConfirmationFinalized = (props: ConfirmationFinalzedProps) => {
@@ -18,22 +19,25 @@ const ConfirmationFinalized = (props: ConfirmationFinalzedProps) => {
       >
         <h1 className="text-5xl">Are you sure you want to finalized?</h1>
         <ul>
-          {props.groupsClassData?.updatedProjects.map((groupDetail: any, index: number) => (
-            <li className="border-b-2 w-full">
-              <div className="flex justify-between items-center">
-                <h3 className="text-lg">
-                  Group {groupDetail?.projectDetail?.group} - {groupDetail?.projectDetail?.title}
-                </h3>
-                <h3 className="text-lg">
-                  Rating{" "}
-                  <span className="text-primary-orange">
-                    {props.ratings[index]}
-                  </span>{" "}
-                  of 5
-                </h3>
-              </div>
-            </li>
-          ))}
+          {props.groupsClassData?.updatedProjects.map(
+            (groupDetail: any, index: number) => (
+              <li className="border-b-2 w-full">
+                <div className="flex justify-between items-center">
+                  <h3 className="text-lg">
+                    Group {groupDetail?.projectDetail?.group} -{" "}
+                    {groupDetail?.projectDetail?.title}
+                  </h3>
+                  <h3 className="text-lg">
+                    Rating{" "}
+                    <span className="text-primary-orange">
+                      {props.ratings[index]}
+                    </span>{" "}
+                    of 5
+                  </h3>
+                </div>
+              </li>
+            )
+          )}
         </ul>
         <div className="text-xl">
           {props.ratings.some((rating: any) => rating > 3) ? (
@@ -54,6 +58,7 @@ const ConfirmationFinalized = (props: ConfirmationFinalzedProps) => {
         </div>
         <button
           type="submit"
+          onClick={props.handleFinalize}
           className="bg-purple-600 text-white px-2 py-2 rounded-md"
         >
           Finalized

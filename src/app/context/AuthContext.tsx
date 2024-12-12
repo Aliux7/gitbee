@@ -52,7 +52,8 @@ export const AuthProvider = ({ children }: AuthProviderProps) => {
     const decoded = jwt.decode(token) as JwtPayload;
     console.log(decoded)
     setUserData({
-      nim: "2501959296",
+      // nim: decoded.nim,
+      nim: decoded.nim,
       name: decoded.name,
       email: decoded.email,
       role: decoded.role,
