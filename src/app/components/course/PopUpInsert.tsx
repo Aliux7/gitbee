@@ -107,16 +107,27 @@ function PopUpInsert(props: PopUpInsertProps) {
   const validateForm = () => {
     const errors: Record<string, string> = {};
     if (!title) errors.title = "Project name is required";
+    else if (title.length < 5)
+      errors.title = "Project name length must be at least 5 characters";
+
     if (!description) errors.description = "Project description is required";
+    else if (description.length < 100)
+      errors.description =
+        "Project description length must be at least 100 characters";
+
     if (!githubLink) errors.githubLink = "GitHub link is required";
-    if (!isValidUrl(githubLink))
+    else if (!isValidUrl(githubLink))
       errors.githubLink = "GitHub link is format is incorrect";
+
     if (!projectLink) errors.projectLink = "Project link is required";
-    if (!isValidUrl(projectLink))
+    else if (!isValidUrl(projectLink))
       errors.projectLink = "Project link is format is incorrect";
+
     if (!thumbnail) errors.thumbnail = "Project cover is required";
+
     if (!isFileUnderMaxSize(thumbnail))
       errors.thumbnail = "Thumbnail exceeds the maximum size of 500KB.";
+
     if (gallery.length === 0)
       errors.gallery = "At least one gallery image is required";
 
@@ -127,9 +138,10 @@ function PopUpInsert(props: PopUpInsertProps) {
       errors.gallery =
         "One or more gallery files exceed the maximum size of 500KB.";
     }
+
     if (!documentation)
       errors.documentation = "Project documentation is required";
-    if (!isFileUnderMaxSize(documentation))
+    else if (!isFileUnderMaxSize(documentation))
       errors.documentation = "Documentation exceeds the maximum size of 500KB.";
 
     setFormErrors(errors);

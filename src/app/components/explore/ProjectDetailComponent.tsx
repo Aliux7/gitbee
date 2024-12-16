@@ -5,6 +5,7 @@ import { motion } from "framer-motion";
 import { IoIosArrowRoundBack } from "react-icons/io";
 import { SiGithub } from "react-icons/si";
 import { getProjectById } from "@/app/(pages)/explore/actions";
+import { useAuth } from "@/app/context/AuthContext";
 
 interface ProjectDetailProps {
   selectedProjectId: string;
@@ -15,6 +16,7 @@ interface ProjectDetailProps {
 }
 
 function ProjectDetailComponent(props: ProjectDetailProps) {
+  const { userData } = useAuth();
   const [detailProject, setDetailProject] = useState<any>();
   const containerVariants = {
     hidden: { opacity: 0 },
@@ -44,7 +46,6 @@ function ProjectDetailComponent(props: ProjectDetailProps) {
         } w-[30rem] h-full py-2 opacity-100 flex flex-col gap-5 transition-all ease-in-out duration-500 overflow-hidden`}
         variants={containerVariants}
       >
-        {/* <h1 className="text-center py-10 text-gray-500">No Project Selected</h1> */}
         {detailProject?.projectGroups.map((student: any) => (
           <Link
             href={"/portofolio/123"}
@@ -55,8 +56,8 @@ function ProjectDetailComponent(props: ProjectDetailProps) {
               className="rounded-full h-20 w-20 p-1 border object-cover"
             />
             <div className="w-48">
-              <h1 className="truncate font-semibold">
-                {student?.student_name}
+              <h1 className="truncate font-semibold capitalize">
+                {student?.student_name.toLowerCase()}
               </h1>
               <h1 className="truncate text-sm text-gray-500">
                 {student?.student_id}
@@ -67,20 +68,6 @@ function ProjectDetailComponent(props: ProjectDetailProps) {
             </div>
           </Link>
         ))}
-        <Link
-          href={"/portofolio/123"}
-          className="flex justify-start items-center gap-5 border-b pb-5 mr-4 cursor-pointer"
-        >
-          <img
-            src="/images/3.jpg"
-            className="rounded-full h-20 w-20 p-1 border object-cover"
-          />
-          <div className="w-48">
-            <h1 className="truncate font-semibold">Timothy Darren</h1>
-            <h1 className="truncate text-sm text-gray-500">2540115465</h1>
-            <h1 className="truncate text-sm text-gray-500">Computer Science</h1>
-          </div>
-        </Link>
       </motion.div>
       <motion.div
         className="relative w-full border-l pl-3 flex h-fit py-3 justify-start items-start transition-all ease-in-out duration-500"
@@ -108,17 +95,19 @@ function ProjectDetailComponent(props: ProjectDetailProps) {
                   {detailProject?.projectDetail?.description}
                 </h1>
               </div>
-              <Link
-                href={
-                  detailProject?.projectDetail?.github_link
-                    ? detailProject?.projectDetail?.github_link
-                    : ""
-                }
-                className="flex justify-start items-center gap-2 text-sm my-1 text-primary-binus"
-              >
-                <SiGithub fill="#EB9327" />
-                {detailProject?.projectDetail?.github_link}
-              </Link>
+              {userData && userData?.role != "Student" && (
+                <Link
+                  href={
+                    detailProject?.projectDetail?.github_link
+                      ? detailProject?.projectDetail?.github_link
+                      : ""
+                  }
+                  className="flex justify-start items-center gap-2 text-sm my-1 text-primary-binus"
+                >
+                  <SiGithub fill="#EB9327" />
+                  {detailProject?.projectDetail?.github_link}
+                </Link>
+              )}
               <Link
                 href={
                   detailProject?.projectDetail?.project_link
@@ -132,10 +121,6 @@ function ProjectDetailComponent(props: ProjectDetailProps) {
               </Link>
             </div>
             <div className="w-1/3">
-              {/* <img
-                    src="/images/image-1.webp"
-                    className="w-full rounded-md"
-                    /> */}
               <img
                 src={
                   detailProject?.projectDetail?.thumbnail
@@ -155,24 +140,28 @@ function ProjectDetailComponent(props: ProjectDetailProps) {
             ))}
           </div>
 
-          <Link
-            href={
-              detailProject?.projectDetail?.documentation
-                ? detailProject?.projectDetail?.documentation
-                : ""
-            }
-            className="mt-10 w-96 truncate"
-          >
-            Download PDF File
-          </Link>
-          <iframe
-            src={
-              detailProject?.projectDetail?.documentation
-                ? detailProject?.projectDetail?.documentation
-                : ""
-            }
-            className="w-full h-96"
-          />
+          {userData && userData?.role != "Student" && (
+            <Link
+              href={
+                detailProject?.projectDetail?.documentation
+                  ? detailProject?.projectDetail?.documentation
+                  : ""
+              }
+              className="mt-10 w-96 truncate"
+            >
+              Download PDF File
+            </Link>
+          )}
+          {userData && userData?.role != "Student" && (
+            <iframe
+              src={
+                detailProject?.projectDetail?.documentation
+                  ? detailProject?.projectDetail?.documentation
+                  : ""
+              }
+              className="w-full h-96"
+            />
+          )}
         </div>
       </motion.div>
     </motion.div>

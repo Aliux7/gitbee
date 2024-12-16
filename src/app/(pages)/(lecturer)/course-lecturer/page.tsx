@@ -93,7 +93,7 @@ const page = () => {
       Array(resultAllGroupsData?.data?.updatedProjects?.length).fill(1)
     );
     setReasons(
-      Array(resultAllGroupsData?.data?.updatedProjects?.length).fill("Test")
+      Array(resultAllGroupsData?.data?.updatedProjects?.length).fill("")
     );
     console.log(resultAllGroupsData?.data);
 
@@ -101,7 +101,7 @@ const page = () => {
       id: resultAllGroupsData?.data?.updatedProjects[0]?.projectDetail
         ?.status_id,
       created_at:
-        resultAllGroupsData?.data?.updatedProjects[0]?.assessment.created_at,
+        resultAllGroupsData?.data?.updatedProjects[0]?.assessment?.created_at,
     });
 
     setLoading(false);
@@ -190,11 +190,6 @@ const page = () => {
       >
         <div className="w-full border-b flex justify-between items-center pb-3">
           <div className={`px-1 ${expand ? "w-1/2" : "w-[calc(50%-5rem)]"}`}>
-            {/* <h1 className="font-montserrat text-xl text-primary-binus font-semibold">
-              <span className="text-primary-orange text-xl">COMP6100001</span> -
-              Software Engineering
-            </h1> */}
-
             <Breadcrumb>
               <BreadcrumbList>
                 <BreadcrumbItem>
@@ -394,10 +389,10 @@ const page = () => {
                         <Rating
                           value={groupDetail?.assessment?.grade}
                           ratedIcon={
-                            <LiaStarSolid className="fill-yellow-500 w-6 h-6" />
+                            <LiaStarSolid className="fill-purple-500 w-6 h-6" />
                           }
                           unratedIcon={
-                            <RiStarSLine className="fill-yellow-500 w-6 h-6" />
+                            <RiStarSLine className="fill-purple-500 w-6 h-6" />
                           }
                           ratedColor="yellow"
                           unratedColor="gray"

@@ -144,6 +144,33 @@ const page = () => {
         </Breadcrumb>
       </div>
       <div className="h-fit w-full pt-48 pb-10 flex flex-col gap-5">
+        {groupDetail?.length >= 1 && (
+          <div className="w-[31rem] max-h-[21rem] h-fit overflow-y-auto shadow-xl border rounded-xl p-5">
+            <h1 className="text-xl">Group Forming</h1>
+            <Table>
+              <TableHeader>
+                <TableRow>
+                  <TableHead className="w-[35px]">NO</TableHead>
+                  <TableHead className="w-32">NIM</TableHead>
+                  <TableHead className="w-96">NAME</TableHead>
+                </TableRow>
+              </TableHeader>
+              <TableBody>
+                {groupDetail.map((row: any, index: number) => (
+                  <TableRow key={index}>
+                    <TableCell className="font-medium text-center">
+                      {index + 1}
+                    </TableCell>
+                    <TableCell className="w-32">{row?.student_id}</TableCell>
+                    <TableCell className="w-96 truncate">
+                      {row?.student_name}
+                    </TableCell>
+                  </TableRow>
+                ))}
+              </TableBody>
+            </Table>
+          </div>
+        )}
         <div className="flex-grow max-h-[21rem] h-fit overflow-y-auto shadow-xl border rounded-xl p-5">
           <h1 className="text-xl">Submitted Answer</h1>
           <Table>
@@ -232,33 +259,6 @@ const page = () => {
             </TableBody>
           </Table>
         </div>
-        {groupDetail?.length >= 1 && (
-          <div className="w-[31rem] max-h-[21rem] h-fit overflow-y-auto shadow-xl border rounded-xl p-5">
-            <h1 className="text-xl">Group Forming</h1>
-            <Table>
-              <TableHeader>
-                <TableRow>
-                  <TableHead className="w-[35px]">NO</TableHead>
-                  <TableHead className="w-32">NIM</TableHead>
-                  <TableHead className="w-96">NAME</TableHead>
-                </TableRow>
-              </TableHeader>
-              <TableBody>
-                {groupDetail.map((row: any, index: number) => (
-                  <TableRow key={index}>
-                    <TableCell className="font-medium text-center">
-                      {index + 1}
-                    </TableCell>
-                    <TableCell className="w-32">{row?.student_id}</TableCell>
-                    <TableCell className="w-96 truncate">
-                      {row?.student_name}
-                    </TableCell>
-                  </TableRow>
-                ))}
-              </TableBody>
-            </Table>
-          </div>
-        )}
       </div>
       <Toaster />
       {showInsertForm && (
@@ -270,7 +270,7 @@ const page = () => {
           toast={toast}
           userId={userData?.nim}
         />
-      )} 
+      )}
       {loading && <Loading />}
     </motion.div>
   );

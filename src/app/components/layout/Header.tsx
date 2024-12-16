@@ -190,13 +190,7 @@ const Header = () => {
                             <FaUser className="group-hover:fill-primary-orange" />
                             Profile
                           </li>
-                        </Link>
-                        <Link href="/support" className="w-full">
-                          <li className="hover:bg-white/90 rounded-md w-full cursor-pointer py-2 flex justify-between items-center px-3 hover:text-primary-orange group ">
-                            <MdSupportAgent className="group-hover:fill-primary-orange" />
-                            Support
-                          </li>
-                        </Link>
+                        </Link> 
                         <li
                           className="hover:bg-white/90 rounded-md w-full cursor-pointer py-2 flex justify-between items-center px-3 hover:text-primary-orange group "
                           onClick={() => logoutMircosoft()}
