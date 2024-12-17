@@ -29,6 +29,23 @@ import {
   TableRow,
 } from "@/components/ui/table";
 import { off } from "process";
+import { DropdownMenu } from "@/components/ui/dropdown-menu";
+import {
+  Popover,
+  PopoverContent,
+  PopoverTrigger,
+} from "@/components/ui/popover";
+import { Button } from "@/components/ui/button";
+import { Check, ChevronsUpDown } from "lucide-react";
+import {
+  Command,
+  CommandEmpty,
+  CommandGroup,
+  CommandInput,
+  CommandItem,
+  CommandList,
+} from "@/components/ui/command";
+import { cn } from "@/lib/utils";
 
 interface PopUpInsertProps {
   fetchData: any;
@@ -40,6 +57,8 @@ interface PopUpInsertProps {
     description: string;
     variant?: "default" | "destructive" | null;
   }) => void;
+  categories: any;
+  technologies: any;
   userId?: string;
 }
 
@@ -70,7 +89,12 @@ function PopUpInsert(props: PopUpInsertProps) {
   const [pdfUrl, setPdfUrl] = useState<string | undefined>(undefined);
   const [gallery, setGallery] = useState<File[]>([]);
   const [statusId, setStatusId] = useState(0);
-  const [categoryId, setCategoryId] = useState(0);
+  const [categoryId, setCategoryId] = useState("");
+  const [selectedTechnologies, setSelectedTechnologies] = useState<string[]>(
+    []
+  );
+  const [dropdownsTechno, setDropdownsTechno] = useState<number[]>([0]);
+  const [openStatesTechno, setOpenStatesTechno] = useState<boolean[]>([false]);
   const [majorId, setMajorId] = useState(0);
   const [formErrors, setFormErrors] = useState<Record<string, string>>({});
 
@@ -148,6 +172,25 @@ function PopUpInsert(props: PopUpInsertProps) {
     return Object.keys(errors).length === 0;
   };
 
+  const addDropdown = () => {
+    const newIndex = dropdownsTechno.length;
+    setDropdownsTechno([...dropdownsTechno, newIndex]);
+    setSelectedTechnologies([...selectedTechnologies, ""]);
+    setOpenStatesTechno([...openStatesTechno, false]);
+  };
+
+  const handleSelect = (index: number, id: string) => {
+    const updatedTechnologies = [...selectedTechnologies];
+    updatedTechnologies[index] = id;
+    setSelectedTechnologies(updatedTechnologies);
+  };
+
+  const togglePopover = (index: number, isOpen: boolean) => {
+    const updatedOpenStatesTechno = [...openStatesTechno];
+    updatedOpenStatesTechno[index] = isOpen;
+    setOpenStatesTechno(updatedOpenStatesTechno);
+  };
+
   const handleSubmit = async () => {
     if (validateForm()) setCurrentStep(4);
     const fileToBase64 = (file: File): Promise<string> => {
@@ -184,8 +227,8 @@ function PopUpInsert(props: PopUpInsertProps) {
       thumbnail,
       documentation,
       gallery,
-      statusId,
       categoryId,
+      selectedTechnologies,
       majorId,
       groupMembersId,
       group: props.groupMembers[0]?.group
@@ -552,6 +595,123 @@ function PopUpInsert(props: PopUpInsertProps) {
                   </span>
                 )}
               </div>
+            </div>
+          </div>
+          <div className="flex flex-col gap-3">
+            <div className="flex justify-start items-center gap-1">
+              <Label htmlFor="cover">Category</Label>
+              <TooltipProvider>
+                <Tooltip>
+                  <TooltipTrigger>
+                    <CiCircleQuestion className="w-4 h-4" />
+                  </TooltipTrigger>
+                  <TooltipContent>
+                    <p>Category for your projects</p>
+                  </TooltipContent>
+                </Tooltip>
+              </TooltipProvider>
+            </div>
+            <div className="border rounded-md">
+              <select
+                value={categoryId}
+                onChange={(event) => setCategoryId(event.target.value)}
+                className="flex h-10 w-full rounded-md border border-input bg-background px-3 py-2 text-sm ring-offset-background border-r-8 border-white focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-ring focus-visible:ring-offset-2 disabled:cursor-not-allowed disabled:opacity-50"
+              >
+                <option value="" disabled>
+                  Choose a category
+                </option>
+                {props.categories?.map((category: any) => (
+                  <option key={category?.id} value={category.id}>
+                    {category?.name}
+                  </option>
+                ))}
+              </select>
+            </div>
+          </div>
+          <div className="flex flex-col gap-3">
+            <div className="flex justify-between items-start">
+              <div className="flex justify-start items-center gap-1">
+                <Label htmlFor="cover">Technology</Label>
+                <TooltipProvider>
+                  <Tooltip>
+                    <TooltipTrigger>
+                      <CiCircleQuestion className="w-4 h-4" />
+                    </TooltipTrigger>
+                    <TooltipContent>
+                      <p>Technology you use for your projects</p>
+                    </TooltipContent>
+                  </Tooltip>
+                </TooltipProvider>
+              </div>
+              <div className="pt-1">
+                <span
+                  className="text-primary-orange text-sm cursor-pointer"
+                  onClick={addDropdown}
+                >
+                  Add Technology +
+                </span>
+              </div>
+            </div>
+            <div className="flex flex-col gap-3">
+              {selectedTechnologies.map((t) => t)}
+              {dropdownsTechno.map((_, index) => (
+                <Popover
+                  key={index}
+                  open={openStatesTechno[index]}
+                  onOpenChange={(isOpen) => togglePopover(index, isOpen)}
+                >
+                  <PopoverTrigger asChild>
+                    <Button
+                      variant="outline"
+                      role="combobox"
+                      aria-expanded={openStatesTechno[index]}
+                      className="w-full justify-between"
+                    >
+                      {selectedTechnologies[index]
+                        ? props.technologies.find(
+                            (tech: any) =>
+                              tech.id === selectedTechnologies[index]
+                          )?.name || "Select technology"
+                        : "Select technology"}
+                      <ChevronsUpDown className="ml-2 h-4 w-4 shrink-0 opacity-50" />
+                    </Button>
+                  </PopoverTrigger>
+                  <PopoverContent className="min-w-[300px] w-full p-0">
+                    <Command>
+                      <CommandInput placeholder="Search technology..." />
+                      <CommandList>
+                        <CommandEmpty>No technologies found.</CommandEmpty>
+                        <CommandGroup>
+                          <CommandItem key="" value="" disabled>
+                            Choose a technology
+                          </CommandItem>
+                          {props.technologies.map((tech: any) => (
+                            <CommandItem
+                              key={tech.id}
+                              value={tech.id}
+                              onSelect={() => {
+                                handleSelect(index, tech.id);
+                                togglePopover(index, false);
+                              }}
+                              disabled={selectedTechnologies.includes(tech.id)}
+                            >
+                              <Check
+                                className={cn(
+                                  "mr-2 h-4 w-4",
+                                  selectedTechnologies[index] === tech.id
+                                    ? "opacity-100"
+                                    : "opacity-0"
+                                )}
+                              />
+                              {tech.name}
+                            </CommandItem>
+                          ))}
+                        </CommandGroup>
+                      </CommandList>
+                    </Command>
+                  </PopoverContent>
+                </Popover>
+              ))}
             </div>
           </div>
           <button

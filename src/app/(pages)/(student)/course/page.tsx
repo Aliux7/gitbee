@@ -23,7 +23,12 @@ import {
 } from "@/components/ui/table";
 import PopUpInsert from "@/app/components/course/PopUpInsert";
 import PopUpJoinGroup from "@/app/components/course/PopUpJoinGroup";
-import { getGroupDetail, getProjectDetail } from "./actions";
+import {
+  getAllCategory,
+  getAllTech,
+  getGroupDetail,
+  getProjectDetail,
+} from "./actions";
 import { useAuth } from "@/app/context/AuthContext";
 import Loading from "@/app/components/Loading";
 
@@ -34,10 +39,11 @@ const page = () => {
   const { toast } = useToast();
   const [expand, setExpand] = useState(true);
   const [showInsertForm, setShowInsertForm] = useState(false);
-  const [showJoinGroup, setShowJoinGroup] = useState(false);
   const [groupDetail, setGroupDetail] = useState<any>([]);
   const [projectDetail, setProjectDetail] = useState<any>([]);
   const [loading, setLoading] = useState(false);
+  const [categories, setCategories] = useState<any>([]);
+  const [technologies, setTechnologies] = useState<any>([]);
 
   useEffect(() => {
     scrollYProgress.onChange((currentScrollY) => {
@@ -79,6 +85,12 @@ const page = () => {
       setGroupDetail(resultDetailGroup?.data);
       console.log(resultDetailGroup?.data);
     }
+
+    const resultCategories = await getAllCategory();
+    setCategories(resultCategories?.data);
+
+    const resultTechnology = await getAllTech();
+    setTechnologies(resultTechnology?.data);
 
     setLoading(false);
   };
@@ -268,6 +280,8 @@ const page = () => {
           fetchData={fetchData}
           setShowInsertForm={setShowInsertForm}
           toast={toast}
+          technologies={technologies}
+          categories={categories}
           userId={userData?.nim}
         />
       )}

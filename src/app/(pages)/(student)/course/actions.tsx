@@ -7,6 +7,40 @@ const fileToBase64 = (file: File): Promise<string> => {
   });
 };
 
+export const getAllCategory = async () => {
+  try {
+    const response = await fetch(
+      `${process.env.NEXT_PUBLIC_BACKEND_API}category/all`
+    );
+    const result = await response.json();
+
+    if (result.status) {
+      return { success: true, data: result.data ? result.data : "" };
+    } else {
+      return { success: false, message: result.message };
+    }
+  } catch (error: any) {
+    console.error("API call failed:", error.message);
+  }
+};
+
+export const getAllTech = async () => {
+  try {
+    const response = await fetch(
+      `${process.env.NEXT_PUBLIC_BACKEND_API}technology/all`
+    );
+    const result = await response.json();
+
+    if (result.status) {
+      return { success: true, data: result.data ? result.data : "" };
+    } else {
+      return { success: false, message: result.message };
+    }
+  } catch (error: any) {
+    console.error("API call failed:", error.message);
+  }
+};
+
 export const insertProject = async ({
   lecturerId,
   studentLeaderId,
@@ -19,12 +53,12 @@ export const insertProject = async ({
   projectLink,
   thumbnail,
   documentation,
-  gallery,
-  statusId,
+  gallery, 
   categoryId,
+  selectedTechnologies,
   majorId,
   groupMembersId,
-  group
+  group,
 }: {
   lecturerId: string;
   studentLeaderId: string;
@@ -37,12 +71,12 @@ export const insertProject = async ({
   projectLink: string;
   thumbnail?: File;
   documentation?: File;
-  gallery: File[];
-  statusId: number;
-  categoryId: number;
+  gallery: File[]; 
+  categoryId: string;
+  selectedTechnologies: string[];
   majorId: number;
   groupMembersId: string[];
-  group: number
+  group: number;
 }) => {
   try {
     const thumbnailBase64 = thumbnail ? await fileToBase64(thumbnail) : "";
@@ -66,12 +100,12 @@ export const insertProject = async ({
       thumbnail: thumbnailBase64,
       description,
       status_id: 1,
-      category_id: 2,
+      category_id: Number(categoryId),
       major_id: 6,
       gallery: galleryBase64,
       group_members: groupMembersId,
-      technology_ids: [1, 5, 11],
-      group: group
+      technology_ids: selectedTechnologies,
+      group: group,
     };
     console.log(payload);
 
