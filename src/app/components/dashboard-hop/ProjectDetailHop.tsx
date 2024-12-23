@@ -1,5 +1,5 @@
 import Link from "next/link";
-import React from "react";
+import React, { useEffect } from "react";
 import { BsGlobe2 } from "react-icons/bs";
 import { motion } from "framer-motion";
 import { IoIosArrowRoundBack } from "react-icons/io";
@@ -16,6 +16,7 @@ function ProjectDetailHop(props: ProjectDetailHopProps) {
     hidden: { opacity: 0 },
     visible: { opacity: 1, transition: { duration: 1 } },
   };
+
 
   return (
     <motion.div

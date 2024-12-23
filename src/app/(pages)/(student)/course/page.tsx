@@ -31,6 +31,9 @@ import {
 } from "./actions";
 import { useAuth } from "@/app/context/AuthContext";
 import Loading from "@/app/components/Loading";
+import Link from "next/link";
+import { SiGithub } from "react-icons/si";
+import { BsGlobe2 } from "react-icons/bs";
 
 const page = () => {
   const { userData } = useAuth();
@@ -66,7 +69,7 @@ const page = () => {
     const resultProjectDetail = await getProjectDetail(
       "be992b30-4b38-4361-8404-25f2d6912754",
       "COMP6100001",
-      "BG01",
+      "BA01",
       userData?.nim ? userData?.nim : ""
     );
     setProjectDetail(resultProjectDetail?.data);
@@ -79,7 +82,7 @@ const page = () => {
       const resultDetailGroup = await getGroupDetail(
         "be992b30-4b38-4361-8404-25f2d6912754",
         "COMP6100001",
-        "BG01",
+        "BA01",
         userData?.nim ? userData?.nim : ""
       );
       setGroupDetail(resultDetailGroup?.data);
@@ -125,7 +128,7 @@ const page = () => {
             } flex justify-end items-center`}
           >
             <div className="bg-secondary-binus text-xl font-semibold rounded-lg px-2 ">
-              BG01
+              BA01
             </div>
           </div>
         </div>
@@ -271,6 +274,100 @@ const page = () => {
             </TableBody>
           </Table>
         </div>
+        {projectDetail?.length > 0 && (
+          <div className="flex-grow h-fit overflow-y-auto shadow-xl border rounded-xl p-5">
+            <h1 className="text-xl">Detail Project</h1>
+            <motion.div className="relative w-full flex h-fit py-5 justify-start items-start transition-all ease-in-out duration-500 px-3">
+              <div className="w-full flex flex-col pr-5">
+                <div className="w-full flex justify-start items-start border-b pb-5">
+                  <div className="flex flex-col gap-1 w-2/3">
+                    <h1 className="text-3xl font-bold">
+                      {projectDetail[0]?.projectDetail?.title}{" "}
+                      <span className="text-sm font-normal">
+                        (
+                        {
+                          categories?.find(
+                            (category: any) =>
+                              category?.id ==
+                              projectDetail[0].projectDetail?.category_id
+                          )?.name
+                        }
+                        )
+                      </span>
+                    </h1>
+                    <h3 className="text-sm text-gray-500">
+                      By:{" "}
+                      {groupDetail?.map((row: any, index: number) => {
+                        return (
+                          <span className="capitalize text-gray-500">
+                            {row?.student_name.toLowerCase()}
+                            {index + 1 < groupDetail.length ? ", " : ""}
+                          </span>
+                        );
+                      })}
+                    </h3>
+                    <div className="h-fit flex-grow my-3 pr-10">
+                      <h1 className="text-balance text-gray-700 overflow-auto">
+                        {projectDetail[0]?.projectDetail?.description}
+                      </h1>
+                    </div>
+                    <div className="h-fit flex-grow mb-3">
+                      <h1 className="text-primary-binus italic">
+                        {projectDetail[0]?.projectTechnologies?.map(
+                          (tech: any, index: number) => (
+                            <span>
+                              {tech?.technology_name}
+                              {index + 1 <
+                              projectDetail[0]?.projectTechnologies?.length
+                                ? ", "
+                                : ""}
+                            </span>
+                          )
+                        )}
+                      </h1>
+                    </div>
+                    <Link
+                      href={projectDetail[0]?.projectDetail?.github_link}
+                      className="flex justify-start items-center gap-2 text-sm my-1 text-primary-binus"
+                    >
+                      <SiGithub fill="#EB9327" />
+                      {projectDetail[0]?.projectDetail?.github_link}
+                    </Link>
+                    <Link
+                      href={projectDetail[0]?.projectDetail?.project_link}
+                      className="flex justify-start items-center gap-2 text-sm my-1 text-primary-binus"
+                    >
+                      <BsGlobe2 fill="#EB9327" />{" "}
+                      {projectDetail[0]?.projectDetail?.project_link}
+                    </Link>
+                  </div>
+                  <div className="w-1/3">
+                    <img
+                      src={projectDetail[0]?.projectDetail?.thumbnail}
+                      className="w-full rounded-md border h-96 object-cover"
+                    />
+                  </div>
+                </div>
+                <div className="w-full h-96 my-3 flex overflow-auto gap-3">
+                  {projectDetail[0]?.galleries?.map(
+                    (file: any, index: number) => (
+                      <img
+                        key={index}
+                        src={file?.image}
+                        alt={`Gallery Image ${index + 1}`}
+                        className="w-full rounded-md border h-full object-cover"
+                      />
+                    )
+                  )}
+                </div>
+                <iframe
+                  src={projectDetail[0]?.projectDetail?.documentation}
+                  className="w-full h-96"
+                />
+              </div>
+            </motion.div>
+          </div>
+        )}
       </div>
       <Toaster />
       {showInsertForm && (

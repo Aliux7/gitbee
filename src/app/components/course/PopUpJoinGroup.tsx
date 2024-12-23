@@ -41,10 +41,11 @@ const students = [
   { value: "2501959296", label: "Timothy Darren" },
   { value: "2501970166", label: "Roger Laurent" },
   { value: "2602118912", label: "Ryan Rafael" },
+  { value: "2540126550", label: "Vincentius Jericho" },
 ];
 
 function PopUpJoinGroup(props: PopUpJoinGroupProps) {
-  const [totalMember, setTotalMember] = useState(2); 
+  const [totalMember, setTotalMember] = useState(2);
   const [openStates, setOpenStates] = useState<boolean[]>([false]);
   const [selectedStudents, setSelectedStudents] = useState<string[]>([
     props.userId || "",
@@ -82,12 +83,12 @@ function PopUpJoinGroup(props: PopUpJoinGroupProps) {
       return;
     }
 
-    props.setLoading(true); 
+    props.setLoading(true);
     const result = await createGroup({
       semester_id: "be992b30-4b38-4361-8404-25f2d6912754",
       course_id: "COMP6100001",
       student_ids: selectedStudents,
-      class_id: "BG01",
+      class_id: "BA01",
     });
     if (result?.success) {
       props.toast({

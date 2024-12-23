@@ -86,7 +86,7 @@ const page = () => {
     const resultAllGroupsData = await getAllGroupByClass(
       "be992b30-4b38-4361-8404-25f2d6912754",
       "COMP6100001",
-      "BG01"
+      "BA01"
     );
     setGroupsClassData(resultAllGroupsData?.data);
     setRatings(
@@ -120,7 +120,7 @@ const page = () => {
     const payloadData = {
       semester_id: "be992b30-4b38-4361-8404-25f2d6912754",
       course_id: "COMP6100001",
-      class: "BG01",
+      class: "BA01",
       lecturer_id: "KS23-1",
       assessments: assessments,
     };
@@ -173,7 +173,7 @@ const page = () => {
     const resultDeleteGroup = await deleteGroup(
       "be992b30-4b38-4361-8404-25f2d6912754",
       "COMP6100001",
-      "BG01",
+      "BA01",
       group
     );
 
@@ -245,7 +245,7 @@ const page = () => {
             <div>
               <h1 className="">
                 <span className="text-primary-binus font-semibold">Class:</span>{" "}
-                BG01
+                BA01
               </h1>
               <h1 className="">
                 <span className="text-primary-binus font-semibold">
@@ -512,6 +512,12 @@ const page = () => {
               )
             )}
           </div>
+          {groupsClassData?.sortedGroups?.length < 1 &&
+            groupsClassData?.updatedProjects?.length < 1 && (
+              <div className="w-full text-center py-5 shadow-sm rounded-md">
+                No Group Has Been Created
+              </div>
+            )}
         </div>
       )}
       {showPreviewDetailProject && (

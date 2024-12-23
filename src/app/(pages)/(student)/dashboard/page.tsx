@@ -93,7 +93,7 @@ const page = () => {
               </h1>
             </div>
             <h1 className="text-lg font-semibold truncate max-w-2/12 w-auto min-w-14 text-center bg-secondary-binus rounded-lg h-fit px-2">
-              BG01
+              BA01
             </h1>
           </div>
           <div className="text-primary-binus text-sm my-3">
@@ -126,7 +126,7 @@ const page = () => {
               </h1>
             </div>
             <h1 className="text-lg font-semibold truncate max-w-2/12 w-auto min-w-14 text-center bg-secondary-binus rounded-lg h-fit px-2">
-              BG01
+              BA01
             </h1>
           </div>
           <div className="text-primary-binus text-sm my-3">
@@ -159,7 +159,7 @@ const page = () => {
               </h1>
             </div>
             <h1 className="text-lg font-semibold truncate max-w-2/12 w-auto min-w-14 text-center bg-secondary-binus rounded-lg h-fit px-2">
-              BG01
+              BA01
             </h1>
           </div>
           <div className="text-primary-binus text-sm my-3">
@@ -192,7 +192,7 @@ const page = () => {
               </h1>
             </div>
             <h1 className="text-lg font-semibold truncate max-w-2/12 w-auto min-w-14 text-center bg-secondary-binus rounded-lg h-fit px-2">
-              BG01
+              BA01
             </h1>
           </div>
           <div className="text-primary-binus text-sm my-3">

@@ -32,10 +32,10 @@ export const getCurrentSemester = async () => {
   }
 };
 
-export const getHistoryByLecturer = async (lecturer_id: string) => {
+export const getHistoryByLecturer = async (lecturer_id: string, search: string) => {
   try {
     const response = await fetch(
-      `${process.env.NEXT_PUBLIC_BACKEND_API}project/lecturer/all-outstanding?id=${lecturer_id}`
+      `${process.env.NEXT_PUBLIC_BACKEND_API}project/lecturer/all-reviewed?id=${lecturer_id}&search=${search}`
     );
     const result = await response.json();
 

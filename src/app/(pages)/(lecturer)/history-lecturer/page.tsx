@@ -21,6 +21,7 @@ import {
   getCurrentSemester,
   getHistoryByLecturer,
 } from "./action";
+import { CiSearch } from "react-icons/ci";
 
 const page = () => {
   const { scrollYProgress } = useScroll();
@@ -32,6 +33,7 @@ const page = () => {
   const [historyOutstandingProject, setHistoryOutstandingProject] =
     useState<any>();
   const [selectedPreviewProject, setSelectedPreviewProject] = useState<any>();
+  const [search, setSearch] = useState("");
 
   const containerVariants = {
     hidden: { opacity: 0 },
@@ -60,20 +62,30 @@ const page = () => {
     const resultCurrentSemester = await getCurrentSemester();
     setCurrentSemester(resultCurrentSemester);
 
-    const resultHistoryOutstandingData = await getHistoryByLecturer("KS23-1");
-    setHistoryOutstandingProject(resultHistoryOutstandingData?.data);
-    console.log(resultHistoryOutstandingData?.data);
+    fetchHistroyData();
   };
 
   useEffect(() => {
     fetchData();
   }, []);
 
+  const fetchHistroyData = async () => {
+    const resultHistoryOutstandingData = await getHistoryByLecturer(
+      "KS23-1",
+      search
+    );
+    setHistoryOutstandingProject(resultHistoryOutstandingData?.data);
+  };
+
+  useEffect(() => {
+    fetchHistroyData();
+  }, [search]);
+
   return (
     <motion.div className="relative min-h-screen flex flex-col justify-start items-center px-[6.25rem] ">
       <div
         className={`fixed top-0 w-full flex justify-center items-center transition-all ease-in-out duration-300 px-24 z-20 ${
-          expand ? "pt-24" : "pt-10"
+          expand ? "pt-24" : "pt-8"
         } bg-gray-50`}
       >
         <div className="w-full border-b flex justify-between items-center pb-3">
@@ -101,7 +113,21 @@ const page = () => {
           </div>
         </div>
       </div>
-      <div className="w-full mt-44 bg-white shadow-md rounded-md">
+
+      <div className="relative w-full flex justify-start items-center h-full mt-44">
+        <CiSearch
+          className="absolute ml-3 w-7 h-7 pr-2 border-r"
+          fill="#6B7280"
+        />
+        <input
+          type="text"
+          placeholder="Search"
+          value={search}
+          onChange={(e) => setSearch(e.target.value)}
+          className={`border w-full h-full p-3 px-12 rounded-md`}
+        />
+      </div>
+      <div className="w-full mt-5 bg-white shadow-md rounded-md">
         <Table>
           <TableHeader>
             <TableRow>

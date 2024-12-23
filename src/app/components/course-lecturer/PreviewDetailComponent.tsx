@@ -78,11 +78,40 @@ function PreviewDetailComponent(props: PreviewDetailProps) {
                 {props.selectedPreviewProject?.projectDetail?.title}
               </h1>
               <h3 className="text-sm text-gray-500">
-                By Kelson Edbert S, Timothy Darren, Nicholas Chandra
+                By.{" "}
+                {props.selectedPreviewProject?.projectGroups?.map(
+                  (row: any, index: number) => {
+                    return (
+                      <span className="capitalize text-gray-500">
+                        {row?.student_name.toLowerCase()}
+                        {index + 1 <
+                        props.selectedPreviewProject?.projectGroups.length
+                          ? ", "
+                          : ""}
+                      </span>
+                    );
+                  }
+                )}
               </h3>
               <div className="h-fit flex-grow my-3 pr-10">
                 <h1 className="text-balance text-gray-700">
                   {props.selectedPreviewProject?.projectDetail?.description}
+                </h1>
+              </div>
+              <div className="h-fit flex-grow mb-3">
+                <h1 className="text-primary-binus italic">
+                  {props.selectedPreviewProject?.projectTechnologies?.map(
+                    (tech: any, index: number) => (
+                      <span>
+                        {tech?.technology_name}
+                        {index + 1 <
+                        props.selectedPreviewProject?.projectTechnologies
+                          ?.length
+                          ? ", "
+                          : ""}
+                      </span>
+                    )
+                  )}
                 </h1>
               </div>
               <Link

@@ -79,7 +79,7 @@ function PopUpInsert(props: PopUpInsertProps) {
     "be992b30-4b38-4361-8404-25f2d6912754"
   );
   const [courseId, setCourseId] = useState("COMP6100001");
-  const [className, setClassName] = useState("BG01");
+  const [className, setClassName] = useState("BA01");
   const [githubLink, setGithubLink] = useState("");
   const [projectLink, setProjectLink] = useState("");
   const [thumbnail, setThumbnail] = useState<File | undefined>(undefined);
@@ -653,7 +653,6 @@ function PopUpInsert(props: PopUpInsertProps) {
               </div>
             </div>
             <div className="flex flex-col gap-3">
-              {selectedTechnologies.map((t) => t)}
               {dropdownsTechno.map((_, index) => (
                 <Popover
                   key={index}
@@ -738,13 +737,49 @@ function PopUpInsert(props: PopUpInsertProps) {
             <div className="w-full flex flex-col pr-5">
               <div className="w-full flex justify-start items-start border-b pb-5">
                 <div className="mx-3 flex flex-col gap-1 w-2/3">
-                  <h1 className="text-3xl font-bold">{title}</h1>
+                  <h1 className="text-3xl font-bold">
+                    {title}{" "}
+                    <span className="text-sm font-normal">
+                      (
+                      {
+                        props.categories?.find(
+                          (category: any) => category?.id == categoryId
+                        )?.name
+                      }
+                      )
+                    </span>
+                  </h1>
                   <h3 className="text-sm text-gray-500">
-                    By Kelson Edbert S, Timothy Darren, Nicholas Chandra
+                    By:{" "}{" "}
+                    {props.groupMembers.map((row: any, index: number) => {
+                      return (
+                        <span className="capitalize text-gray-500">
+                          {row?.student_name.toLowerCase()}
+                          {index + 1 < props.groupMembers.length ? ", " : ""}
+                        </span>
+                      );
+                    })}
                   </h3>
                   <div className="h-fit flex-grow my-3 pr-10">
-                    <h1 className="text-balance text-gray-700">
+                    <h1 className="text-balance text-gray-700 overflow-auto">
                       {description}
+                    </h1>
+                  </div>
+                  <div className="h-fit flex-grow mb-3">
+                    <h1 className="text-primary-binus italic">
+                      {selectedTechnologies?.map((techId, index) => {
+                        const tech = props.technologies.find(
+                          (t: any) => t.id === techId
+                        );
+                        return (
+                          <span key={techId}>
+                            {tech?.name || "Unknown"}
+                            {index + 1 < selectedTechnologies.length
+                              ? ", "
+                              : ""}
+                          </span>
+                        );
+                      })}
                     </h1>
                   </div>
                   <Link
