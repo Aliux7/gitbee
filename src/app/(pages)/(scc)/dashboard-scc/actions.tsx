@@ -50,13 +50,14 @@ export const getAllTech = async () => {
 };
 
 export const getAllProjects = async (
+  search: string,
   major_id: string,
   semester_id: string,
-  course_id: string
+  course_id: string,
 ) => {
   try {
     const response = await fetch(
-      `${process.env.NEXT_PUBLIC_BACKEND_API}project/scc/dashboard?major_id=${major_id}&semester_id=${semester_id}&course_id=${course_id}`
+      `${process.env.NEXT_PUBLIC_BACKEND_API}project/scc/dashboard?search=${search}&major_id=${major_id}&semester_id=${semester_id}&course_id=${course_id}`
     );
     const result = await response.json();
 

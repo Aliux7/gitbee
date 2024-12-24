@@ -80,7 +80,7 @@ const page = () => {
       </div>
       <div className="grid grid-cols-3 h-fit pt-44 w-full gap-5">
         <Link
-          href={"/course"}
+          href={"/course/BA01"}
           className="h-fit bg-white shadow-md hover:shadow-xl rounded-md p-5 cursor-pointer"
         >
           <div className="flex justify-between w-full">
@@ -113,7 +113,7 @@ const page = () => {
           </div>
         </Link>
         <Link
-          href={"/course"}
+          href={"/course/BB01"}
           className="h-fit bg-white shadow-md hover:shadow-xl rounded-md p-5 cursor-pointer"
         >
           <div className="flex justify-between w-full">
@@ -126,7 +126,7 @@ const page = () => {
               </h1>
             </div>
             <h1 className="text-lg font-semibold truncate max-w-2/12 w-auto min-w-14 text-center bg-secondary-binus rounded-lg h-fit px-2">
-              BA01
+              BB01
             </h1>
           </div>
           <div className="text-primary-binus text-sm my-3">
@@ -146,7 +146,7 @@ const page = () => {
           </div>
         </Link>
         <Link
-          href={"/course"}
+          href={"/course/BC01"}
           className="h-fit bg-white shadow-md hover:shadow-xl rounded-md p-5 cursor-pointer"
         >
           <div className="flex justify-between w-full">
@@ -159,7 +159,7 @@ const page = () => {
               </h1>
             </div>
             <h1 className="text-lg font-semibold truncate max-w-2/12 w-auto min-w-14 text-center bg-secondary-binus rounded-lg h-fit px-2">
-              BA01
+              BC01
             </h1>
           </div>
           <div className="text-primary-binus text-sm my-3">
@@ -179,7 +179,7 @@ const page = () => {
           </div>
         </Link>
         <Link
-          href={"/course"}
+          href={"/course/BD01"}
           className="h-fit bg-white shadow-md hover:shadow-xl rounded-md p-5 cursor-pointer"
         >
           <div className="flex justify-between w-full">
@@ -192,7 +192,7 @@ const page = () => {
               </h1>
             </div>
             <h1 className="text-lg font-semibold truncate max-w-2/12 w-auto min-w-14 text-center bg-secondary-binus rounded-lg h-fit px-2">
-              BA01
+              BD01
             </h1>
           </div>
           <div className="text-primary-binus text-sm my-3">

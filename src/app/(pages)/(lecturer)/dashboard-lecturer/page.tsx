@@ -114,7 +114,7 @@ const page = () => {
             </TableHeader>
             <TableBody>
               <TableRow>
-                <TableCell className="text-start font-medium">BG01</TableCell>
+                <TableCell className="text-start font-medium">BA01</TableCell>
                 <TableCell className="text-center">COMP6100001</TableCell>
                 <TableCell className="text-center">
                   Software Engineering
@@ -125,26 +125,7 @@ const page = () => {
                 <TableCell className="text-center">4/5</TableCell>
                 <TableCell className="text-center">
                   <Link
-                    href="course-lecturer"
-                    className="bg-primary-binus px-2 py-1 text-white rounded-md"
-                  >
-                    Detail
-                  </Link>
-                </TableCell>
-              </TableRow>
-              <TableRow>
-                <TableCell className="text-start font-medium">BK01</TableCell>
-                <TableCell className="text-center">COMP6100001</TableCell>
-                <TableCell className="text-center">
-                  Software Engineering
-                </TableCell>
-                <TableCell className="text-center">20 Sept 2024</TableCell>
-                <TableCell className="text-center">20 Sept 2024</TableCell>
-                <TableCell className="text-center">32</TableCell>
-                <TableCell className="text-center">3/5</TableCell>
-                <TableCell className="text-center">
-                  <Link
-                    href="course-lecturer"
+                    href="course-lecturer/BA01"
                     className="bg-primary-binus px-2 py-1 text-white rounded-md"
                   >
                     Detail
@@ -160,10 +141,48 @@ const page = () => {
                 <TableCell className="text-center">20 Sept 2024</TableCell>
                 <TableCell className="text-center">20 Sept 2024</TableCell>
                 <TableCell className="text-center">32</TableCell>
+                <TableCell className="text-center">3/5</TableCell>
+                <TableCell className="text-center">
+                  <Link
+                    href="course-lecturer/BB01"
+                    className="bg-primary-binus px-2 py-1 text-white rounded-md"
+                  >
+                    Detail
+                  </Link>
+                </TableCell>
+              </TableRow>
+              <TableRow>
+                <TableCell className="text-start font-medium">BC01</TableCell>
+                <TableCell className="text-center">COMP6100001</TableCell>
+                <TableCell className="text-center">
+                  Software Engineering
+                </TableCell>
+                <TableCell className="text-center">20 Sept 2024</TableCell>
+                <TableCell className="text-center">20 Sept 2024</TableCell>
+                <TableCell className="text-center">32</TableCell>
                 <TableCell className="text-center">1/5</TableCell>
                 <TableCell className="text-center">
                   <Link
-                    href="course-lecturer"
+                    href="course-lecturer/BC01"
+                    className="bg-primary-binus px-2 py-1 text-white rounded-md"
+                  >
+                    Detail
+                  </Link>
+                </TableCell>
+              </TableRow>
+              <TableRow>
+                <TableCell className="text-start font-medium">BD01</TableCell>
+                <TableCell className="text-center">COMP6100001</TableCell>
+                <TableCell className="text-center">
+                  Software Engineering
+                </TableCell>
+                <TableCell className="text-center">20 Sept 2024</TableCell>
+                <TableCell className="text-center">20 Sept 2024</TableCell>
+                <TableCell className="text-center">32</TableCell>
+                <TableCell className="text-center">1/5</TableCell>
+                <TableCell className="text-center">
+                  <Link
+                    href="course-lecturer/BD01"
                     className="bg-primary-binus px-2 py-1 text-white rounded-md"
                   >
                     Detail

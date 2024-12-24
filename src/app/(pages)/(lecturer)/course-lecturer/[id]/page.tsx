@@ -42,7 +42,7 @@ import {
   deleteGroup,
   finalizeClassProject,
   getAllGroupByClass,
-} from "./actions";
+} from "../actions";
 import { useToast } from "@/hooks/use-toast";
 import { Toaster } from "@/components/ui/toaster";
 import Loading from "@/app/components/Loading";
@@ -52,7 +52,7 @@ interface Status {
   created_at: string;
 }
 
-const page = () => {
+const page: React.FC<{ params: { id: string } }> = ({ params: { id } }) => {
   const { scrollYProgress } = useScroll();
   const prevScrollY = useRef(0);
   const { toast } = useToast();
@@ -86,7 +86,7 @@ const page = () => {
     const resultAllGroupsData = await getAllGroupByClass(
       "be992b30-4b38-4361-8404-25f2d6912754",
       "COMP6100001",
-      "BA01"
+      id
     );
     setGroupsClassData(resultAllGroupsData?.data);
     setRatings(
@@ -120,7 +120,7 @@ const page = () => {
     const payloadData = {
       semester_id: "be992b30-4b38-4361-8404-25f2d6912754",
       course_id: "COMP6100001",
-      class: "BA01",
+      class: id,
       lecturer_id: "KS23-1",
       assessments: assessments,
     };
@@ -173,7 +173,7 @@ const page = () => {
     const resultDeleteGroup = await deleteGroup(
       "be992b30-4b38-4361-8404-25f2d6912754",
       "COMP6100001",
-      "BA01",
+      id,
       group
     );
 
@@ -209,7 +209,7 @@ const page = () => {
                         : "text-primary-orange"
                     }`}
                   >
-                    B601 - Software Engineering
+                    {id.toUpperCase()} - Software Engineering
                   </BreadcrumbPage>
                 </BreadcrumbItem>
                 {showPreviewDetailProject && <BreadcrumbSeparator />}
@@ -245,7 +245,7 @@ const page = () => {
             <div>
               <h1 className="">
                 <span className="text-primary-binus font-semibold">Class:</span>{" "}
-                BA01
+                {id.toUpperCase()}
               </h1>
               <h1 className="">
                 <span className="text-primary-binus font-semibold">

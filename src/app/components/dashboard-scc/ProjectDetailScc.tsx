@@ -151,44 +151,91 @@ function ProjectDetailScc(props: ProjectDetailSccProps) {
             ))}
           </div>
         </div>
-        <div className="w-full h-auto flex justify-end items-center gap-5 mt-10">
-          <div className="flex justify-center items-center gap-1 bg-white rounded-md border p-1">
-            <div
-              className={`px-5 py-1 ${
-                toggleStatus == 0
-                  ? "bg-red-500 text-white"
-                  : "hover:bg-gray-100 text-red-500"
-              } cursor-pointer rounded-sm text-lg`}
-              onClick={() => setToggleStatus(0)}
-            >
-              Not Recommended
-            </div>
-            <div
-              className={`px-5 py-1 ${
-                toggleStatus == 1
-                  ? "bg-primary-orange text-white"
-                  : "hover:bg-gray-100 text-primary-orange"
-              } cursor-pointer rounded-sm text-lg`}
-              onClick={() => setToggleStatus(1)}
-            >
-              Recommended
-            </div>
+        {props.selectedDetailProject?.reviewedProject ? (
+          <div className="w-full h-auto flex justify-start items-center gap-5 mt-10">
+            {props.selectedDetailProject?.reviewedProject?.is_recommended ==
+            1 ? (
+              <div>
+                This Project has been{" "}
+                <span className="text-primary-orange underline">
+                  recommended
+                </span>{" "}
+                and been finalized at{" "}
+                {new Date(
+                  props.selectedDetailProject?.reviewedProject?.created_at
+                ).toLocaleDateString([], {
+                  day: "2-digit",
+                  month: "long",
+                  year: "numeric",
+                })}{" "}
+                {new Date(
+                  props.selectedDetailProject?.reviewedProject?.created_at
+                ).toLocaleTimeString([], {
+                  hour: "2-digit",
+                  minute: "2-digit",
+                })}
+              </div>
+            ) : (
+              <div>
+                This Project has been{" "}
+                <span className="text-red-600 underline">not recommended</span>{" "}
+                and been finalized at{" "}
+                {new Date(
+                  props.selectedDetailProject?.reviewedProject?.created_at
+                ).toLocaleDateString([], {
+                  day: "2-digit",
+                  month: "long",
+                  year: "numeric",
+                })}{" "}
+                {new Date(
+                  props.selectedDetailProject?.reviewedProject?.created_at
+                ).toLocaleTimeString([], {
+                  hour: "2-digit",
+                  minute: "2-digit",
+                })}
+              </div>
+            )}
           </div>
-          <button
-            className={`text-white px-10 py-2 rounded-md ${
-              toggleStatus == 1 || toggleStatus == 0
-                ? "cursor-pointer bg-primary-binus"
-                : "cursor-not-allowed bg-gray-500"
-            }`}
-            onClick={() => {
-              toggleStatus == 0 || toggleStatus == 1
-                ? setShowConfirmFinalize(true)
-                : null;
-            }}
-          >
-            Finalize
-          </button>
-        </div>
+        ) : (
+          <div className="w-full h-auto flex justify-end items-center gap-5 mt-10">
+            <div className="flex justify-center items-center gap-1 bg-white rounded-md border p-1">
+              <div
+                className={`px-5 py-1 ${
+                  toggleStatus == 0
+                    ? "bg-red-500 text-white"
+                    : "hover:bg-gray-100 text-red-500"
+                } cursor-pointer rounded-sm text-lg`}
+                onClick={() => setToggleStatus(0)}
+              >
+                Not Recommended
+              </div>
+              <div
+                className={`px-5 py-1 ${
+                  toggleStatus == 1
+                    ? "bg-primary-orange text-white"
+                    : "hover:bg-gray-100 text-primary-orange"
+                } cursor-pointer rounded-sm text-lg`}
+                onClick={() => setToggleStatus(1)}
+              >
+                Recommended
+              </div>
+            </div>
+            <button
+              className={`text-white px-10 py-2 rounded-md ${
+                toggleStatus == 1 || toggleStatus == 0
+                  ? "cursor-pointer bg-primary-binus"
+                  : "cursor-not-allowed bg-gray-500"
+              }`}
+              onClick={() => {
+                toggleStatus == 0 || toggleStatus == 1
+                  ? setShowConfirmFinalize(true)
+                  : null;
+              }}
+            >
+              Finalize
+            </button>
+          </div>
+        )}
       </motion.div>
       {showConfirmFinalize && (
         <div className="fixed top-0 w-screen h-screen bg-black/50 z-[110] flex justify-center items-center">

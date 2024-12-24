@@ -38,7 +38,7 @@ const page = () => {
   const [project, setProject] = useState<any>([]);
   const [selectedCategoryFilter, setSelectedCategoryFilter] = useState("");
   const [selectedMajorFilter, setSelectedMajorFilter] = useState("");
-  const [selectedTechnologyFilter, setSelectedTechnologyFilter] = useState("");
+  const [selectedTechnologyFilter, setSelectedTechnologyFilter] = useState(""); 
 
   const fetchData = async () => {
     const resultCategory = await getAllCategory();
@@ -53,6 +53,7 @@ const page = () => {
 
   const fetchProjectData = async () => {
     const resultProject = await getAllProjects(
+      search,
       "6",
       "be992b30-4b38-4361-8404-25f2d6912754",
       "COMP6100001"
@@ -79,6 +80,10 @@ const page = () => {
       }
     });
   }, [scrollYProgress]);
+
+  useEffect(() => {
+    fetchProjectData()
+  }, [search]);
 
   useEffect(() => {
     fetchProjectData();

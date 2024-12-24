@@ -34,6 +34,8 @@ const page = () => {
   const [selectedCategoryFilter, setSelectedCategoryFilter] = useState("");
   const [selectedMajorFilter, setSelectedMajorFilter] = useState("");
   const [selectedTechnologyFilter, setSelectedTechnologyFilter] = useState("");
+  const [listSemester, setListSemester] = useState<any>([]);
+  const [currentSemester, setCurrentSemester] = useState<any>();
 
   const fetchData = async () => {
     const resultCategory = await getAllCategory();
@@ -49,9 +51,8 @@ const page = () => {
   const fetchProjectData = async () => {
     const resultProject = await getAllProjects(
       search,
-      selectedCategoryFilter,
-      selectedMajorFilter,
-      selectedTechnologyFilter
+      "6",
+      "be992b30-4b38-4361-8404-25f2d6912754"
     );
     if (resultProject?.success) setProjects(resultProject.data);
     console.log(resultProject?.data);
@@ -116,23 +117,18 @@ const page = () => {
               } h-full p-3 px-12 rounded-md`}
             />
           </div>
-          <div className="relative w-fit flex justify-end items-center h-full gap-5">
+          <div className="relative w-fit flex justify-end items-center h-full gap-5 ">
             <DDMenuSemester
               className="h-full"
-              options={[
-                "Even Semester 2023/2024",
-                "Odd Semester 2023/2024",
-                "Even Semester 2022/2023",
-                "Odd Semester 2022/2023",
-                "Even Semester 2021/2022",
-              ]}
+              options={listSemester}
               filter="Semester"
               icon={<BsCalendar4Range className="w-4 h-4" />}
+              currentSemester={currentSemester}
             />
           </div>
         </div>
       )}
-      {showDevelopers ? (
+      {/* {showDevelopers ? (
         <ProjectDetailHop
           setShowDevelopers={setShowDevelopers}
           showDevelopers={showDevelopers}
@@ -146,7 +142,7 @@ const page = () => {
           handleScrollToTop={handleScrollToTop}
           projects={projects}
         />
-      )}
+      )} */}
     </motion.div>
   );
 };

@@ -28,14 +28,14 @@ import {
   getAllTech,
   getGroupDetail,
   getProjectDetail,
-} from "./actions";
+} from "../actions";
 import { useAuth } from "@/app/context/AuthContext";
 import Loading from "@/app/components/Loading";
 import Link from "next/link";
 import { SiGithub } from "react-icons/si";
 import { BsGlobe2 } from "react-icons/bs";
 
-const page = () => {
+const page: React.FC<{ params: { id: string } }> = ({ params: { id } }) => {
   const { userData } = useAuth();
   const { scrollYProgress } = useScroll();
   const prevScrollY = useRef(0);
@@ -69,7 +69,7 @@ const page = () => {
     const resultProjectDetail = await getProjectDetail(
       "be992b30-4b38-4361-8404-25f2d6912754",
       "COMP6100001",
-      "BA01",
+      id,
       userData?.nim ? userData?.nim : ""
     );
     setProjectDetail(resultProjectDetail?.data);
@@ -82,7 +82,7 @@ const page = () => {
       const resultDetailGroup = await getGroupDetail(
         "be992b30-4b38-4361-8404-25f2d6912754",
         "COMP6100001",
-        "BA01",
+        id,
         userData?.nim ? userData?.nim : ""
       );
       setGroupDetail(resultDetailGroup?.data);
@@ -128,7 +128,7 @@ const page = () => {
             } flex justify-end items-center`}
           >
             <div className="bg-secondary-binus text-xl font-semibold rounded-lg px-2 ">
-              BA01
+              {id.toUpperCase()}
             </div>
           </div>
         </div>
