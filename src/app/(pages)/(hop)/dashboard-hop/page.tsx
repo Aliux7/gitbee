@@ -13,24 +13,28 @@ import {
   getAllMajor,
   getAllProjects,
   getAllTech,
-} from "./actions";
-import DashboardHopComponent from "@/app/components/dashboard-hop/DashboardHopComponent";
+} from "./actions"; 
 import DDMenuSemester from "@/app/components/DDMenuSemester";
-import { BsCalendar4Range } from "react-icons/bs";
+import { BsCalendar4Range } from "react-icons/bs"; 
+import { useToast } from "@/hooks/use-toast";
+import { Toaster } from "@/components/ui/toaster";
 import ProjectDetailHop from "@/app/components/dashboard-hop/ProjectDetailHop";
+import DashboardHopComponent from "@/app/components/dashboard-hop/DashboardHopComponent";
 
 const page = () => {
   const { scrollYProgress } = useScroll();
+  const { toast } = useToast();
   const prevScrollY = useRef(0);
   const [expand, setExpand] = useState(true);
   const [showDevelopers, setShowDevelopers] = useState(false);
+  const [selectedDetailProject, setSelectedDetailProject] = useState<any>();
   const [categories, setCategories] = useState<{ id: number; name: string }[]>(
     []
   );
   const [search, setSearch] = useState("");
   const [majors, setMajors] = useState<{ id: number; name: string }[]>([]);
   const [techs, setTechs] = useState<{ id: number; name: string }[]>([]);
-  const [projects, setProjects] = useState<any[]>([]);
+  const [project, setProject] = useState<any>([]);
   const [selectedCategoryFilter, setSelectedCategoryFilter] = useState("");
   const [selectedMajorFilter, setSelectedMajorFilter] = useState("");
   const [selectedTechnologyFilter, setSelectedTechnologyFilter] = useState("");
@@ -52,10 +56,15 @@ const page = () => {
     const resultProject = await getAllProjects(
       search,
       "6",
-      "be992b30-4b38-4361-8404-25f2d6912754"
+      "be992b30-4b38-4361-8404-25f2d6912754",
+      "COMP6100001"
     );
-    if (resultProject?.success) setProjects(resultProject.data);
-    console.log(resultProject?.data);
+
+    if (resultProject?.success) {
+      console.log();
+      setProject(resultProject?.data);
+    }
+    console.log(resultProject);
   };
 
   useEffect(() => {
@@ -72,6 +81,10 @@ const page = () => {
       }
     });
   }, [scrollYProgress]);
+
+  useEffect(() => {
+    fetchProjectData();
+  }, [search]);
 
   useEffect(() => {
     fetchProjectData();
@@ -116,33 +129,29 @@ const page = () => {
                 expand ? "w-full" : "w-[35.5rem]"
               } h-full p-3 px-12 rounded-md`}
             />
-          </div>
-          <div className="relative w-fit flex justify-end items-center h-full gap-5 ">
-            <DDMenuSemester
-              className="h-full"
-              options={listSemester}
-              filter="Semester"
-              icon={<BsCalendar4Range className="w-4 h-4" />}
-              currentSemester={currentSemester}
-            />
-          </div>
+          </div> 
         </div>
       )}
-      {/* {showDevelopers ? (
+      <Toaster />
+      {showDevelopers ? (
         <ProjectDetailHop
           setShowDevelopers={setShowDevelopers}
           showDevelopers={showDevelopers}
+          selectedDetailProject={selectedDetailProject}
+          toast={toast}
           expand={expand}
+          fetchProjectData={fetchProjectData}
         />
       ) : (
         <DashboardHopComponent
           setShowDevelopers={setShowDevelopers}
+          setSelectedDetailProject={setSelectedDetailProject}
           showDevelopers={showDevelopers}
           expand={expand}
           handleScrollToTop={handleScrollToTop}
-          projects={projects}
+          projects={project}
         />
-      )} */}
+      )}
     </motion.div>
   );
 };

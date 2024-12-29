@@ -2,21 +2,12 @@
 import React, { useEffect, useRef, useState } from "react";
 import { motion, useScroll } from "framer-motion";
 import { CiSearch } from "react-icons/ci";
-import DDMenu from "../../../components/DDMenu";
-import { TbCategory2 } from "react-icons/tb";
-import { IoBookOutline } from "react-icons/io5";
-import { FaCode } from "react-icons/fa";
-import ProjectDetailComponent from "@/app/components/explore/ProjectDetailComponent";
-import ExploreComponent from "@/app/components/explore/ExploreComponent";
 import {
   getAllCategory,
   getAllMajor,
   getAllProjects,
   getAllTech,
 } from "./actions";
-import DashboardHopComponent from "@/app/components/dashboard-hop/DashboardHopComponent";
-import DDMenuSemester from "@/app/components/DDMenuSemester";
-import { BsCalendar4Range } from "react-icons/bs";
 import DashboardSccComponent from "@/app/components/dashboard-scc/DashboardSccComponent";
 import ProjectDetailScc from "@/app/components/dashboard-scc/ProjectDetailScc";
 import { useToast } from "@/hooks/use-toast";
@@ -38,7 +29,7 @@ const page = () => {
   const [project, setProject] = useState<any>([]);
   const [selectedCategoryFilter, setSelectedCategoryFilter] = useState("");
   const [selectedMajorFilter, setSelectedMajorFilter] = useState("");
-  const [selectedTechnologyFilter, setSelectedTechnologyFilter] = useState(""); 
+  const [selectedTechnologyFilter, setSelectedTechnologyFilter] = useState("");
 
   const fetchData = async () => {
     const resultCategory = await getAllCategory();
@@ -82,7 +73,7 @@ const page = () => {
   }, [scrollYProgress]);
 
   useEffect(() => {
-    fetchProjectData()
+    fetchProjectData();
   }, [search]);
 
   useEffect(() => {

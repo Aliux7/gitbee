@@ -1,11 +1,13 @@
 "use client";
-import React, { useEffect } from "react";
+import React, { useEffect, useState } from "react";
 import { motion } from "framer-motion";
 import Card from "../Card";
 import { Tabs, TabsContent, TabsList, TabsTrigger } from "@/components/ui/tabs";
+import { propTypesPlacement } from "@material-tailwind/react/types/components/menu";
 
 interface DashboardHopProps {
   setShowDevelopers: (value: boolean) => void;
+  setSelectedDetailProject: (value: any) => void;
   showDevelopers: boolean;
   expand: boolean;
   projects: any;
@@ -13,6 +15,7 @@ interface DashboardHopProps {
 }
 
 function DashboardHopComponent(props: DashboardHopProps) {
+  const [currentStatus, setCurrentStatus] = useState(0);
   const charVariants = {
     hidden: { opacity: 0 },
     reveal: { opacity: 1 },
@@ -38,18 +41,47 @@ function DashboardHopComponent(props: DashboardHopProps) {
         }`}
       >
         <div className="p-1 rounded-md my-4 border flex justify-around items-center gap-3">
-          <div className="w-1/2 bg-primary-binus hover:bg-gray-100 text-white rounded-sm text-center py-1 cursor-pointer">
-            Reviewed <span className="bg-white text-primary-binus ml-1 px-1 rounded-sm text-sm">10</span>
+          <div
+            className={`w-1/2  ${
+              currentStatus == 1
+                ? "bg-primary-binus text-white"
+                : "bg-transparent hover:bg-gray-100"
+            }  rounded-sm text-center py-1 cursor-pointer`}
+            onClick={() => setCurrentStatus(1)}
+          >
+            Reviewed{" "}
+            <span
+              className={`${
+                currentStatus == 1
+                  ? " bg-white text-primary-binus"
+                  : "bg-primary-binus text-white"
+              } ml-1 px-1 rounded-sm text-sm`}
+            >
+              {props.projects?.["count reviewed"]}
+            </span>
           </div>
-          <div className="w-1/2 bg-transparent hover:bg-gray-100 rounded-sm text-center py-1 cursor-pointer">
-            Not Yet Review <span className="bg-primary-binus text-white ml-1 px-1 rounded-sm text-sm">10</span>
+          <div
+            className={`w-1/2  rounded-sm text-center py-1 cursor-pointer ${
+              currentStatus == 0
+                ? "bg-primary-binus text-white"
+                : "bg-transparent hover:bg-gray-100"
+            }`}
+            onClick={() => setCurrentStatus(0)}
+          >
+            Not Yet Review{" "}
+            <span
+              className={`${
+                currentStatus == 0
+                  ? " bg-white text-primary-binus"
+                  : "bg-primary-binus text-white"
+              } ml-1 px-1 rounded-sm text-sm`}
+            >
+              {props.projects?.["count not reviewed"]}
+            </span>
           </div>
         </div>
       </div>
-
-      <div className="p-2 rounded-md mb-4 border mx-5">
-        {props.projects.length} Results Found
-      </div>
+ 
       <motion.div
         className={`grid grid-cols-3 flex-grow h-fit gap-7 justify-center items-start transition-all ease-in-out duration-500 pt-3`}
         initial="hidden"
@@ -57,86 +89,45 @@ function DashboardHopComponent(props: DashboardHopProps) {
         variants={charVariants}
         transition={{ staggerChildren: 0.5, duration: 1 }}
       >
-        {props.projects.map((project: any, index: number) => (
-          <div
-            className="flex justify-center items-center"
-            onClick={() => {
-              props.setShowDevelopers(!props.showDevelopers);
-              props.handleScrollToTop();
-            }}
-          >
-            <Card
-              image={project?.projectDetail?.thumbnail}
-              delay={0}
-              title={project?.projectDetail?.title}
-              developers={project?.projectGroups}
-            />
-          </div>
-        ))}
-        {props.projects.map((project: any, index: number) => (
-          <div
-            className="flex justify-center items-center"
-            onClick={() => {
-              props.setShowDevelopers(!props.showDevelopers);
-              props.handleScrollToTop();
-            }}
-          >
-            <Card
-              image={project?.projectDetail?.thumbnail}
-              delay={0}
-              title={project?.projectDetail?.title}
-              developers={project?.projectGroups}
-            />
-          </div>
-        ))}
-        {props.projects.map((project: any, index: number) => (
-          <div
-            className="flex justify-center items-center"
-            onClick={() => {
-              props.setShowDevelopers(!props.showDevelopers);
-              props.handleScrollToTop();
-            }}
-          >
-            <Card
-              image={project?.projectDetail?.thumbnail}
-              delay={0}
-              title={project?.projectDetail?.title}
-              developers={project?.projectGroups}
-            />
-          </div>
-        ))}
-        {props.projects.map((project: any, index: number) => (
-          <div
-            className="flex justify-center items-center"
-            onClick={() => {
-              props.setShowDevelopers(!props.showDevelopers);
-              props.handleScrollToTop();
-            }}
-          >
-            <Card
-              image={project?.projectDetail?.thumbnail}
-              delay={0}
-              title={project?.projectDetail?.title}
-              developers={project?.projectGroups}
-            />
-          </div>
-        ))}
-        {props.projects.map((project: any, index: number) => (
-          <div
-            className="flex justify-center items-center"
-            onClick={() => {
-              props.setShowDevelopers(!props.showDevelopers);
-              props.handleScrollToTop();
-            }}
-          >
-            <Card
-              image={project?.projectDetail?.thumbnail}
-              delay={0}
-              title={project?.projectDetail?.title}
-              developers={project?.projectGroups}
-            />
-          </div>
-        ))}
+        {currentStatus === 1
+          ? props.projects?.["reviewed"]?.map((project: any, index: number) => (
+              <div
+                key={index}
+                className="flex justify-center items-center"
+                onClick={() => {
+                  props.setShowDevelopers(!props.showDevelopers);
+                  props.setSelectedDetailProject(project);
+                  props.handleScrollToTop();
+                }}
+              >
+                <Card
+                  image={project?.projectDetail?.thumbnail}
+                  delay={0}
+                  title={project?.projectDetail?.title}
+                  developers={project?.projectGroups}
+                />
+              </div>
+            ))
+          : props.projects?.["not reviewed"]?.map(
+              (project: any, index: number) => (
+                <div
+                  key={index}
+                  className="flex justify-center items-center"
+                  onClick={() => {
+                    props.setShowDevelopers(!props.showDevelopers);
+                    props.setSelectedDetailProject(project);
+                    props.handleScrollToTop();
+                  }}
+                >
+                  <Card
+                    image={project?.projectDetail?.thumbnail}
+                    delay={0}
+                    title={project?.projectDetail?.title}
+                    developers={project?.projectGroups}
+                  />
+                </div>
+              )
+            )}
       </motion.div>
     </motion.div>
   );

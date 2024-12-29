@@ -81,10 +81,7 @@ function DashboardSccComponent(props: DashboardSccProps) {
           </div>
         </div>
       </div>
-
-      <div className="p-2 rounded-md mb-4 border mx-5">
-        {/* {props.projects.length} Results Found */}
-      </div>
+ 
       <motion.div
         className={`grid grid-cols-3 flex-grow h-fit gap-7 justify-center items-start transition-all ease-in-out duration-500 pt-3`}
         initial="hidden"
