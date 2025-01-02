@@ -53,11 +53,11 @@ export const getAllProjects = async (
   search: string,
   categoryFilter: string,
   majorFilter: string,
-  technologyFilter: string
+  semester_id: string
 ) => {
   try {
     const response = await fetch(
-      `${process.env.NEXT_PUBLIC_BACKEND_API}project/all?search=${search}&categoryFilter=${categoryFilter}&majorFilter=${majorFilter}&technologyFilter=${technologyFilter}`
+      `${process.env.NEXT_PUBLIC_BACKEND_API}project/admin/dashboard?search=${search}&categoryFilter=${categoryFilter}&majorFilter=${majorFilter}&semester_id=${semester_id}`
     );
     const result = await response.json();
 

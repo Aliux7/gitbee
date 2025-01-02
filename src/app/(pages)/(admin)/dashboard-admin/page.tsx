@@ -26,7 +26,9 @@ import {
 import DDMenuCourses from "@/app/components/DDMenuCourses";
 import { BsCalendar4Range } from "react-icons/bs";
 import Link from "next/link";
+
 const page = () => {
+  const listStatus = ["submitted", "graded", "reviewed", "outstanding"];
   const { scrollYProgress } = useScroll();
   const prevScrollY = useRef(0);
   const [expand, setExpand] = useState(true);
@@ -37,11 +39,13 @@ const page = () => {
   const [search, setSearch] = useState("");
   const [majors, setMajors] = useState<{ id: number; name: string }[]>([]);
   const [techs, setTechs] = useState<{ id: number; name: string }[]>([]);
-  const [projects, setProjects] = useState<any[]>([]);
+  const [projects, setProjects] = useState<any>([]);
   const [selectedCategoryFilter, setSelectedCategoryFilter] = useState("");
   const [selectedMajorFilter, setSelectedMajorFilter] = useState("");
   const [selectedTechnologyFilter, setSelectedTechnologyFilter] = useState("");
   const [selectedProjectId, setSelectedProjectId] = useState("");
+  const [selectedSemesterId, setSelectedSemesterId] = useState("");
+  const [selectedStatus, setSelectedStats] = useState(1);
 
   const fetchData = async () => {
     const resultCategory = await getAllCategory();
@@ -59,7 +63,7 @@ const page = () => {
       search,
       selectedCategoryFilter,
       selectedMajorFilter,
-      selectedTechnologyFilter
+      selectedSemesterId
     );
     if (resultProject?.success) setProjects(resultProject.data);
     console.log(resultProject?.data);
@@ -149,30 +153,59 @@ const page = () => {
         </div>
       </div>
       <div className="w-auto bg-white shadow-md rounded-md mx-9 mb-7 flex justify-around items-center py-7">
-        <div className="flex flex-col justify-center items-center text-lg gap-3 hover:bg-gray-50 px-7 py-3 rounded-lg cursor-pointer">
+        <div
+          onClick={() => setSelectedStats(1)}
+          className={`flex flex-col justify-center items-center text-lg gap-3 hover:bg-gray-50 px-7 py-3 rounded-lg cursor-pointer ${
+            selectedStatus == 1 && "border border-primary-binus"
+          } `}
+        >
           <img src="/icons/submit.png" className="w-24 h-24" />
           <div className="flex justify-center items-center gap-2">
             Submitted{" "}
             <span className="bg-primary-binus text-white px-1 text-sm rounded-sm">
-              10
+              {projects?.["count submitted"]}
             </span>
           </div>
         </div>
-        <div className="flex flex-col justify-center items-center text-lg gap-3 hover:bg-gray-50 px-7 py-3 rounded-lg cursor-pointer">
+        <div
+          onClick={() => setSelectedStats(2)}
+          className={`flex flex-col justify-center items-center text-lg gap-3 hover:bg-gray-50 px-7 py-3 rounded-lg cursor-pointer ${
+            selectedStatus == 2 && "border border-primary-binus"
+          } `}
+        >
           <img src="/icons/reviews.png" className="w-24 h-24" />
           <div className="flex justify-center items-center gap-2">
             Graded{" "}
             <span className="bg-primary-binus text-white px-1 text-sm rounded-sm">
-              10
+              {projects?.["count graded"]}
             </span>
           </div>
         </div>
-        <div className="flex flex-col justify-center items-center text-lg gap-3 hover:bg-gray-50 px-7 py-3 rounded-lg cursor-pointer">
+        <div
+          onClick={() => setSelectedStats(3)}
+          className={`flex flex-col justify-center items-center text-lg gap-3 hover:bg-gray-50 px-7 py-3 rounded-lg cursor-pointer ${
+            selectedStatus == 3 && "border border-primary-binus"
+          } `}
+        >
           <img src="/icons/recommendation.png" className="w-24 h-24" />
           <div className="flex justify-center items-center gap-2">
             Reviewed{" "}
             <span className="bg-primary-binus text-white px-1 text-sm rounded-sm">
-              10
+              {projects?.["count reviewed"]}
+            </span>
+          </div>
+        </div>
+        <div
+          onClick={() => setSelectedStats(4)}
+          className={`flex flex-col justify-center items-center text-lg gap-3 hover:bg-gray-50 px-7 py-3 rounded-lg cursor-pointer ${
+            selectedStatus == 4 && "border border-primary-binus"
+          } `}
+        >
+          <img src="/icons/outstanding.png" className="w-24 h-24" />
+          <div className="flex justify-center items-center gap-2">
+            Outstanding{" "}
+            <span className="bg-primary-binus text-white px-1 text-sm rounded-sm">
+              {projects?.["count outstanding"]}
             </span>
           </div>
         </div>
@@ -190,85 +223,35 @@ const page = () => {
               <TableHead className="text-center">Action</TableHead>
             </TableRow>
           </TableHeader>
-          <TableBody>
-            <TableRow>
-              <TableCell className="text-start font-medium">01</TableCell>
-              <TableCell className="text-center">The Spotify</TableCell>
-              <TableCell className="text-center">
-                <Link href={"/"}>Project Link</Link>
-              </TableCell>
-              <TableCell className="text-center">
-                <Link href={"/"}>Project Link</Link>
-              </TableCell>
-              <TableCell className="text-center">
-                <div>
-                  1. Kelson Edbert Susilo <br />
-                  2. Kelson Edbert Susilo <br />
-                  3. Kelson Edbert Susilo
-                </div>
-              </TableCell>
-              <TableCell className="text-center">Mark By Lecturer</TableCell>
-              <TableCell className="text-center">
-                <Link
-                  href="/detail-admin-project"
-                  className="bg-primary-binus px-2 py-1 text-white rounded-md"
-                >
-                  Detail
-                </Link>
-              </TableCell>
-            </TableRow>
-            <TableRow>
-              <TableCell className="text-start font-medium">01</TableCell>
-              <TableCell className="text-center">The Spotify</TableCell>
-              <TableCell className="text-center">
-                <Link href={"/"}>Project Link</Link>
-              </TableCell>
-              <TableCell className="text-center">
-                <Link href={"/"}>Project Link</Link>
-              </TableCell>
-              <TableCell className="text-center">
-                <div>
-                  1. Kelson Edbert Susilo <br />
-                  2. Kelson Edbert Susilo <br />
-                  3. Kelson Edbert Susilo
-                </div>
-              </TableCell>
-              <TableCell className="text-center">Recommeded By HOP</TableCell>
-              <TableCell className="text-center">
-                <Link
-                  href="/detail-admin-project"
-                  className="bg-primary-binus px-2 py-1 text-white rounded-md"
-                >
-                  Detail
-                </Link>
-              </TableCell>
-            </TableRow>
-            <TableRow>
-              <TableCell className="text-start font-medium">01</TableCell>
-              <TableCell className="text-center">The Spotify</TableCell>
-              <TableCell className="text-center">
-                <Link href={"/"}>Project Link</Link>
-              </TableCell>
-              <TableCell className="text-center">
-                <Link href={"/"}>Project Link</Link>
-              </TableCell>
-              <TableCell className="text-center">
-                <div>
-                  1. Kelson Edbert Susilo <br />
-                  2. Kelson Edbert Susilo <br />
-                  3. Kelson Edbert Susilo
-                </div>
-              </TableCell>
-              <TableCell className="text-center">Mark By Lecturer</TableCell>
-              <TableCell className="text-center">
-                <Link
-                  href="/detail-admin-project"
-                  className="bg-primary-binus px-2 py-1 text-white rounded-md"
-                >
-                  Detail
-                </Link>
-              </TableCell>
-            </TableRow>
+          <TableBody> 
+            {projects?.[listStatus[selectedStatus - 1]]?.map((project: any) => (
+              <TableRow>
+                <TableCell className="text-start font-medium">01</TableCell>
+                <TableCell className="text-center">The Spotify</TableCell>
+                <TableCell className="text-center">
+                  <Link href={"/"}>Project Link</Link>
+                </TableCell>
+                <TableCell className="text-center">
+                  <Link href={"/"}>Project Link</Link>
+                </TableCell>
+                <TableCell className="text-center">
+                  <div>
+                    1. Kelson Edbert Susilo <br />
+                    2. Kelson Edbert Susilo <br />
+                    3. Kelson Edbert Susilo
+                  </div>
+                </TableCell>
+                <TableCell className="text-center">Mark By Lecturer</TableCell>
+                <TableCell className="text-center">
+                  <Link
+                    href="/detail-admin-project"
+                    className="bg-primary-binus px-2 py-1 text-white rounded-md"
+                  >
+                    Detail
+                  </Link>
+                </TableCell>
+              </TableRow>
+            ))}
           </TableBody>
         </Table>
       </div>

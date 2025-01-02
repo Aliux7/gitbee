@@ -39,6 +39,7 @@ const page = () => {
             if (result.data.Role == "Lecturer") router.push("/dashboard-lecturer");
             if (result.data.Role == "Scc") router.push("/dashboard-scc");
             if (result.data.Role == "Hop") router.push("/dashboard-hop");
+            if (result.data.Role == "Admin") router.push("/dashboard-admin");
           } else {
             router.push("/");
           }
