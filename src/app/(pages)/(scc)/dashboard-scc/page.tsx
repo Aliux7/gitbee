@@ -45,7 +45,8 @@ const page = () => {
   const fetchProjectData = async () => {
     const resultProject = await getAllProjects(
       search,
-      "6",
+      // "6",
+      "",
       "be992b30-4b38-4361-8404-25f2d6912754",
       "COMP6100001"
     );

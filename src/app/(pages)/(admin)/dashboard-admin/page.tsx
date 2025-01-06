@@ -161,7 +161,7 @@ const page = () => {
         >
           <img src="/icons/submit.png" className="w-24 h-24" />
           <div className="flex justify-center items-center gap-2">
-            Submitted{" "}
+            Submitted By Student{" "}
             <span className="bg-primary-binus text-white px-1 text-sm rounded-sm">
               {projects?.["count submitted"]}
             </span>
@@ -175,7 +175,7 @@ const page = () => {
         >
           <img src="/icons/reviews.png" className="w-24 h-24" />
           <div className="flex justify-center items-center gap-2">
-            Graded{" "}
+            Graded By Lecturer{" "}
             <span className="bg-primary-binus text-white px-1 text-sm rounded-sm">
               {projects?.["count graded"]}
             </span>
@@ -189,7 +189,7 @@ const page = () => {
         >
           <img src="/icons/recommendation.png" className="w-24 h-24" />
           <div className="flex justify-center items-center gap-2">
-            Reviewed{" "}
+            Reviewed By SCC{" "}
             <span className="bg-primary-binus text-white px-1 text-sm rounded-sm">
               {projects?.["count reviewed"]}
             </span>
@@ -203,7 +203,7 @@ const page = () => {
         >
           <img src="/icons/outstanding.png" className="w-24 h-24" />
           <div className="flex justify-center items-center gap-2">
-            Outstanding{" "}
+            Reviewed By HOP{" "}
             <span className="bg-primary-binus text-white px-1 text-sm rounded-sm">
               {projects?.["count outstanding"]}
             </span>
@@ -223,35 +223,55 @@ const page = () => {
               <TableHead className="text-center">Action</TableHead>
             </TableRow>
           </TableHeader>
-          <TableBody> 
-            {projects?.[listStatus[selectedStatus - 1]]?.map((project: any) => (
-              <TableRow>
-                <TableCell className="text-start font-medium">01</TableCell>
-                <TableCell className="text-center">The Spotify</TableCell>
-                <TableCell className="text-center">
-                  <Link href={"/"}>Project Link</Link>
-                </TableCell>
-                <TableCell className="text-center">
-                  <Link href={"/"}>Project Link</Link>
-                </TableCell>
-                <TableCell className="text-center">
-                  <div>
-                    1. Kelson Edbert Susilo <br />
-                    2. Kelson Edbert Susilo <br />
-                    3. Kelson Edbert Susilo
-                  </div>
-                </TableCell>
-                <TableCell className="text-center">Mark By Lecturer</TableCell>
-                <TableCell className="text-center">
-                  <Link
-                    href="/detail-admin-project"
-                    className="bg-primary-binus px-2 py-1 text-white rounded-md"
-                  >
-                    Detail
-                  </Link>
-                </TableCell>
-              </TableRow>
-            ))}
+          <TableBody>
+            {projects?.[listStatus[selectedStatus - 1]]?.map(
+              (project: any, index: number) => (
+                <TableRow>
+                  <TableCell className="text-start font-medium">
+                    {index + 1}.
+                  </TableCell>
+                  <TableCell className="text-center">
+                    {project?.projectDetail?.title}
+                  </TableCell>
+                  <TableCell className="text-center">
+                    <Link href={project?.projectDetail?.project_link}>
+                      {project?.projectDetail?.project_link}
+                    </Link>
+                  </TableCell>
+                  <TableCell className="text-center">
+                    <Link href={project?.projectDetail?.github_link}>
+                      {project?.projectDetail?.github_link}
+                    </Link>
+                  </TableCell>
+                  <TableCell className="text-center">
+                    <div>
+                      {project?.projectGroups?.map(
+                        (member: any, index: number) => (
+                          <span>
+                            {index + 1}. {member?.student_name} <br />
+                          </span>
+                        )
+                      )}
+                    </div>
+                  </TableCell>
+                  <TableCell className="text-center">
+                    {project?.is_disable ? (
+                      <span className="text-red-500">Hidden</span>
+                    ) : (
+                      <span className="text-green-500">Display</span>
+                    )}
+                  </TableCell>
+                  <TableCell className="text-center">
+                    <Link
+                      href={`/detail-admin-project/${project?.id}`}
+                      className="bg-primary-binus px-2 py-1 text-white rounded-md"
+                    >
+                      Detail
+                    </Link>
+                  </TableCell>
+                </TableRow>
+              )
+            )}
           </TableBody>
         </Table>
       </div>

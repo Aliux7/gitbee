@@ -81,7 +81,7 @@ function DashboardHopComponent(props: DashboardHopProps) {
           </div>
         </div>
       </div>
- 
+
       <motion.div
         className={`grid grid-cols-3 flex-grow h-fit gap-7 justify-center items-start transition-all ease-in-out duration-500 pt-3`}
         initial="hidden"
@@ -118,7 +118,7 @@ function DashboardHopComponent(props: DashboardHopProps) {
                     props.setSelectedDetailProject(project);
                     props.handleScrollToTop();
                   }}
-                >
+                > 
                   <Card
                     image={project?.projectDetail?.thumbnail}
                     delay={0}

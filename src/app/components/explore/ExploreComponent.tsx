@@ -66,55 +66,7 @@ function ExploreComponent(props: ExploreProps) {
               developers={project?.projectGroups}
             />
           </div>
-        ))}
-        {props.projects.map((project: any, index: number) => (
-          <div
-            className="flex justify-center items-center"
-            onClick={() => {
-              props.setShowDevelopers(!props.showDevelopers);
-              props.handleScrollToTop();
-            }}
-          >
-            <Card
-              image={project?.projectDetail?.thumbnail}
-              delay={0}
-              title={project?.projectDetail?.title}
-              developers={project?.projectGroups}
-            />
-          </div>
-        ))}
-        {props.projects.map((project: any, index: number) => (
-          <div
-            className="flex justify-center items-center"
-            onClick={() => {
-              props.setShowDevelopers(!props.showDevelopers);
-              props.handleScrollToTop();
-            }}
-          >
-            <Card
-              image={project?.projectDetail?.thumbnail}
-              delay={0}
-              title={project?.projectDetail?.title}
-              developers={project?.projectGroups}
-            />
-          </div>
-        ))}
-        {props.projects.map((project: any, index: number) => (
-          <div
-            className="flex justify-center items-center"
-            onClick={() => {
-              props.setShowDevelopers(!props.showDevelopers);
-              props.handleScrollToTop();
-            }}
-          >
-            <Card
-              image={project?.projectDetail?.thumbnail}
-              delay={0}
-              title={project?.projectDetail?.title}
-              developers={project?.projectGroups}
-            />
-          </div>
-        ))}
+        ))} 
       </motion.div>
     </motion.div>
   );

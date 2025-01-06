@@ -49,15 +49,10 @@ export const getAllTech = async () => {
   }
 };
 
-export const getAllProjects = async (
-  search: string,
-  categoryFilter: string,
-  majorFilter: string,
-  technologyFilter: string
-) => {
+export const getProjectDetail = async (id_project: string) => {
   try {
     const response = await fetch(
-      `${process.env.NEXT_PUBLIC_BACKEND_API}project/all?search=${search}&categoryFilter=${categoryFilter}&majorFilter=${majorFilter}&technologyFilter=${technologyFilter}`
+      `${process.env.NEXT_PUBLIC_BACKEND_API}project/detail?id=${id_project}`
     );
     const result = await response.json();
 
@@ -71,24 +66,31 @@ export const getAllProjects = async (
   }
 };
 
-//   export const clockIn = async (businessId: string, staffId: string) => {
-//     try {
-//       const responseClockIn = await fetch("/api/staff/attendance/clockin", {
-//         method: "POST",
-//         headers: {
-//           "Content-Type": "application/json",
-//         },
-//         body: JSON.stringify({ businessId, staffId }),
-//       });
+export const toggleIsDisable = async (id_project: string) => {
+  try {
+    const payload = {
+      project_id: id_project,
+    };
+    console.log(payload);
+    const response = await fetch(
+      `${process.env.NEXT_PUBLIC_BACKEND_API}project/admin/disable-toggle?project_id=${id_project}`,
+      {
+        method: "PATCH",
+        headers: {
+          "Content-Type": "application/json",
+        },
+      }
+    );
+    console.log("MASUKASD");
+    const result = await response.json();
+    console.log(result);
 
-//       const resultClockIn = await responseClockIn.json();
-
-//       if (resultClockIn.success) {
-//         return { success: true, message: "ClockIn Successful" };
-//       } else {
-//         return { success: false, message: resultClockIn.message };
-//       }
-//     } catch (error: any) {
-//       console.error("API call failed:", error.message);
-//     }
-//   };
+    if (result.status) {
+      return { success: true, data: result.data ? result.data : "" };
+    } else {
+      return { success: false, message: result.message };
+    }
+  } catch (error: any) {
+    console.error("API call failed:", error.message);
+  }
+};

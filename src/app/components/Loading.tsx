@@ -2,7 +2,7 @@ import React from "react";
 
 const Loading = () => {
   return (
-    <div className="fixed z-[100] bg-black/50 w-screen h-screen flex justify-center items-center">
+    <div className="fixed z-[100] bg-black/50 w-screen h-screen flex justify-center items-center top-0 left-0">
       <div className="flex-col gap-4 w-full flex items-center justify-center">
         <h1 className="font-montserrat font-bold text-2xl text-primary-binus absolute animate-pulse">
           <span className="bg-primary-binus text-white px-2 rounded-md mr-1">
