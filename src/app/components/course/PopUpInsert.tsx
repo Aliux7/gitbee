@@ -60,6 +60,10 @@ interface PopUpInsertProps {
   categories: any;
   technologies: any;
   userId?: string;
+  course_code: string;
+  semester_id: string;
+  class_id: string;
+  lecturer_id: string;
 }
 
 function PopUpInsert(props: PopUpInsertProps) {
@@ -72,14 +76,8 @@ function PopUpInsert(props: PopUpInsertProps) {
   const [currentStep, setCurrentStep] = useState(1);
   const { userData } = useAuth();
   const [loading, setLoading] = useState(false);
-  const [lecturerId, setLecturerId] = useState("KS23-1");
   const [title, setTitle] = useState("");
   const [description, setDescription] = useState("");
-  const [semesterId, setSemesterId] = useState(
-    "be992b30-4b38-4361-8404-25f2d6912754"
-  );
-  const [courseId, setCourseId] = useState("COMP6100001");
-  const [className, setClassName] = useState("BA01");
   const [githubLink, setGithubLink] = useState("");
   const [projectLink, setProjectLink] = useState("");
   const [thumbnail, setThumbnail] = useState<File | undefined>(undefined);
@@ -215,13 +213,13 @@ function PopUpInsert(props: PopUpInsertProps) {
       (member: any) => member.student_id
     );
     const result = await insertProject({
-      lecturerId,
+      lecturerId: props.lecturer_id ? props.lecturer_id : "",
       studentLeaderId,
       title,
       description,
-      semesterId,
-      courseId,
-      className,
+      semesterId: props.semester_id,
+      courseId: props.course_code,
+      className: props.class_id,
       githubLink,
       projectLink,
       thumbnail,
@@ -298,6 +296,9 @@ function PopUpInsert(props: PopUpInsertProps) {
           toast={props.toast}
           userId={userData?.nim}
           setCurrentStep={setCurrentStep}
+          course_code={props.course_code}
+          semester_id={props.semester_id}
+          class_id={props.class_id}
         />
       )}
       {currentStep === 2 && !loading && (
@@ -750,7 +751,7 @@ function PopUpInsert(props: PopUpInsertProps) {
                     </span>
                   </h1>
                   <h3 className="text-sm text-gray-500">
-                    By:{" "}{" "}
+                    By:{" "}
                     {props.groupMembers.map((row: any, index: number) => {
                       return (
                         <span className="capitalize text-gray-500">

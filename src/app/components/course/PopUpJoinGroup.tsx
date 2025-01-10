@@ -28,6 +28,9 @@ interface PopUpJoinGroupProps {
   userId?: string;
   setCurrentStep: (value: number) => void;
   setLoading: (value: boolean) => void;
+  course_code: string;
+  semester_id: string;
+  class_id: string; 
 }
 
 const students = [
@@ -85,10 +88,10 @@ function PopUpJoinGroup(props: PopUpJoinGroupProps) {
 
     props.setLoading(true);
     const result = await createGroup({
-      semester_id: "be992b30-4b38-4361-8404-25f2d6912754",
-      course_id: "COMP6100001",
+      semester_id: props.semester_id,
+      course_id: props.course_code,
       student_ids: selectedStudents,
-      class_id: "BA01",
+      class_id: props.class_id,
     });
     if (result?.success) {
       props.toast({

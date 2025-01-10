@@ -113,12 +113,12 @@ const Header = () => {
             {userData && userData.role === "Student" && (
               <ul className="flex justify-center items-center gap-5">
                 <Link href="/dashboard">
-                  <li className="w-28 cursor-pointer py-2 px-1 relative after:absolute after:w-0 hover:after:w-full after:h-[2px] after:bottom-0 after:left-0 after:bg-primary-binus flex justify-center items-center after:transition-all after:ease-in-out after:duration-300">
+                  <li className="w-fit cursor-pointer py-2 px-3 relative after:absolute after:w-0 hover:after:w-full after:h-[2px] after:bottom-0 after:left-0 after:bg-primary-binus flex justify-center items-center after:transition-all after:ease-in-out after:duration-300">
                     Dashboard
                   </li>
                 </Link>
                 <Link href="/explore">
-                  <li className="w-20 cursor-pointer py-2 px-1 relative after:absolute after:w-0 hover:after:w-full after:h-[2px] after:bottom-0 after:left-0 after:bg-primary-binus flex justify-center items-center after:transition-all after:ease-in-out after:duration-300">
+                  <li className="w-fit cursor-pointer py-2 px-3 relative after:absolute after:w-0 hover:after:w-full after:h-[2px] after:bottom-0 after:left-0 after:bg-primary-binus flex justify-center items-center after:transition-all after:ease-in-out after:duration-300">
                     Explore
                   </li>
                 </Link>
@@ -127,40 +127,40 @@ const Header = () => {
             {userData && userData.role === "Lecturer" && (
               <ul className="flex justify-center items-center gap-5">
                 <Link href="/dashboard-lecturer">
-                  <li className="w-28 cursor-pointer py-2 px-1 relative after:absolute after:w-0 hover:after:w-full after:h-[2px] after:bottom-0 after:left-0 after:bg-primary-binus flex justify-center items-center after:transition-all after:ease-in-out after:duration-300">
+                  <li className="w-fit cursor-pointer py-2 px-3 relative after:absolute after:w-0 hover:after:w-full after:h-[2px] after:bottom-0 after:left-0 after:bg-primary-binus flex justify-center items-center after:transition-all after:ease-in-out after:duration-300">
                     Dashboard
                   </li>
                 </Link>
                 <Link href="/history-lecturer">
-                  <li className="w-20 cursor-pointer py-2 px-1 relative after:absolute after:w-0 hover:after:w-full after:h-[2px] after:bottom-0 after:left-0 after:bg-primary-binus flex justify-center items-center after:transition-all after:ease-in-out after:duration-300">
+                  <li className="w-fit cursor-pointer py-2 px-3 relative after:absolute after:w-0 hover:after:w-full after:h-[2px] after:bottom-0 after:left-0 after:bg-primary-binus flex justify-center items-center after:transition-all after:ease-in-out after:duration-300">
                     History
                   </li>
                 </Link>
               </ul>
             )}
-            {userData && userData.role === "Scc" && (
+            {userData && userData.role.toLowerCase() === "scc" && (
               <ul className="flex justify-center items-center gap-5">
                 <Link href="/dashboard-scc">
-                  <li className="w-28 cursor-pointer py-2 px-1 relative after:absolute after:w-0 hover:after:w-full after:h-[2px] after:bottom-0 after:left-0 after:bg-primary-binus flex justify-center items-center after:transition-all after:ease-in-out after:duration-300">
+                  <li className="w-fit cursor-pointer py-2 px-3 relative after:absolute after:w-0 hover:after:w-full after:h-[2px] after:bottom-0 after:left-0 after:bg-primary-binus flex justify-center items-center after:transition-all after:ease-in-out after:duration-300">
                     Dashboard
                   </li>
                 </Link>
                 <Link href="/explore">
-                  <li className="w-20 cursor-pointer py-2 px-1 relative after:absolute after:w-0 hover:after:w-full after:h-[2px] after:bottom-0 after:left-0 after:bg-primary-binus flex justify-center items-center after:transition-all after:ease-in-out after:duration-300">
+                  <li className="w-fit cursor-pointer py-2 px-3 relative after:absolute after:w-0 hover:after:w-full after:h-[2px] after:bottom-0 after:left-0 after:bg-primary-binus flex justify-center items-center after:transition-all after:ease-in-out after:duration-300">
                     Explore
                   </li>
                 </Link>
               </ul>
             )}
-            {userData && userData.role === "Hop" && (
+            {userData && userData.role.toLowerCase() === "hop" && (
               <ul className="flex justify-center items-center gap-5">
                 <Link href="/dashboard-hop">
-                  <li className="w-28 cursor-pointer py-2 px-1 relative after:absolute after:w-0 hover:after:w-full after:h-[2px] after:bottom-0 after:left-0 after:bg-primary-binus flex justify-center items-center after:transition-all after:ease-in-out after:duration-300">
+                  <li className="w-fit cursor-pointer py-2 px-3 relative after:absolute after:w-0 hover:after:w-full after:h-[2px] after:bottom-0 after:left-0 after:bg-primary-binus flex justify-center items-center after:transition-all after:ease-in-out after:duration-300">
                     Dashboard
                   </li>
                 </Link>
                 <Link href="/explore">
-                  <li className="w-20 cursor-pointer py-2 px-1 relative after:absolute after:w-0 hover:after:w-full after:h-[2px] after:bottom-0 after:left-0 after:bg-primary-binus flex justify-center items-center after:transition-all after:ease-in-out after:duration-300">
+                  <li className="w-fit cursor-pointer py-2 px-3 relative after:absolute after:w-0 hover:after:w-full after:h-[2px] after:bottom-0 after:left-0 after:bg-primary-binus flex justify-center items-center after:transition-all after:ease-in-out after:duration-300">
                     Explore
                   </li>
                 </Link>
@@ -169,18 +169,23 @@ const Header = () => {
             {userData && userData.role === "Admin" && (
               <ul className="flex justify-center items-center gap-5">
                 <Link href="/dashboard-admin">
-                  <li className="w-28 cursor-pointer py-2 px-1 relative after:absolute after:w-0 hover:after:w-full after:h-[2px] after:bottom-0 after:left-0 after:bg-primary-binus flex justify-center items-center after:transition-all after:ease-in-out after:duration-300">
+                  <li className="w-fit cursor-pointer py-2 px-3 relative after:absolute after:w-0 hover:after:w-full after:h-[2px] after:bottom-0 after:left-0 after:bg-primary-binus flex justify-center items-center after:transition-all after:ease-in-out after:duration-300">
                     Dashboard
                   </li>
                 </Link>
                 <Link href="/manage-users">
-                  <li className="w-28 cursor-pointer py-2 px-1 relative after:absolute after:w-0 hover:after:w-full after:h-[2px] after:bottom-0 after:left-0 after:bg-primary-binus flex justify-center items-center after:transition-all after:ease-in-out after:duration-300">
+                  <li className="w-fit cursor-pointer py-2 px-3 relative after:absolute after:w-0 hover:after:w-full after:h-[2px] after:bottom-0 after:left-0 after:bg-primary-binus flex justify-center items-center after:transition-all after:ease-in-out after:duration-300">
                     Manage Users
                   </li>
                 </Link>
                 <Link href="/manage-categories">
-                  <li className="w-20 cursor-pointer py-2 px-1 relative after:absolute after:w-0 hover:after:w-full after:h-[2px] after:bottom-0 after:left-0 after:bg-primary-binus flex justify-center items-center after:transition-all after:ease-in-out after:duration-300">
+                  <li className="w-fit cursor-pointer py-2 px-3 relative after:absolute after:w-0 hover:after:w-full after:h-[2px] after:bottom-0 after:left-0 after:bg-primary-binus flex justify-center items-center after:transition-all after:ease-in-out after:duration-300">
                     Categories
+                  </li>
+                </Link>
+                <Link href="/manage-transactions">
+                  <li className="w-fit cursor-pointer py-2 px-3 relative after:absolute after:w-0 hover:after:w-full after:h-[2px] after:bottom-0 after:left-0 after:bg-primary-binus flex justify-center items-center after:transition-all after:ease-in-out after:duration-300">
+                    Transactions
                   </li>
                 </Link>
               </ul>

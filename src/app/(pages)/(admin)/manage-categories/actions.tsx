@@ -15,23 +15,6 @@ export const getAllCategory = async () => {
   }
 };
 
-export const getAllMajor = async () => {
-  try {
-    const response = await fetch(
-      `${process.env.NEXT_PUBLIC_BACKEND_API}major/all`
-    );
-    const result = await response.json();
-
-    if (result.status) {
-      return { success: true, data: result.data ? result.data : "" };
-    } else {
-      return { success: false, message: result.message };
-    }
-  } catch (error: any) {
-    console.error("API call failed:", error.message);
-  }
-};
-
 export const getAllTech = async () => {
   try {
     const response = await fetch(
@@ -49,15 +32,17 @@ export const getAllTech = async () => {
   }
 };
 
-export const getAllProjects = async (
-  search: string,
-  categoryFilter: string,
-  majorFilter: string,
-  technologyFilter: string
-) => {
+export const AddCategory = async (name: string) => {
   try {
     const response = await fetch(
-      `${process.env.NEXT_PUBLIC_BACKEND_API}project/all?search=${search}&categoryFilter=${categoryFilter}&majorFilter=${majorFilter}&technologyFilter=${technologyFilter}`
+      `${process.env.NEXT_PUBLIC_BACKEND_API}category/admin/insert`,
+      {
+        method: "POST",
+        headers: {
+          "Content-Type": "application/json",
+        },
+        body: JSON.stringify({ name }),
+      }
     );
     const result = await response.json();
 
@@ -71,10 +56,65 @@ export const getAllProjects = async (
   }
 };
 
-export const getProjectById = async (id: string) => {
+export const AddTech = async (name: string) => {
   try {
     const response = await fetch(
-      `${process.env.NEXT_PUBLIC_BACKEND_API}project/detail?id=${id}`
+      `${process.env.NEXT_PUBLIC_BACKEND_API}technology/admin/insert`,
+      {
+        method: "POST",
+        headers: {
+          "Content-Type": "application/json",
+        },
+        body: JSON.stringify({ name }),
+      }
+    );
+    const result = await response.json();
+
+    if (result.status) {
+      return { success: true, data: result.data ? result.data : "" };
+    } else {
+      return { success: false, message: result.message };
+    }
+  } catch (error: any) {
+    console.error("API call failed:", error.message);
+  }
+};
+
+export const UpdateCategory = async (id: string, name: string) => {
+  try {
+    const response = await fetch(
+      `${process.env.NEXT_PUBLIC_BACKEND_API}category/admin/update`,
+      {
+        method: "PATCH",
+        headers: {
+          "Content-Type": "application/json",
+        },
+        body: JSON.stringify({ id, name }),
+      }
+    );
+    const result = await response.json();
+
+    if (result.status) {
+      return { success: true, data: result.data ? result.data : "" };
+    } else {
+      return { success: false, message: result.message };
+    }
+  } catch (error: any) {
+    console.error("API call failed:", error.message);
+  }
+};
+
+export const UpdateTechnologies = async (id: string, name: string) => {
+  try {
+    const response = await fetch(
+      `${process.env.NEXT_PUBLIC_BACKEND_API}technology/admin/update`,
+      {
+        method: "PATCH",
+        headers: {
+          "Content-Type": "application/json",
+        },
+        body: JSON.stringify({ id, name }),
+      }
     );
     const result = await response.json();
 

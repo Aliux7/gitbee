@@ -155,6 +155,7 @@ export const createGroup = async ({
       student_ids,
     };
 
+    console.log(groupData);
     const response = await fetch(
       `${process.env.NEXT_PUBLIC_BACKEND_API}group/student/insert`,
       {

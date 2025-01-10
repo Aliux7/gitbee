@@ -12,7 +12,8 @@ import {
   getAllCategory,
   getAllMajor,
   getAllProjects,
-  getAllTech,
+  getAllSemester,
+  getCurrentSemester,
 } from "./actions";
 import {
   Table,
@@ -26,6 +27,7 @@ import {
 import DDMenuCourses from "@/app/components/DDMenuCourses";
 import { BsCalendar4Range } from "react-icons/bs";
 import Link from "next/link";
+import DDMenuSemester from "@/app/components/DDMenuSemester";
 
 const page = () => {
   const listStatus = ["submitted", "graded", "reviewed", "outstanding"];
@@ -38,7 +40,6 @@ const page = () => {
   );
   const [search, setSearch] = useState("");
   const [majors, setMajors] = useState<{ id: number; name: string }[]>([]);
-  const [techs, setTechs] = useState<{ id: number; name: string }[]>([]);
   const [projects, setProjects] = useState<any>([]);
   const [selectedCategoryFilter, setSelectedCategoryFilter] = useState("");
   const [selectedMajorFilter, setSelectedMajorFilter] = useState("");
@@ -46,6 +47,8 @@ const page = () => {
   const [selectedProjectId, setSelectedProjectId] = useState("");
   const [selectedSemesterId, setSelectedSemesterId] = useState("");
   const [selectedStatus, setSelectedStats] = useState(1);
+  const [listSemester, setListSemester] = useState<any>([]);
+  const [currentSemester, setCurrentSemester] = useState<any>();
 
   const fetchData = async () => {
     const resultCategory = await getAllCategory();
@@ -54,19 +57,22 @@ const page = () => {
     const resultMajor = await getAllMajor();
     if (resultMajor?.success) setMajors(resultMajor.data);
 
-    const resultTech = await getAllTech();
-    if (resultTech?.success) setTechs(resultTech.data);
+    const resultListSemester = await getAllSemester();
+    setListSemester(resultListSemester);
+
+    const resultCurrentSemester = await getCurrentSemester();
+    setCurrentSemester(resultCurrentSemester);
   };
 
   const fetchProjectData = async () => {
+    console.log(currentSemester?.data?.SemesterId)
     const resultProject = await getAllProjects(
       search,
       selectedCategoryFilter,
       selectedMajorFilter,
-      selectedSemesterId
+      currentSemester?.data?.SemesterId
     );
     if (resultProject?.success) setProjects(resultProject.data);
-    console.log(resultProject?.data);
   };
 
   useEffect(() => {
@@ -90,7 +96,7 @@ const page = () => {
     search,
     selectedCategoryFilter,
     selectedMajorFilter,
-    selectedTechnologyFilter,
+    currentSemester
   ]);
 
   useEffect(() => {
@@ -144,11 +150,13 @@ const page = () => {
             setSelectedValue={setSelectedMajorFilter}
             icon={<IoBookOutline className="w-4 h-4" />}
           />
-          <DDMenu
-            options={techs}
-            filter="Technology"
-            setSelectedValue={setSelectedTechnologyFilter}
-            icon={<FaCode className="w-5 h-5" />}
+          <DDMenuSemester
+            className="h-full max-w-44"
+            options={listSemester}
+            filter="Semester"
+            icon={<BsCalendar4Range className="w-4 h-4" />}
+            currentSemester={currentSemester}
+            setCurrentSemester={setCurrentSemester}
           />
         </div>
       </div>

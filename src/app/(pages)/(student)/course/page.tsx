@@ -22,20 +22,25 @@ import {
   TableRow,
 } from "@/components/ui/table";
 import PopUpInsert from "@/app/components/course/PopUpInsert";
-import PopUpJoinGroup from "@/app/components/course/PopUpJoinGroup";
 import {
   getAllCategory,
   getAllTech,
   getGroupDetail,
   getProjectDetail,
-} from "../actions";
+} from "./actions";
 import { useAuth } from "@/app/context/AuthContext";
 import Loading from "@/app/components/Loading";
 import Link from "next/link";
 import { SiGithub } from "react-icons/si";
 import { BsGlobe2 } from "react-icons/bs";
+import { useSearchParams } from "next/navigation";
 
-const page: React.FC<{ params: { id: string } }> = ({ params: { id } }) => {
+const page = () => {
+  const searchParams = useSearchParams();
+  const course_code = searchParams.get("course_code");
+  const course_name = searchParams.get("course_name");
+  const semester_id = searchParams.get("semester_id");
+  const class_id = searchParams.get("class_id");
   const { userData } = useAuth();
   const { scrollYProgress } = useScroll();
   const prevScrollY = useRef(0);
@@ -44,6 +49,7 @@ const page: React.FC<{ params: { id: string } }> = ({ params: { id } }) => {
   const [showInsertForm, setShowInsertForm] = useState(false);
   const [groupDetail, setGroupDetail] = useState<any>([]);
   const [projectDetail, setProjectDetail] = useState<any>([]);
+  const [classTransactionDetail, setClassTransactionDetail] = useState<any>([]);
   const [loading, setLoading] = useState(false);
   const [categories, setCategories] = useState<any>([]);
   const [technologies, setTechnologies] = useState<any>([]);
@@ -67,22 +73,23 @@ const page: React.FC<{ params: { id: string } }> = ({ params: { id } }) => {
     setLoading(true);
 
     const resultProjectDetail = await getProjectDetail(
-      "be992b30-4b38-4361-8404-25f2d6912754",
-      "COMP6100001",
-      id,
+      semester_id ? semester_id : "",
+      course_code ? course_code : "",
+      class_id ? class_id : "",
       userData?.nim ? userData?.nim : ""
     );
-    setProjectDetail(resultProjectDetail?.data);
+    setProjectDetail(resultProjectDetail?.data?.updatedProjects);
+    setClassTransactionDetail(resultProjectDetail?.data?.classTransactions);
     console.log(resultProjectDetail?.data);
 
-    if (resultProjectDetail?.data?.length > 0) {
-      setGroupDetail(resultProjectDetail?.data[0]?.projectGroups);
-      console.log(resultProjectDetail?.data[0]?.projectGroups);
+    if (resultProjectDetail?.data?.updatedProjects?.length > 0) {
+      setGroupDetail(resultProjectDetail?.data?.updatedProjects[0]?.projectGroups);
+      console.log(resultProjectDetail?.data?.updatedProjects[0]?.projectGroups);
     } else if (projectDetail?.length == 0) {
       const resultDetailGroup = await getGroupDetail(
-        "be992b30-4b38-4361-8404-25f2d6912754",
-        "COMP6100001",
-        id,
+        semester_id ? semester_id : "",
+        course_code ? course_code : "",
+        class_id ? class_id : "",
         userData?.nim ? userData?.nim : ""
       );
       setGroupDetail(resultDetailGroup?.data);
@@ -100,7 +107,6 @@ const page: React.FC<{ params: { id: string } }> = ({ params: { id } }) => {
 
   useEffect(() => {
     fetchData();
-    console.log(userData);
   }, []);
 
   return (
@@ -113,8 +119,8 @@ const page: React.FC<{ params: { id: string } }> = ({ params: { id } }) => {
         <div className="w-full border-b flex justify-between items-center pb-3">
           <div className={`px-1 ${expand ? "w-1/2" : "w-[calc(50%-5rem)]"}`}>
             <h1 className="font-montserrat text-xl text-primary-binus font-semibold">
-              <span className="text-primary-orange text-xl">COMP6100001</span> -
-              Software Engineering
+              <span className="text-primary-orange text-xl">{course_code}</span>{" "}
+              - {course_name}
             </h1>
           </div>
           <div
@@ -128,7 +134,7 @@ const page: React.FC<{ params: { id: string } }> = ({ params: { id } }) => {
             } flex justify-end items-center`}
           >
             <div className="bg-secondary-binus text-xl font-semibold rounded-lg px-2 ">
-              {id.toUpperCase()}
+              {class_id?.toUpperCase()}
             </div>
           </div>
         </div>
@@ -152,7 +158,7 @@ const page: React.FC<{ params: { id: string } }> = ({ params: { id } }) => {
             <BreadcrumbSeparator />
             <BreadcrumbItem>
               <BreadcrumbPage className="text-primary-orange">
-                COMP6100001 - Software Engineering
+                {course_code} - {course_name}
               </BreadcrumbPage>
             </BreadcrumbItem>
           </BreadcrumbList>
@@ -379,7 +385,11 @@ const page: React.FC<{ params: { id: string } }> = ({ params: { id } }) => {
           toast={toast}
           technologies={technologies}
           categories={categories}
+          course_code={course_code ? course_code : ""}
+          semester_id={semester_id ? semester_id : ""}
+          class_id={class_id ? class_id : ""}
           userId={userData?.nim}
+          lecturer_id={classTransactionDetail?.lecturer_code}
         />
       )}
       {loading && <Loading />}

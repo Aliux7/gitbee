@@ -24,10 +24,10 @@ const page = () => {
           }
 
           const idToken = accounts[0]?.idToken ? accounts[0].idToken : "";
-          console.log(idToken)
-          const result = await login(idToken); 
+          console.log(idToken);
+          const result = await login(idToken);
+          console.log(result);
           if (result?.success) {
-            console.log(result)
             setUserData({
               nim: result.data.nim,
               name: result.data.Name,
@@ -35,11 +35,17 @@ const page = () => {
               role: result.data.Role,
             });
 
-            if (result.data.Role == "Student") router.push("/dashboard");
-            if (result.data.Role == "Lecturer") router.push("/dashboard-lecturer");
-            if (result.data.Role == "Scc") router.push("/dashboard-scc");
-            if (result.data.Role == "Hop") router.push("/dashboard-hop");
-            if (result.data.Role == "Admin") router.push("/dashboard-admin");
+            console.log(result.data);
+            if (result.data.Role?.toLowerCase() == "student")
+              router.push("/dashboard");
+            if (result.data.Role?.toLowerCase() == "lecturer")
+              router.push("/dashboard-lecturer");
+            if (result.data.Role?.toLowerCase() == "scc")
+              router.push("/dashboard-scc");
+            if (result.data.Role?.toLowerCase() == "hop")
+              router.push("/dashboard-hop");
+            if (result.data.Role?.toLowerCase() == "admin")
+              router.push("/dashboard-admin");
           } else {
             router.push("/");
           }

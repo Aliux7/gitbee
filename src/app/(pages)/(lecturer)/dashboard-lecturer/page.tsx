@@ -16,14 +16,23 @@ import {
   TableRow,
 } from "@/components/ui/table";
 import DDMenuCourses from "@/app/components/DDMenuCourses";
-import { getAllSemester, getCurrentSemester } from "./action";
+import {
+  getAllSemester,
+  getCurrentSemester,
+  getTranscationByLecturer,
+} from "./action";
+import { useAuth } from "@/app/context/AuthContext";
+import Loading from "@/app/components/Loading";
 
 const page = () => {
+  const { userData } = useAuth();
   const { scrollYProgress } = useScroll();
   const prevScrollY = useRef(0);
   const [expand, setExpand] = useState(true);
   const [listSemester, setListSemester] = useState<any>([]);
+  const [transactions, setTransactions] = useState<any>([]);
   const [currentSemester, setCurrentSemester] = useState<any>();
+  const [loading, setLoading] = useState(false);
 
   const [categories, setCategories] = useState<{ id: number; name: string }[]>([
     { id: 1, name: "Algorithm Programming" },
@@ -55,9 +64,25 @@ const page = () => {
     setCurrentSemester(resultCurrentSemester);
   };
 
+  const fetchTransactionData = async () => {
+    setLoading(true);
+    console.log(userData);
+    const resultTransactions = await getTranscationByLecturer(
+      currentSemester?.data?.SemesterId,
+      userData?.nim ? userData?.nim : "",
+    );
+    console.log(resultTransactions?.data);
+    setTransactions(resultTransactions?.data);
+    setLoading(false);
+  };
+
   useEffect(() => {
     fetchData();
   }, []);
+
+  useEffect(() => {
+    fetchTransactionData();
+  }, [currentSemester]);
 
   return (
     <motion.div className="relative min-h-screen flex flex-col justify-start items-center px-[6.25rem] ">
@@ -82,11 +107,13 @@ const page = () => {
               expand ? "w-1/2" : "w-[calc(50%-5rem)]"
             } flex justify-end items-center`}
           >
+            {" "}
             <DDMenuSemester
               options={listSemester}
               filter="Semester"
               icon={<BsCalendar4Range className="w-4 h-4" />}
               currentSemester={currentSemester}
+              setCurrentSemester={setCurrentSemester}
             />
           </div>
         </div>
@@ -113,86 +140,45 @@ const page = () => {
               </TableRow>
             </TableHeader>
             <TableBody>
-              <TableRow>
-                <TableCell className="text-start font-medium">BA01</TableCell>
-                <TableCell className="text-center">COMP6100001</TableCell>
-                <TableCell className="text-center">
-                  Software Engineering
-                </TableCell>
-                <TableCell className="text-center">20 Sept 2024</TableCell>
-                <TableCell className="text-center">20 Sept 2024</TableCell>
-                <TableCell className="text-center">32</TableCell>
-                <TableCell className="text-center">4/5</TableCell>
-                <TableCell className="text-center">
-                  <Link
-                    href="course-lecturer/BA01"
-                    className="bg-primary-binus px-2 py-1 text-white rounded-md"
-                  >
-                    Detail
-                  </Link>
-                </TableCell>
-              </TableRow>
-              <TableRow>
-                <TableCell className="text-start font-medium">BB01</TableCell>
-                <TableCell className="text-center">COMP6100001</TableCell>
-                <TableCell className="text-center">
-                  Software Engineering
-                </TableCell>
-                <TableCell className="text-center">20 Sept 2024</TableCell>
-                <TableCell className="text-center">20 Sept 2024</TableCell>
-                <TableCell className="text-center">32</TableCell>
-                <TableCell className="text-center">3/5</TableCell>
-                <TableCell className="text-center">
-                  <Link
-                    href="course-lecturer/BB01"
-                    className="bg-primary-binus px-2 py-1 text-white rounded-md"
-                  >
-                    Detail
-                  </Link>
-                </TableCell>
-              </TableRow>
-              <TableRow>
-                <TableCell className="text-start font-medium">BC01</TableCell>
-                <TableCell className="text-center">COMP6100001</TableCell>
-                <TableCell className="text-center">
-                  Software Engineering
-                </TableCell>
-                <TableCell className="text-center">20 Sept 2024</TableCell>
-                <TableCell className="text-center">20 Sept 2024</TableCell>
-                <TableCell className="text-center">32</TableCell>
-                <TableCell className="text-center">1/5</TableCell>
-                <TableCell className="text-center">
-                  <Link
-                    href="course-lecturer/BC01"
-                    className="bg-primary-binus px-2 py-1 text-white rounded-md"
-                  >
-                    Detail
-                  </Link>
-                </TableCell>
-              </TableRow>
-              <TableRow>
-                <TableCell className="text-start font-medium">BD01</TableCell>
-                <TableCell className="text-center">COMP6100001</TableCell>
-                <TableCell className="text-center">
-                  Software Engineering
-                </TableCell>
-                <TableCell className="text-center">20 Sept 2024</TableCell>
-                <TableCell className="text-center">20 Sept 2024</TableCell>
-                <TableCell className="text-center">32</TableCell>
-                <TableCell className="text-center">1/5</TableCell>
-                <TableCell className="text-center">
-                  <Link
-                    href="course-lecturer/BD01"
-                    className="bg-primary-binus px-2 py-1 text-white rounded-md"
-                  >
-                    Detail
-                  </Link>
-                </TableCell>
-              </TableRow>
+              {transactions?.map((transaction: any) => (
+                <TableRow>
+                  <TableCell className="text-start font-medium">
+                    {transaction?.class}
+                  </TableCell>
+                  <TableCell className="text-center">
+                    {transaction?.course_code}
+                  </TableCell>
+                  <TableCell className="text-center">
+                    {transaction?.course_name}
+                  </TableCell>
+                  <TableCell className="text-center"> - </TableCell>
+                  <TableCell className="text-center"> - </TableCell>
+                  <TableCell className="text-center"> - </TableCell>
+                  <TableCell className="text-center"> - </TableCell>
+                  <TableCell className="text-center">
+                    <Link
+                      href={{
+                        pathname: `/course-lecturer`,
+                        query: {
+                          course_code: transaction?.course_code,
+                          course_name: transaction?.course_name,
+                          semester_id: currentSemester?.data?.SemesterId,
+                          class_id: transaction?.class,
+                        },
+                      }}
+                      className="bg-primary-binus px-2 py-1 text-white rounded-md"
+                    >
+                      Detail
+                    </Link>
+                  </TableCell>
+                </TableRow>
+              ))}
             </TableBody>
           </Table>
         </div>
       </div>
+
+      {loading && <Loading />}
     </motion.div>
   );
 };

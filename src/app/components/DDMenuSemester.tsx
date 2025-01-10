@@ -18,6 +18,7 @@ type DDMenuSemesterProps = {
   icon: React.ReactElement;
   className?: string;
   currentSemester: any;
+  setCurrentSemester: any;
 };
 
 const DDMenuSemester: React.FC<DDMenuSemesterProps> = ({
@@ -26,20 +27,21 @@ const DDMenuSemester: React.FC<DDMenuSemesterProps> = ({
   icon,
   className,
   currentSemester,
+  setCurrentSemester,
 }) => {
   const [position, setPosition] = React.useState("");
 
   React.useEffect(() => {
     setPosition(currentSemester?.data?.Description);
-    console.log(currentSemester?.data?.Description);
-  }, [currentSemester])
+  }, [currentSemester]);
+
   return (
     <DropdownMenu>
       <DropdownMenuTrigger asChild>
         <Button
           variant="outline"
-          className={`h-full w-72 flex justify-between items-center gap-3 py-3 ${
-            className == null ? "max-h-10" : ""
+          className={`h-full flex justify-between items-center gap-3 py-3 ${
+            className == null ? null : className
           }`}
         >
           <div className="pr-2 border-r h-full flex justify-center items-center">
@@ -51,9 +53,28 @@ const DDMenuSemester: React.FC<DDMenuSemesterProps> = ({
         </Button>
       </DropdownMenuTrigger>
       <DropdownMenuContent className="w-72">
-        <DropdownMenuRadioGroup value={position} onValueChange={setPosition}>
+        <DropdownMenuRadioGroup
+          value={position}
+          onValueChange={(newValue) => {
+            setPosition(newValue);
+            const selectedOption = options?.data?.find(
+              (option: any) => option.Description === newValue
+            );
+            if (selectedOption) {
+              setCurrentSemester({
+                data: {
+                  SemesterId: selectedOption?.SemesterID,
+                  Description: selectedOption?.Description,
+                },
+              });
+            }
+          }}
+        >
           {options?.data?.map((option: any, index: number) => (
-            <DropdownMenuRadioItem key={option?.SemesterId ? option.SemesterId : index} value={option.Description}>
+            <DropdownMenuRadioItem
+              key={option?.SemesterId ? option.SemesterId : index}
+              value={option.Description}
+            >
               {option.Description}
             </DropdownMenuRadioItem>
           ))}

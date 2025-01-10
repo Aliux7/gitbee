@@ -2,7 +2,7 @@
 import React, { useEffect, useRef, useState } from "react";
 import { motion, useScroll } from "framer-motion";
 import { CiSearch } from "react-icons/ci";
-import { getAllUsers } from "./actions";
+// import { getAllUsers } from "./actions";
 import {
   Table,
   TableBody,
@@ -13,7 +13,7 @@ import {
   TableRow,
 } from "@/components/ui/table";
 import Link from "next/link";
-import ImportExcel from "@/app/components/manage-users/ImportExcel";
+import ImportExcel from "@/app/components/manage-transactions/ImportExcel";
 import PopUpUsers from "@/app/components/manage-users/PopUpUsers";
 
 const page = () => {
@@ -29,9 +29,9 @@ const page = () => {
   const [selectedUserToUpdate, setSelectedUserToUpdate] = useState<any>();
 
   const fetchData = async () => {
-    const resultUsers = await getAllUsers(search);
-    console.log(resultUsers?.data);
-    setUsers(resultUsers?.data);
+    // const resultUsers = await getAllUsers(search);
+    // console.log(resultUsers?.data);
+    // setUsers(resultUsers?.data);
   };
 
   useEffect(() => {
@@ -79,39 +79,7 @@ const page = () => {
               expand ? "w-full" : "w-[35.5rem]"
             } h-full p-3 px-12 rounded-md`}
           />
-        </div>
-        <div className="relative min-w-fit flex justify-end items-center h-full bg-white border rounded-md px-2 gap-2">
-          <button
-            className={`w-full whitespace-nowrap cursor-pointer py-2 px-4 relative ${
-              selectedRole == 0
-                ? "bg-primary-binus text-white"
-                : "bg-transparent text-primary-binus hover:bg-gray-50"
-            } rounded-sm`}
-            onClick={() => setSelectedRole(0)}
-          >
-            User HOP
-          </button>
-          <button
-            className={`w-full whitespace-nowrap cursor-pointer py-2 px-4 relative ${
-              selectedRole == 1
-                ? "bg-primary-binus text-white"
-                : "bg-transparent text-primary-binus hover:bg-gray-50"
-            } rounded-sm`}
-            onClick={() => setSelectedRole(1)}
-          >
-            User SCC
-          </button>
-          <button
-            className={`w-full whitespace-nowrap cursor-pointer py-2 px-4 relative ${
-              selectedRole == 2
-                ? "bg-primary-binus text-white"
-                : "bg-transparent text-primary-binus hover:bg-gray-50"
-            } rounded-sm`}
-            onClick={() => setSelectedRole(2)}
-          >
-            User Lecturer
-          </button>
-        </div>
+        </div> 
         <div className="relative min-w-fit flex justify-end items-center h-full bg-white border rounded-md px-2 gap-2">
           <button
             className="w-full whitespace-nowrap cursor-pointer py-2 px-4 relative text-primary-binus rounded-sm"

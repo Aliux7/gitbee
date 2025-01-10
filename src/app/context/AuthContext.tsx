@@ -50,13 +50,13 @@ export const AuthProvider = ({ children }: AuthProviderProps) => {
     }
 
     const decoded = jwt.decode(token) as JwtPayload;
-    console.log(decoded)
+    console.log(decoded);
     setUserData({
       // nim: decoded.nim,
-      nim: decoded.nim,
-      name: decoded.name,
-      email: decoded.email,
-      role: decoded.role,
+      nim: decoded?.nim ? decoded.nim : "",
+      name: decoded?.name ? decoded.name : "",
+      email: decoded?.email ? decoded.email : "",
+      role: decoded?.role ? decoded.role : "",
     });
 
     // setUserData({

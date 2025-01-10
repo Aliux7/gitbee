@@ -22,8 +22,10 @@ import {
   getHistoryByLecturer,
 } from "./action";
 import { CiSearch } from "react-icons/ci";
+import { useAuth } from "@/app/context/AuthContext";
 
 const page = () => {
+  const { userData } = useAuth();
   const { scrollYProgress } = useScroll();
   const prevScrollY = useRef(0);
   const [expand, setExpand] = useState(true);
@@ -61,6 +63,7 @@ const page = () => {
 
     const resultCurrentSemester = await getCurrentSemester();
     setCurrentSemester(resultCurrentSemester);
+    console.log(resultCurrentSemester?.data?.SemesterId);
 
     fetchHistroyData();
   };
@@ -71,7 +74,8 @@ const page = () => {
 
   const fetchHistroyData = async () => {
     const resultHistoryOutstandingData = await getHistoryByLecturer(
-      "KS23-1",
+      currentSemester?.data?.SemesterId,
+      userData?.nim ? userData.nim : "",
       search
     );
     setHistoryOutstandingProject(resultHistoryOutstandingData?.data);
@@ -79,7 +83,7 @@ const page = () => {
 
   useEffect(() => {
     fetchHistroyData();
-  }, [search]);
+  }, [search, currentSemester]);
 
   return (
     <motion.div className="relative min-h-screen flex flex-col justify-start items-center px-[6.25rem] ">
@@ -109,6 +113,7 @@ const page = () => {
               filter="Semester"
               icon={<BsCalendar4Range className="w-4 h-4" />}
               currentSemester={currentSemester}
+              setCurrentSemester={setCurrentSemester}
             />
           </div>
         </div>

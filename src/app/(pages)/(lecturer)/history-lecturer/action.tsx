@@ -6,7 +6,10 @@ export const getAllSemester = async () => {
     const result = await response.json();
 
     if (result.status) {
-      return { success: true, data: result.data ? result.data.reverse().slice(0, 7) : "" };
+      return {
+        success: true,
+        data: result.data ? result.data.reverse().slice(0, 7) : "",
+      };
     } else {
       return { success: false, message: result.message };
     }
@@ -32,10 +35,16 @@ export const getCurrentSemester = async () => {
   }
 };
 
-export const getHistoryByLecturer = async (lecturer_id: string, search: string) => {
+export const getHistoryByLecturer = async (
+  semester_id: string,
+  lecturer_id: string,
+  search: string
+) => {
   try {
+    console.log(semester_id);
+    console.log(lecturer_id);
     const response = await fetch(
-      `${process.env.NEXT_PUBLIC_BACKEND_API}project/lecturer/all-reviewed?id=${lecturer_id}&search=${search}`
+      `${process.env.NEXT_PUBLIC_BACKEND_API}project/lecturer/all-reviewed?semester_id=${semester_id}&lecturer_id=${lecturer_id}&search=${search}`
     );
     const result = await response.json();
 

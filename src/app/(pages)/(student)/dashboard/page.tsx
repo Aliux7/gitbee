@@ -6,15 +6,22 @@ import { BsCalendar4Range } from "react-icons/bs";
 import DDMenuSemester from "@/app/components/DDMenuSemester";
 import Card from "@/app/components/Card";
 import Link from "next/link";
-import { getAllSemester, getCurrentSemester } from "./action";
+import {
+  getAllSemester,
+  getCurrentSemester,
+  getTranscationByStudent,
+} from "./action";
 import Loading from "@/app/components/Loading";
+import { useAuth } from "@/app/context/AuthContext";
 
 const page = () => {
+  const { userData } = useAuth();
   const { scrollYProgress } = useScroll();
   const prevScrollY = useRef(0);
   const [expand, setExpand] = useState(true);
   const [listSemester, setListSemester] = useState<any>([]);
   const [currentSemester, setCurrentSemester] = useState<any>();
+  const [transactions, setTransactions] = useState<any>([]);
   const [loading, setLoading] = useState(false);
 
   useEffect(() => {
@@ -35,16 +42,33 @@ const page = () => {
   const fetchData = async () => {
     setLoading(true);
     const resultListSemester = await getAllSemester();
+    console.log(resultListSemester);
     setListSemester(resultListSemester);
-    
+
     const resultCurrentSemester = await getCurrentSemester();
     setCurrentSemester(resultCurrentSemester);
+    console.log(resultCurrentSemester);
+    setLoading(false);
+  };
+
+  const fetchTransactionData = async () => {
+    setLoading(true);
+    const resultTransactions = await getTranscationByStudent(
+      currentSemester?.data?.SemesterId,
+      userData?.nim ? userData?.nim : ""
+    );
+    console.log(resultTransactions?.data);
+    setTransactions(resultTransactions?.data);
     setLoading(false);
   };
 
   useEffect(() => {
     fetchData();
   }, []);
+
+  useEffect(() => {
+    fetchTransactionData();
+  }, [currentSemester]);
 
   return (
     <motion.div className="relative min-h-screen flex flex-col justify-start items-center px-[6.25rem] ">
@@ -74,143 +98,55 @@ const page = () => {
               filter="Semester"
               icon={<BsCalendar4Range className="w-4 h-4" />}
               currentSemester={currentSemester}
+              setCurrentSemester={setCurrentSemester}
             />
           </div>
         </div>
       </div>
       <div className="grid grid-cols-3 h-fit pt-44 w-full gap-5">
-        <Link
-          href={"/course/BA01"}
-          className="h-fit bg-white shadow-md hover:shadow-xl rounded-md p-5 cursor-pointer"
-        >
-          <div className="flex justify-between w-full">
-            <div className="flex flex-col w-9/12">
-              <h3 className="text-sm truncate text-primary-orange">
-                COMP6100001
-              </h3>
-              <h1 className="text-xl font-semibold truncate">
-                Software Engineering
+        {transactions?.map((transaction: any) => (
+          <Link
+            href={{
+              pathname: `/course`,
+              query: {
+                course_code: transaction?.course_code,
+                course_name: transaction?.course_name,
+                semester_id: currentSemester?.data?.SemesterId,
+                class_id: transaction?.class,
+              },
+            }}
+            className="h-fit bg-white shadow-md hover:shadow-xl rounded-md p-5 cursor-pointer"
+          >
+            <div className="flex justify-between w-full">
+              <div className="flex flex-col w-9/12">
+                <h3 className="text-sm truncate text-primary-orange">
+                  {transaction?.course_code}
+                </h3>
+                <h1 className="text-xl font-semibold truncate">
+                  {transaction?.course_name}
+                </h1>
+              </div>
+              <h1 className="text-lg font-semibold truncate max-w-2/12 w-auto min-w-14 text-center bg-secondary-binus rounded-lg h-fit px-2">
+                {transaction?.class}
               </h1>
             </div>
-            <h1 className="text-lg font-semibold truncate max-w-2/12 w-auto min-w-14 text-center bg-secondary-binus rounded-lg h-fit px-2">
-              BA01
-            </h1>
-          </div>
-          <div className="text-primary-binus text-sm my-3">
-            Nearest Deadline:{" "}
-            <span className="relative after:absolute after:w-full after:h-px after:bg-primary-orange after:bottom-0 after:left-0">
-              20 Sept 2024
-            </span>
-          </div>
-          <div>
-            <span className="text-md">Lecturer:</span>{" "}
-            <span className="text-sm bg-secondary-binus text-primary-binus rounded-md px-1 mx-0.5">
-              KS23-1
-            </span>{" "}
-            <span className="text-sm bg-secondary-binus text-primary-binus rounded-md px-1 mx-0.5">
-              KS23-1
-            </span>
-          </div>
-        </Link>
-        <Link
-          href={"/course/BB01"}
-          className="h-fit bg-white shadow-md hover:shadow-xl rounded-md p-5 cursor-pointer"
-        >
-          <div className="flex justify-between w-full">
-            <div className="flex flex-col w-9/12">
-              <h3 className="text-sm truncate text-primary-orange">
-                COMP6100001
-              </h3>
-              <h1 className="text-xl font-semibold truncate">
-                Software Engineering
-              </h1>
+            <div className="text-primary-binus text-sm my-3">
+              Location:{" "}
+              <span className="relative after:absolute after:w-full after:h-px after:bg-primary-orange after:bottom-0 after:left-0">
+                {transaction?.location}
+              </span>
             </div>
-            <h1 className="text-lg font-semibold truncate max-w-2/12 w-auto min-w-14 text-center bg-secondary-binus rounded-lg h-fit px-2">
-              BB01
-            </h1>
-          </div>
-          <div className="text-primary-binus text-sm my-3">
-            Nearest Deadline:{" "}
-            <span className="relative after:absolute after:w-full after:h-px after:bg-primary-orange after:bottom-0 after:left-0">
-              20 Sept 2024
-            </span>
-          </div>
-          <div>
-            <span className="text-md">Lecturer:</span>{" "}
-            <span className="text-sm bg-secondary-binus text-primary-binus rounded-md px-1 mx-0.5">
-              KS23-1
-            </span>{" "}
-            <span className="text-sm bg-secondary-binus text-primary-binus rounded-md px-1 mx-0.5">
-              KS23-1
-            </span>
-          </div>
-        </Link>
-        <Link
-          href={"/course/BC01"}
-          className="h-fit bg-white shadow-md hover:shadow-xl rounded-md p-5 cursor-pointer"
-        >
-          <div className="flex justify-between w-full">
-            <div className="flex flex-col w-9/12">
-              <h3 className="text-sm truncate text-primary-orange">
-                COMP6100001
-              </h3>
-              <h1 className="text-xl font-semibold truncate">
-                Software Engineering
-              </h1>
+            <div className="flex justify-start items-start">
+              <span className="text-md">Lecturer:</span>{" "}
+              <span className="text-sm bg-secondary-binus text-primary-binus rounded-md px-1 mx-0.5">
+                {transaction?.lecturer_code}
+              </span>
+              <span className="truncate w-auto">
+                - {transaction?.lecturer_name}
+              </span>
             </div>
-            <h1 className="text-lg font-semibold truncate max-w-2/12 w-auto min-w-14 text-center bg-secondary-binus rounded-lg h-fit px-2">
-              BC01
-            </h1>
-          </div>
-          <div className="text-primary-binus text-sm my-3">
-            Nearest Deadline:{" "}
-            <span className="relative after:absolute after:w-full after:h-px after:bg-primary-orange after:bottom-0 after:left-0">
-              20 Sept 2024
-            </span>
-          </div>
-          <div>
-            <span className="text-md">Lecturer:</span>{" "}
-            <span className="text-sm bg-secondary-binus text-primary-binus rounded-md px-1 mx-0.5">
-              KS23-1
-            </span>{" "}
-            <span className="text-sm bg-secondary-binus text-primary-binus rounded-md px-1 mx-0.5">
-              KS23-1
-            </span>
-          </div>
-        </Link>
-        <Link
-          href={"/course/BD01"}
-          className="h-fit bg-white shadow-md hover:shadow-xl rounded-md p-5 cursor-pointer"
-        >
-          <div className="flex justify-between w-full">
-            <div className="flex flex-col w-9/12">
-              <h3 className="text-sm truncate text-primary-orange">
-                COMP6100001
-              </h3>
-              <h1 className="text-xl font-semibold truncate">
-                Software Engineering
-              </h1>
-            </div>
-            <h1 className="text-lg font-semibold truncate max-w-2/12 w-auto min-w-14 text-center bg-secondary-binus rounded-lg h-fit px-2">
-              BD01
-            </h1>
-          </div>
-          <div className="text-primary-binus text-sm my-3">
-            Nearest Deadline:{" "}
-            <span className="relative after:absolute after:w-full after:h-px after:bg-primary-orange after:bottom-0 after:left-0">
-              20 Sept 2024
-            </span>
-          </div>
-          <div>
-            <span className="text-md">Lecturer:</span>{" "}
-            <span className="text-sm bg-secondary-binus text-primary-binus rounded-md px-1 mx-0.5">
-              KS23-1
-            </span>{" "}
-            <span className="text-sm bg-secondary-binus text-primary-binus rounded-md px-1 mx-0.5">
-              KS23-1
-            </span>
-          </div>
-        </Link>
+          </Link>
+        ))}
       </div>
 
       {loading && <Loading />}

@@ -42,17 +42,25 @@ import {
   deleteGroup,
   finalizeClassProject,
   getAllGroupByClass,
-} from "../actions";
+} from "./actions";
 import { useToast } from "@/hooks/use-toast";
 import { Toaster } from "@/components/ui/toaster";
 import Loading from "@/app/components/Loading";
+import { useSearchParams } from "next/navigation";
+import { useAuth } from "@/app/context/AuthContext";
 
 interface Status {
   id: number;
   created_at: string;
 }
 
-const page: React.FC<{ params: { id: string } }> = ({ params: { id } }) => {
+const page = () => {
+  const { userData } = useAuth();
+  const searchParams = useSearchParams();
+  const course_code = searchParams.get("course_code");
+  const course_name = searchParams.get("course_name");
+  const semester_id = searchParams.get("semester_id");
+  const class_id = searchParams.get("class_id");
   const { scrollYProgress } = useScroll();
   const prevScrollY = useRef(0);
   const { toast } = useToast();
@@ -84,9 +92,9 @@ const page: React.FC<{ params: { id: string } }> = ({ params: { id } }) => {
   const fetchData = async () => {
     setLoading(true);
     const resultAllGroupsData = await getAllGroupByClass(
-      "be992b30-4b38-4361-8404-25f2d6912754",
-      "COMP6100001",
-      id
+      semester_id ? semester_id : "",
+      course_code ? course_code : "",
+      class_id ? class_id : ""
     );
     setGroupsClassData(resultAllGroupsData?.data);
     setRatings(
@@ -118,10 +126,10 @@ const page: React.FC<{ params: { id: string } }> = ({ params: { id } }) => {
     );
 
     const payloadData = {
-      semester_id: "be992b30-4b38-4361-8404-25f2d6912754",
-      course_id: "COMP6100001",
-      class: id,
-      lecturer_id: "KS23-1",
+      semester_id: semester_id ? semester_id : "",
+      course_id: course_code ? course_code : "",
+      class: class_id ? class_id : "",
+      lecturer_id: userData?.nim ? userData?.nim : "",
       assessments: assessments,
     };
 
@@ -171,9 +179,9 @@ const page: React.FC<{ params: { id: string } }> = ({ params: { id } }) => {
 
   const handleDeleteGroup = async (group: string) => {
     const resultDeleteGroup = await deleteGroup(
-      "be992b30-4b38-4361-8404-25f2d6912754",
-      "COMP6100001",
-      id,
+      semester_id ? semester_id : "",
+      course_code ? course_code : "",
+      class_id ? class_id : "",
       group
     );
 
@@ -209,7 +217,8 @@ const page: React.FC<{ params: { id: string } }> = ({ params: { id } }) => {
                         : "text-primary-orange"
                     }`}
                   >
-                    {id.toUpperCase()} - Software Engineering
+                    {class_id ? class_id : "".toUpperCase()} -{" "}
+                    {course_name ? course_name : ""}
                   </BreadcrumbPage>
                 </BreadcrumbItem>
                 {showPreviewDetailProject && <BreadcrumbSeparator />}
@@ -234,7 +243,7 @@ const page: React.FC<{ params: { id: string } }> = ({ params: { id } }) => {
             } flex justify-end items-center`}
           >
             <div className="bg-secondary-binus text-sm font-semibold rounded-md px-2 ">
-              COMP6100001
+              {course_code ? course_code : ""}
             </div>
           </div>
         </div>
@@ -245,25 +254,26 @@ const page: React.FC<{ params: { id: string } }> = ({ params: { id } }) => {
             <div>
               <h1 className="">
                 <span className="text-primary-binus font-semibold">Class:</span>{" "}
-                {id.toUpperCase()}
+                {class_id ? class_id : "".toUpperCase()}
               </h1>
               <h1 className="">
                 <span className="text-primary-binus font-semibold">
                   Course:
                 </span>{" "}
-                COMP6100001 - Software Engineering
+                {course_code ? course_code : ""} -{" "}
+                {course_name ? course_name : ""}
               </h1>
               <h1 className="">
                 <span className="text-primary-binus font-semibold">
                   Start Date Correction:
                 </span>{" "}
-                20 Sept 2024
+                -
               </h1>
               <h1 className="">
                 <span className="text-primary-binus font-semibold">
                   End Date Correction:
                 </span>{" "}
-                20 Sept 2024
+                -
               </h1>
               <h1 className="">
                 <span className="text-primary-binus font-semibold">

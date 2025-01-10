@@ -32,30 +32,10 @@ export const getAllMajor = async () => {
   }
 };
 
-export const getAllSemester = async () => {
+export const getAllTech = async () => {
   try {
     const response = await fetch(
-      `${process.env.NEXT_PUBLIC_BACKEND_API}semester/all`
-    );
-    const result = await response.json();
-
-    if (result.status) {
-      return {
-        success: true,
-        data: result.data ? result.data.reverse().slice(0, 7) : "",
-      };
-    } else {
-      return { success: false, message: result.message };
-    }
-  } catch (error: any) {
-    console.error("API call failed:", error.message);
-  }
-};
-
-export const getCurrentSemester = async () => {
-  try {
-    const response = await fetch(
-      `${process.env.NEXT_PUBLIC_BACKEND_API}semester/current`
+      `${process.env.NEXT_PUBLIC_BACKEND_API}technology/all`
     );
     const result = await response.json();
 
@@ -67,38 +47,21 @@ export const getCurrentSemester = async () => {
   } catch (error: any) {
     console.error("API call failed:", error.message);
   }
-};
+}; 
 
-export const getAllProjects = async (
-  search: string,
-  categoryFilter: string,
-  majorFilter: string,
-  semester_id: string
-) => {
-  console.log(semester_id)
+export const uploadExcelTransactions = async (file: File) => {
   try {
+    const formData = new FormData();
+    formData.append("file", file);
     const response = await fetch(
-      `${process.env.NEXT_PUBLIC_BACKEND_API}project/admin/dashboard?search=${search}&categoryFilter=${categoryFilter}&majorFilter=${majorFilter}&semester_id=${semester_id}`
+      `${process.env.NEXT_PUBLIC_BACKEND_API}user/admin/upload-transaction-excel`,
+      {
+        method: "POST",
+        body: formData,
+      }
     );
     const result = await response.json();
-
-    if (result.status) {
-      return { success: true, data: result.data ? result.data : "" };
-    } else {
-      return { success: false, message: result.message };
-    }
-  } catch (error: any) {
-    console.error("API call failed:", error.message);
-  }
-};
-
-export const getProjectById = async (id: string) => {
-  try {
-    const response = await fetch(
-      `${process.env.NEXT_PUBLIC_BACKEND_API}project/detail?id=${id}`
-    );
-    const result = await response.json();
-
+ 
     if (result.status) {
       return { success: true, data: result.data ? result.data : "" };
     } else {
