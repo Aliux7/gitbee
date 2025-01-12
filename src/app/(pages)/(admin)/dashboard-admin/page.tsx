@@ -256,7 +256,7 @@ const page = () => {
                       {project?.projectGroups?.map(
                         (member: any, index: number) => (
                           <span>
-                            {index + 1}. {member?.student_name} <br />
+                            {index + 1}. <span className="capitalize">{member?.student_name?.toLowerCase()}</span> <br />
                           </span>
                         )
                       )}

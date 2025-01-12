@@ -1,4 +1,4 @@
-export const login = async (microsoftToken: string) => {
+export const login = async (microsoftToken: string, role?: string) => {
   try {
     const responselogin = await fetch(
       `${process.env.NEXT_PUBLIC_BACKEND_API}auth/login`,
@@ -8,7 +8,7 @@ export const login = async (microsoftToken: string) => {
           "Content-Type": "application/json",
         },
         credentials: "include",
-        body: JSON.stringify({ microsoft_token: microsoftToken }),
+        body: JSON.stringify({ microsoft_token: microsoftToken, role: role }),
       }
     );
 

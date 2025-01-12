@@ -32,19 +32,21 @@ const page = () => {
               nim: result.data.nim,
               name: result.data.Name,
               email: result.data.Email,
-              role: result.data.Role,
+              role: result.data.ActiveRole,
+              listRole: result.data.Role,
+              microsoftToken: result.data.MicrosoftToken,
             });
 
             console.log(result.data);
-            if (result.data.Role?.toLowerCase() == "student")
+            if (result.data.ActiveRole?.toLowerCase() == "student")
               router.push("/dashboard");
-            if (result.data.Role?.toLowerCase() == "lecturer")
+            if (result.data.ActiveRole?.toLowerCase() == "lecturer")
               router.push("/dashboard-lecturer");
-            if (result.data.Role?.toLowerCase() == "scc")
+            if (result.data.ActiveRole?.toLowerCase() == "scc")
               router.push("/dashboard-scc");
-            if (result.data.Role?.toLowerCase() == "hop")
+            if (result.data.ActiveRole?.toLowerCase() == "hop")
               router.push("/dashboard-hop");
-            if (result.data.Role?.toLowerCase() == "admin")
+            if (result.data.ActiveRole?.toLowerCase() == "admin")
               router.push("/dashboard-admin");
           } else {
             router.push("/");

@@ -12,25 +12,25 @@ import {
   TableRow,
 } from "@/components/ui/table";
 import Link from "next/link";
-import ImportExcel from "@/app/components/manage-transactions/ImportExcel";
-import { deleteAllTransaction, getAllTransactions } from "./actions";
-import PopUpConfirmation from "@/app/components/manage-transactions/PopUpConfirmation";
+import { deleteAllStudents, getAllStudents } from "./actions";
 import Loading from "@/app/components/Loading";
+import ImportExcel from "@/app/components/manage-student/ImportExcel";
+import PopUpConfirmation from "@/app/components/manage-student/PopUpConfirmation";
 
 const page = () => {
   const { scrollYProgress } = useScroll();
   const prevScrollY = useRef(0);
   const [expand, setExpand] = useState(true);
   const [search, setSearch] = useState("");
-  const [transactions, setTransactions] = useState<any>([]);
+  const [students, setStudents] = useState<any>([]);
   const [openImportExcel, setOpenImportExcel] = useState(false);
   const [openPopUpConfirmation, setOpenPopUpConfirmation] = useState(false);
   const [loading, setLoading] = useState(false);
 
   const fetchData = async () => {
-    const resultTransactions = await getAllTransactions(search);
-    console.log(resultTransactions?.data);
-    setTransactions(resultTransactions?.data);
+    const resultStudents = await getAllStudents(search);
+    console.log(resultStudents?.data);
+    setStudents(resultStudents?.data);
   };
 
   useEffect(() => {
@@ -52,10 +52,10 @@ const page = () => {
     fetchData();
   }, [search]);
 
-  const handleDeleteAllTransaction = async () => {
+  const handleDeleteAllStudents = async () => {
     setLoading(true);
-    const resultDeleteAllTransaction = await deleteAllTransaction();
-    console.log(resultDeleteAllTransaction?.data);
+    const resultDeleteAllStudents = await deleteAllStudents();
+    console.log(resultDeleteAllStudents?.data);
     setOpenPopUpConfirmation(false);
     fetchData();
     setLoading(false);
@@ -103,7 +103,7 @@ const page = () => {
           onClick={() => setOpenPopUpConfirmation(true)}
           className="text-red-500 cursor-pointer"
         >
-          Delete All Transactions
+          Delete All Students
         </span>
       </div>
       <div className="w-auto bg-white shadow-md rounded-md mx-9">
@@ -111,37 +111,31 @@ const page = () => {
           <TableHeader>
             <TableRow>
               <TableHead className="text-start">No.</TableHead>
-              <TableHead className="text-center">Class</TableHead>
+              <TableHead className="text-center">Nim</TableHead>
+              <TableHead className="text-center">Name</TableHead>
               <TableHead className="text-center">Course Code</TableHead>
-              <TableHead className="text-center">Course Name</TableHead>
-              <TableHead className="text-center">Lecturer Code</TableHead>
-              <TableHead className="text-center">Lecturer Name</TableHead>
-              <TableHead className="text-center">Lecturer Location</TableHead>
+              <TableHead className="text-center">Class</TableHead>
+              <TableHead className="text-center">Semester Id</TableHead>
             </TableRow>
           </TableHeader>
           <TableBody>
-            {transactions?.map((transaction: any, index: number) => (
+            {students?.map((student: any, index: number) => (
               <TableRow>
                 <TableCell className="text-start font-medium">
                   {index + 1}.
                 </TableCell>
                 <TableCell className="text-center">
-                  {transaction?.class}
+                  {student?.student_id}
                 </TableCell>
                 <TableCell className="text-center">
-                  {transaction?.course_code}
+                  {student?.student_name}
                 </TableCell>
                 <TableCell className="text-center">
-                  {transaction?.course_name}
+                  {student?.course_code}
                 </TableCell>
+                <TableCell className="text-center">{student?.class}</TableCell>
                 <TableCell className="text-center">
-                  {transaction?.lecturer_code}
-                </TableCell>
-                <TableCell className="text-center">
-                  {transaction?.lecturer_name}
-                </TableCell>
-                <TableCell className="text-center">
-                  {transaction?.location}
+                  {student?.semester_id}
                 </TableCell>
               </TableRow>
             ))}
@@ -157,7 +151,7 @@ const page = () => {
       {openPopUpConfirmation && (
         <PopUpConfirmation
           setOpenPopUpConfirmation={setOpenPopUpConfirmation}
-          handleDeleteAllTransaction={handleDeleteAllTransaction}
+          handleDeleteAllStudents={handleDeleteAllStudents}
         />
       )}
       {loading && <Loading />}

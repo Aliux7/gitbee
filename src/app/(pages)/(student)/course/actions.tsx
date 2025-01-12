@@ -53,7 +53,7 @@ export const insertProject = async ({
   projectLink,
   thumbnail,
   documentation,
-  gallery, 
+  gallery,
   categoryId,
   selectedTechnologies,
   majorId,
@@ -71,7 +71,7 @@ export const insertProject = async ({
   projectLink: string;
   thumbnail?: File;
   documentation?: File;
-  gallery: File[]; 
+  gallery: File[];
   categoryId: string;
   selectedTechnologies: string[];
   majorId: number;
@@ -213,6 +213,27 @@ export const getGroupDetail = async (
   try {
     const response = await fetch(
       `${process.env.NEXT_PUBLIC_BACKEND_API}group/student/current?semester_id=${semester_id}&course_id=${course_id}&class=${class_id}&student_id=${student_id}`
+    );
+    const result = await response.json();
+
+    if (result.status) {
+      return { success: true, data: result.data ? result.data : "" };
+    } else {
+      return { success: false, message: result.message };
+    }
+  } catch (error: any) {
+    console.error("API call failed:", error.message);
+  }
+};
+
+export const getStudentDataInClass = async (
+  semester_id: string,
+  course_id: string,
+  class_id: string
+) => {
+  try {
+    const response = await fetch(
+      `${process.env.NEXT_PUBLIC_BACKEND_API}class/student/list?semester_id=${semester_id}&course_id=${course_id}&class=${class_id}`
     );
     const result = await response.json();
 

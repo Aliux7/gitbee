@@ -18,6 +18,7 @@ import {
 import DDMenuCourses from "@/app/components/DDMenuCourses";
 import {
   getAllSemester,
+  getCoursesByLecturer,
   getCurrentSemester,
   getTranscationByLecturer,
 } from "./action";
@@ -34,11 +35,9 @@ const page = () => {
   const [currentSemester, setCurrentSemester] = useState<any>();
   const [loading, setLoading] = useState(false);
 
-  const [categories, setCategories] = useState<{ id: number; name: string }[]>([
-    { id: 1, name: "Algorithm Programming" },
-    { id: 2, name: "Object Oriented Prog" },
-    { id: 3, name: "Database Technology" },
-  ]);
+  const [categories, setCategories] = useState<
+    { course_code: string; course_name: string }[]
+  >([]);
   const [selectedCategoryFilter, setSelectedCategoryFilter] = useState("");
 
   useEffect(() => {
@@ -70,9 +69,17 @@ const page = () => {
     const resultTransactions = await getTranscationByLecturer(
       currentSemester?.data?.SemesterId,
       userData?.nim ? userData?.nim : "",
+      selectedCategoryFilter
     );
     console.log(resultTransactions?.data);
     setTransactions(resultTransactions?.data);
+
+    const resultCourses = await getCoursesByLecturer(
+      currentSemester?.data?.SemesterId,
+      userData?.nim ? userData?.nim : ""
+    );
+    console.log(resultCourses?.data);
+    setCategories(resultCourses?.data);
     setLoading(false);
   };
 
@@ -82,7 +89,7 @@ const page = () => {
 
   useEffect(() => {
     fetchTransactionData();
-  }, [currentSemester]);
+  }, [currentSemester, selectedCategoryFilter]);
 
   return (
     <motion.div className="relative min-h-screen flex flex-col justify-start items-center px-[6.25rem] ">

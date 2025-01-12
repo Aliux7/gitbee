@@ -15,6 +15,8 @@ interface UserData {
   name: string;
   email: string;
   role: string;
+  listRole: string[];
+  microsoftToken: string;
 }
 
 interface AuthContextType {
@@ -49,22 +51,17 @@ export const AuthProvider = ({ children }: AuthProviderProps) => {
       return;
     }
 
+    console.log(token);
     const decoded = jwt.decode(token) as JwtPayload;
     console.log(decoded);
     setUserData({
-      // nim: decoded.nim,
       nim: decoded?.nim ? decoded.nim : "",
       name: decoded?.name ? decoded.name : "",
       email: decoded?.email ? decoded.email : "",
-      role: decoded?.role ? decoded.role : "",
+      role: decoded?.activeRole ? decoded.activeRole : "",
+      listRole: decoded?.role ? decoded.role : "",
+      microsoftToken: decoded?.microsoftToken ? decoded.microsoftToken : "",
     });
-
-    // setUserData({
-    //   nim: "2540115465",
-    //   name: "Kelson Edbert Susilo",
-    //   email: "kelson.susilo@binus.ac.id ",
-    //   role: "Lecturer",
-    // });
     setLoading(false);
   }, []);
 

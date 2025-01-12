@@ -14,7 +14,7 @@ import {
 
 type DDMenuCoursesProps = {
   filter: string;
-  options: { id: number; name: string }[];
+  options: { course_code: string; course_name: string }[];
   setSelectedValue: (value: string) => void;
   icon: React.ReactElement;
 };
@@ -46,7 +46,7 @@ const DDMenuCourses: React.FC<DDMenuCoursesProps> = ({
             })}
           </div>
           <div className="truncate text-primary-binus group-hover:text-primary-orange font-poppins font-normal">
-            {options.find((option) => option.id === Number(position))?.name ||
+            {options.find((option) => option.course_code === position)?.course_name ||
               filter}
           </div>
         </Button>
@@ -60,8 +60,8 @@ const DDMenuCourses: React.FC<DDMenuCoursesProps> = ({
             {filter}
           </DropdownMenuRadioItem>
           {options.map((option, index) => (
-            <DropdownMenuRadioItem key={index} value={option.id.toString()}>
-              {option.name}
+            <DropdownMenuRadioItem key={index} value={option.course_code.toString()}>
+              {option.course_name}
             </DropdownMenuRadioItem>
           ))}
         </DropdownMenuRadioGroup>

@@ -14,9 +14,12 @@ import {
 import { FaUser } from "react-icons/fa";
 import { IoLogOut } from "react-icons/io5";
 import { MdSupportAgent } from "react-icons/md";
+import { useRouter } from "next/navigation";
+import { login } from "@/app/(pages)/login/actions";
 
 const Header = () => {
-  const { userData } = useAuth();
+  const router = useRouter();
+  const { userData, setUserData } = useAuth();
   const { instance, inProgress, accounts } = useMsal();
   const { scrollYProgress } = useScroll();
   const prevScrollY = useRef(0);
@@ -57,6 +60,45 @@ const Header = () => {
     instance.logoutRedirect();
     Cookies.remove("token");
   };
+
+  const changeRole = async (role: string) => {
+    if (userData) {
+      // instance.logoutRedirect();
+      Cookies.remove("token");
+      console.log(userData?.microsoftToken);
+      const result = await login(userData.microsoftToken, role);
+      console.log(result);
+      if (result?.success) {
+        setUserData({
+          nim: result.data.nim,
+          name: result.data.Name,
+          email: result.data.Email,
+          role: result.data.ActiveRole,
+          listRole: result.data.Role,
+          microsoftToken: result.data.MicrosoftToken,
+        });
+
+        console.log(result.data);
+        if (result.data.ActiveRole?.toLowerCase() == "student")
+          router.push("/dashboard");
+        if (result.data.ActiveRole?.toLowerCase() == "lecturer")
+          router.push("/dashboard-lecturer");
+        if (result.data.ActiveRole?.toLowerCase() == "scc")
+          router.push("/dashboard-scc");
+        if (result.data.ActiveRole?.toLowerCase() == "hop")
+          router.push("/dashboard-hop");
+        if (result.data.ActiveRole?.toLowerCase() == "admin")
+          router.push("/dashboard-admin");
+      } else {
+        router.push("/");
+      }
+    }
+  };
+
+  useEffect(() => {
+
+    console.log(userData)
+  }, [])
 
   return (
     <div
@@ -188,6 +230,11 @@ const Header = () => {
                     Transactions
                   </li>
                 </Link>
+                <Link href="/manage-student">
+                  <li className="w-fit cursor-pointer py-2 px-3 relative after:absolute after:w-0 hover:after:w-full after:h-[2px] after:bottom-0 after:left-0 after:bg-primary-binus flex justify-center items-center after:transition-all after:ease-in-out after:duration-300">
+                    Students
+                  </li>
+                </Link>
               </ul>
             )}
             {!userData ? (
@@ -225,12 +272,28 @@ const Header = () => {
                     </div>
                     <div className="bg-gray-50 py-2 px-2 rounded-md my-3">
                       <ul className="flex flex-col justify-center items-center gap-1">
-                        <Link href="/profile" className="w-full">
-                          <li className="hover:bg-white/90 rounded-md w-full cursor-pointer py-2 flex justify-between items-center px-3 hover:text-primary-orange group ">
-                            <FaUser className="group-hover:fill-primary-orange" />
-                            Profile
-                          </li>
-                        </Link>
+                        {userData?.listRole
+                          ?.filter((role) => role !== userData.role)
+                          .map((role) => (
+                            <div
+                              key={role}
+                              className="w-full"
+                              onClick={() => changeRole(role)}
+                            >
+                              <li className="hover:bg-white/90 rounded-md w-full cursor-pointer py-2 flex justify-between items-center px-3 hover:text-primary-orange group">
+                                <FaUser className="group-hover:fill-primary-orange" />
+                                Login as {role}
+                              </li>
+                            </div>
+                          ))}
+                        {userData && userData.role === "Student" && (
+                          <Link href="/profile" className="w-full">
+                            <li className="hover:bg-white/90 rounded-md w-full cursor-pointer py-2 flex justify-between items-center px-3 hover:text-primary-orange group ">
+                              <FaUser className="group-hover:fill-primary-orange" />
+                              Profile
+                            </li>
+                          </Link>
+                        )}
                         <li
                           className="hover:bg-white/90 rounded-md w-full cursor-pointer py-2 flex justify-between items-center px-3 hover:text-primary-orange group "
                           onClick={() => logoutMircosoft()}

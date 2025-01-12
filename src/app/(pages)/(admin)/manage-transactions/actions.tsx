@@ -47,7 +47,24 @@ export const getAllTech = async () => {
   } catch (error: any) {
     console.error("API call failed:", error.message);
   }
-}; 
+};
+
+export const getAllTransactions = async (search: string) => {
+  try {
+    const response = await fetch(
+      `${process.env.NEXT_PUBLIC_BACKEND_API}user/admin/get-transaction?search=${search}`
+    );
+    const result = await response.json();
+
+    if (result.status) {
+      return { success: true, data: result.data ? result.data : "" };
+    } else {
+      return { success: false, message: result.message };
+    }
+  } catch (error: any) {
+    console.error("API call failed:", error.message);
+  }
+};
 
 export const uploadExcelTransactions = async (file: File) => {
   try {
@@ -61,7 +78,28 @@ export const uploadExcelTransactions = async (file: File) => {
       }
     );
     const result = await response.json();
- 
+
+    if (result.status) {
+      return { success: true, data: result.data ? result.data : "" };
+    } else {
+      return { success: false, message: result.message };
+    }
+  } catch (error: any) {
+    console.error("API call failed:", error.message);
+  }
+};
+
+export const deleteAllTransaction = async () => {
+  try {
+    const response = await fetch(
+      `${process.env.NEXT_PUBLIC_BACKEND_API}user/admin/remove-transaction-excel`,
+      {
+        method: "PATCH",
+      }
+    );
+    const result = await response.json();
+
+    console.log(result);
     if (result.status) {
       return { success: true, data: result.data ? result.data : "" };
     } else {

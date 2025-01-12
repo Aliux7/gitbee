@@ -253,7 +253,7 @@ const page = () => {
           </button>
         </div>
       </div>
-      <div className="flex gap-5 mx-9">
+      <div className="flex gap-5 mx-9 pb-10">
         <div className="w-full bg-white shadow-md rounded-md h-fit">
           <Table>
             <TableHeader>

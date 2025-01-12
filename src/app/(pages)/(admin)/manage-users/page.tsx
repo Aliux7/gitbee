@@ -2,7 +2,7 @@
 import React, { useEffect, useRef, useState } from "react";
 import { motion, useScroll } from "framer-motion";
 import { CiSearch } from "react-icons/ci";
-import { getAllUsers } from "./actions";
+import { deleteAllUser, getAllUsers } from "./actions";
 import {
   Table,
   TableBody,
@@ -15,6 +15,8 @@ import {
 import Link from "next/link";
 import ImportExcel from "@/app/components/manage-users/ImportExcel";
 import PopUpUsers from "@/app/components/manage-users/PopUpUsers";
+import Loading from "@/app/components/Loading";
+import PopUpConfirmation from "@/app/components/manage-users/PopUpConfirmation";
 
 const page = () => {
   const listRoleUser = ["hop", "scc", "lecturer"];
@@ -27,11 +29,24 @@ const page = () => {
   const [openImportExcel, setOpenImportExcel] = useState(false);
   const [openPopUpUsers, setOpenPopUpUsers] = useState(false);
   const [selectedUserToUpdate, setSelectedUserToUpdate] = useState<any>();
+  const [openPopUpConfirmation, setOpenPopUpConfirmation] = useState(false);
+  const [loading, setLoading] = useState(false);
 
   const fetchData = async () => {
+    setLoading(true);
     const resultUsers = await getAllUsers(search);
     console.log(resultUsers?.data);
     setUsers(resultUsers?.data);
+    setLoading(false);
+  };
+
+  const handleDeleteAllLecturer = async () => {
+    setLoading(true);
+    const resultDeleteAllLecturer = await deleteAllUser();
+    console.log(resultDeleteAllLecturer?.data);
+    setOpenPopUpConfirmation(false);
+    fetchData();
+    setLoading(false);
   };
 
   useEffect(() => {
@@ -54,7 +69,7 @@ const page = () => {
   }, [search]);
 
   return (
-    <motion.div className="relative min-h-screen flex flex-col pt-28 px-16 bg-gray-50">
+    <motion.div className="relative min-h-screen flex flex-col pt-28 px-16 pb-10 bg-gray-50">
       <div
         className={`bg-gray-50 fixed top-0 ${
           expand ? "h-[12.25rem]" : "h-[7rem]"
@@ -122,7 +137,17 @@ const page = () => {
         </div>
       </div>
 
-      <div className="w-auto bg-white shadow-md rounded-md mx-9">
+      {selectedRole == 2 && (
+        <div className="mx-9 text-end mb-2">
+          <span
+            onClick={() => setOpenPopUpConfirmation(true)}
+            className="text-red-500 cursor-pointer"
+          >
+            Delete All Lecturer
+          </span>
+        </div>
+      )}
+      <div className="w-auto bg-white shadow-md rounded-md mx-9 ">
         <Table>
           <TableHeader>
             <TableRow>
@@ -175,7 +200,10 @@ const page = () => {
         </Table>
       </div>
       {openImportExcel && (
-        <ImportExcel setOpenImportExcel={setOpenImportExcel} fetchData={fetchData}/>
+        <ImportExcel
+          setOpenImportExcel={setOpenImportExcel}
+          fetchData={fetchData}
+        />
       )}
       {openPopUpUsers && (
         <PopUpUsers
@@ -184,6 +212,14 @@ const page = () => {
           selectedUserToUpdate={selectedUserToUpdate}
         />
       )}
+
+      {openPopUpConfirmation && (
+        <PopUpConfirmation
+          setOpenPopUpConfirmation={setOpenPopUpConfirmation}
+          handleDeleteAllLecturer={handleDeleteAllLecturer}
+        />
+      )}
+      {loading && <Loading />}
     </motion.div>
   );
 };

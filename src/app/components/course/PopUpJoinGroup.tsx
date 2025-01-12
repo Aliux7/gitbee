@@ -19,6 +19,7 @@ import { cn } from "@/lib/utils";
 import { createGroup } from "@/app/(pages)/(student)/course/actions";
 
 interface PopUpJoinGroupProps {
+  listStudent: any[];
   fetchData: any;
   toast: (options: {
     title: string;
@@ -30,22 +31,8 @@ interface PopUpJoinGroupProps {
   setLoading: (value: boolean) => void;
   course_code: string;
   semester_id: string;
-  class_id: string; 
-}
-
-const students = [
-  { value: "2540115465", label: "Kelson Susilo" },
-  { value: "2602570812", label: "Wilbert" },
-  { value: "2540121465", label: "Edbert" },
-  { value: "2141253221", label: "Susilo" },
-  { value: "1253423523", label: "Budi" },
-  { value: "3253423523", label: "Testing" },
-  { value: "2540124980", label: "Nicholas Chandra" },
-  { value: "2501959296", label: "Timothy Darren" },
-  { value: "2501970166", label: "Roger Laurent" },
-  { value: "2602118912", label: "Ryan Rafael" },
-  { value: "2540126550", label: "Vincentius Jericho" },
-];
+  class_id: string;
+} 
 
 function PopUpJoinGroup(props: PopUpJoinGroupProps) {
   const [totalMember, setTotalMember] = useState(2);
@@ -142,13 +129,13 @@ function PopUpJoinGroup(props: PopUpJoinGroupProps) {
               >
                 {selectedStudents[i]
                   ? `${
-                      students.find(
-                        (student) => student.value === selectedStudents[i]
-                      )?.value
+                    props.listStudent?.find(
+                        (student) => student.student_id === selectedStudents[i]
+                      )?.student_id
                     } - ${
-                      students.find(
-                        (student) => student.value === selectedStudents[i]
-                      )?.label
+                      props.listStudent?.find(
+                        (student) => student.student_id === selectedStudents[i]
+                      )?.student_name
                     }`
                   : "Select student..."}
 
@@ -161,10 +148,10 @@ function PopUpJoinGroup(props: PopUpJoinGroupProps) {
                 <CommandList>
                   <CommandEmpty>No student found.</CommandEmpty>
                   <CommandGroup>
-                    {students.map((student) => (
+                    {props.listStudent.map((student) => (
                       <CommandItem
-                        key={student.value}
-                        value={student.value}
+                        key={student.student_id}
+                        value={student.student_id}
                         onSelect={(currentValue: string) => {
                           handleSelect(
                             i,
@@ -174,17 +161,17 @@ function PopUpJoinGroup(props: PopUpJoinGroupProps) {
                           );
                           togglePopover(i, false);
                         }}
-                        disabled={selectedStudents.includes(student.value)}
+                        disabled={selectedStudents.includes(student?.student_id)}
                       >
                         <Check
                           className={cn(
                             "mr-2 h-4 w-4",
-                            selectedStudents[i] === student.value
+                            selectedStudents[i] === student.student_id
                               ? "opacity-100"
                               : "opacity-0"
                           )}
                         />
-                        {student.value} - {student.label}
+                        {student.student_id} - {student.student_name}
                       </CommandItem>
                     ))}
                   </CommandGroup>

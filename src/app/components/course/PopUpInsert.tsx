@@ -11,7 +11,10 @@ import {
   TooltipProvider,
   TooltipTrigger,
 } from "@/components/ui/tooltip";
-import { insertProject } from "@/app/(pages)/(student)/course/actions";
+import {
+  getStudentDataInClass,
+  insertProject,
+} from "@/app/(pages)/(student)/course/actions";
 import { motion } from "framer-motion";
 import Link from "next/link";
 import { IoIosArrowRoundBack } from "react-icons/io";
@@ -86,7 +89,6 @@ function PopUpInsert(props: PopUpInsertProps) {
   );
   const [pdfUrl, setPdfUrl] = useState<string | undefined>(undefined);
   const [gallery, setGallery] = useState<File[]>([]);
-  const [statusId, setStatusId] = useState(0);
   const [categoryId, setCategoryId] = useState("");
   const [selectedTechnologies, setSelectedTechnologies] = useState<string[]>(
     []
@@ -95,6 +97,7 @@ function PopUpInsert(props: PopUpInsertProps) {
   const [openStatesTechno, setOpenStatesTechno] = useState<boolean[]>([false]);
   const [majorId, setMajorId] = useState(0);
   const [formErrors, setFormErrors] = useState<Record<string, string>>({});
+  const [listStudent, setListStudent] = useState();
 
   useEffect(() => {
     console.log(props.groupMembers.length);
@@ -102,6 +105,20 @@ function PopUpInsert(props: PopUpInsertProps) {
       setCurrentStep(2);
     }
   }, [props.groupMembers]);
+
+  const fetchStudentList = async () => {
+    const resultStudentList = await getStudentDataInClass(
+      props.semester_id,
+      props.course_code,
+      props.class_id
+    );
+    console.log(resultStudentList);
+    setListStudent(resultStudentList?.data);
+  };
+
+  useEffect(() => {
+    fetchStudentList();
+  }, []);
 
   const isValidUrl = (urlString: string) => {
     var urlPattern = new RegExp(
@@ -291,6 +308,7 @@ function PopUpInsert(props: PopUpInsertProps) {
       </div>
       {currentStep === 1 && !loading && (
         <PopUpJoinGroup
+          listStudent={listStudent ? listStudent : []}
           setLoading={setLoading}
           fetchData={props.fetchData}
           toast={props.toast}
