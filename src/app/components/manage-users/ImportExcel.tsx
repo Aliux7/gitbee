@@ -1,5 +1,7 @@
 import { uploadExcelUsers } from "@/app/(pages)/(admin)/manage-users/actions";
-import React, { useState } from "react"; 
+import Link from "next/link";
+import React, { useState } from "react";
+import { LuDownload } from "react-icons/lu";
 
 interface ImportExcelProps {
   setOpenImportExcel: (value: boolean) => void;
@@ -34,7 +36,7 @@ function ImportExcel(props: ImportExcelProps) {
       setUploadStatus("An error occurred while uploading the file.");
     }
     props.fetchData();
-    props.setOpenImportExcel(false)
+    props.setOpenImportExcel(false);
   };
 
   return (
@@ -46,9 +48,13 @@ function ImportExcel(props: ImportExcelProps) {
         className="bg-white w-full max-w-[30rem] max-h-full h-fit overflow-y-auto rounded-md p-10 flex flex-col"
         onClick={(e) => e.stopPropagation()}
       >
-        {/* <button className="self-end text-primary-orange">
+        <Link
+          href="/excel/Header Transaction + Lecturer.xlsx"
+          className="self-end text-primary-orange flex justify-center items-center gap-1"
+        >
+          <LuDownload className="text-primary-orange stroke-primary-orange"/>
           Download Template
-        </button> */}
+        </Link>
         <div className="flex flex-col justify-start items-start">
           <label
             className="block mb-2 text-sm font-medium text-gray-900"

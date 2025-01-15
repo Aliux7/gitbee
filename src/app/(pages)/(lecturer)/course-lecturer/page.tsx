@@ -117,6 +117,26 @@ const page = () => {
 
   const handleFinalize = async () => {
     setLoading(true);
+
+    for (
+      let index = 0;
+      index < groupsClassData?.updatedProjects?.length;
+      index++
+    ) {
+      const project = groupsClassData.updatedProjects[index];
+      const grade = Number(ratings[index]);
+      const reason = reasons[index];
+
+      if (grade > 3 && (!reason || reason.trim() === "")) {
+        toast({
+          title: "Oops! Something went wrong!",
+          description: `Your above 3 rating projects must have a reason`,
+        });
+        setLoading(false); 
+        return; 
+      }
+    }
+
     const assessments = groupsClassData?.updatedProjects?.map(
       (project: any, index: number) => ({
         project_id: String(project.id),
@@ -427,7 +447,7 @@ const page = () => {
                             }
                             value={reasons[index]}
                             className="w-auto"
-                            placeholder="Reason will be deliver to HOP"
+                            placeholder="Reason will be deliver to SCC & HoP"
                           />
                         )}
                       </div>

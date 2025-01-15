@@ -150,9 +150,19 @@ function ProjectDetailScc(props: ProjectDetailSccProps) {
               <img src={gallery?.image} className="h-full rounded-md border" />
             ))}
           </div>
+          <div className="w-full">
+            <p className="text-lg">
+              The lecturer gave a rating of{" "}
+              <span className="text-primary-orange underline">
+                {props.selectedDetailProject?.assessment?.grade}
+              </span>{" "}
+              out of 5 <br/> 
+              Reason: "<span className="text-primary-orange underline">{props.selectedDetailProject?.assessment?.reason}</span>"
+            </p>
+          </div>
         </div>
         {props.selectedDetailProject?.reviewedProject ? (
-          <div className="w-full h-auto flex justify-start items-center gap-5 mt-10">
+          <div className="w-full h-auto flex justify-end items-center gap-5 mt-10 text-lg">
             {props.selectedDetailProject?.reviewedProject?.is_recommended ==
             1 ? (
               <div>

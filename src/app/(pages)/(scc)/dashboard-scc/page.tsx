@@ -3,15 +3,19 @@ import React, { useEffect, useRef, useState } from "react";
 import { motion, useScroll } from "framer-motion";
 import { CiSearch } from "react-icons/ci";
 import {
-  getAllCategory,
   getAllMajor,
   getAllProjects,
-  getAllTech,
+  getAllSemester,
+  getCurrentSemester,
 } from "./actions";
 import DashboardSccComponent from "@/app/components/dashboard-scc/DashboardSccComponent";
 import ProjectDetailScc from "@/app/components/dashboard-scc/ProjectDetailScc";
 import { useToast } from "@/hooks/use-toast";
 import { Toaster } from "@/components/ui/toaster";
+import { BsCalendar4Range } from "react-icons/bs";
+import DDMenuSemester from "@/app/components/DDMenuSemester";
+import DDMenu from "@/app/components/DDMenu";
+import { IoBookOutline } from "react-icons/io5";
 
 const page = () => {
   const { scrollYProgress } = useScroll();
@@ -20,35 +24,30 @@ const page = () => {
   const [expand, setExpand] = useState(true);
   const [showDevelopers, setShowDevelopers] = useState(false);
   const [selectedDetailProject, setSelectedDetailProject] = useState<any>();
-  const [categories, setCategories] = useState<{ id: number; name: string }[]>(
-    []
-  );
+  const [listSemester, setListSemester] = useState<any>([]);
+  const [currentSemester, setCurrentSemester] = useState<any>();
   const [search, setSearch] = useState("");
-  const [majors, setMajors] = useState<{ id: number; name: string }[]>([]);
-  const [techs, setTechs] = useState<{ id: number; name: string }[]>([]);
   const [project, setProject] = useState<any>([]);
-  const [selectedCategoryFilter, setSelectedCategoryFilter] = useState("");
+  const [majors, setMajors] = useState<{ id: number; name: string }[]>([]);
   const [selectedMajorFilter, setSelectedMajorFilter] = useState("");
-  const [selectedTechnologyFilter, setSelectedTechnologyFilter] = useState("");
 
   const fetchData = async () => {
-    const resultCategory = await getAllCategory();
-    if (resultCategory?.success) setCategories(resultCategory.data);
+    const resultListSemester = await getAllSemester();
+    setListSemester(resultListSemester);
 
     const resultMajor = await getAllMajor();
     if (resultMajor?.success) setMajors(resultMajor.data);
 
-    const resultTech = await getAllTech();
-    if (resultTech?.success) setTechs(resultTech.data);
+    const resultCurrentSemester = await getCurrentSemester();
+    setCurrentSemester(resultCurrentSemester);
+    console.log(resultCurrentSemester);
   };
 
   const fetchProjectData = async () => {
     const resultProject = await getAllProjects(
       search,
-      // "6",
-      "",
-      "be992b30-4b38-4361-8404-25f2d6912754",
-      "COMP6100001"
+      selectedMajorFilter,
+      currentSemester?.data?.SemesterId
     );
 
     if (resultProject?.success) {
@@ -75,16 +74,7 @@ const page = () => {
 
   useEffect(() => {
     fetchProjectData();
-  }, [search]);
-
-  useEffect(() => {
-    fetchProjectData();
-  }, [
-    search,
-    selectedCategoryFilter,
-    selectedMajorFilter,
-    selectedTechnologyFilter,
-  ]);
+  }, [search, currentSemester, selectedMajorFilter]);
 
   useEffect(() => {
     fetchData();
@@ -122,18 +112,20 @@ const page = () => {
             />
           </div>
           <div className="relative w-fit flex justify-end items-center h-full gap-5">
-            {/* <DDMenuSemester 
-              className="h-full"
-              options={[
-                "Even Semester 2023/2024",
-                "Odd Semester 2023/2024",
-                "Even Semester 2022/2023",
-                "Odd Semester 2022/2023",
-                "Even Semester 2021/2022",
-              ]}
+            <DDMenu
+              options={majors}
+              filter="Major Project"
+              setSelectedValue={setSelectedMajorFilter}
+              icon={<IoBookOutline className="w-4 h-4" />}
+            />
+            <DDMenuSemester
+              className="h-full w-64"
+              options={listSemester}
               filter="Semester"
               icon={<BsCalendar4Range className="w-4 h-4" />}
-            /> */}
+              currentSemester={currentSemester}
+              setCurrentSemester={setCurrentSemester}
+            />
           </div>
         </div>
       )}
