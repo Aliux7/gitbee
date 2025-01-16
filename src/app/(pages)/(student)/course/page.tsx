@@ -197,7 +197,7 @@ const page = () => {
                         "?"
                     )
                   ) {
-                    handleDeleteGroup()
+                    handleDeleteGroup();
                   }
                 }}
                 className="text-white bg-red-500 px-2 py-2 rounded-md flex justify-center items-center gap-2"
@@ -227,6 +227,11 @@ const page = () => {
                 ))}
               </TableBody>
             </Table>
+            {groupDetail < 1 && (
+              <div className="w-full text-center py-5 text-gray-500">
+                No Data . . .
+              </div>
+            )}
           </div>
         )}
         <div className="flex-grow max-h-[21rem] h-fit overflow-y-auto shadow-xl border rounded-xl p-5">

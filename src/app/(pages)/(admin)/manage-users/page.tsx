@@ -208,6 +208,11 @@ const page = () => {
             )}
           </TableBody>
         </Table>
+        {users?.[listRoleUser[selectedRole]].length < 1 && (
+          <div className="w-full text-center py-5 text-gray-500">
+            No Data . . .
+          </div>
+        )}
       </div>
       {openImportExcel && (
         <ImportExcel

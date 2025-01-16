@@ -161,7 +161,10 @@ function PopUpJoinGroup(props: PopUpJoinGroupProps) {
                           );
                           togglePopover(i, false);
                         }}
-                        disabled={selectedStudents.includes(student?.student_id)}
+                        disabled={
+                          selectedStudents.includes(student?.student_id) || 
+                          student.is_disable === 1
+                        }
                       >
                         <Check
                           className={cn(

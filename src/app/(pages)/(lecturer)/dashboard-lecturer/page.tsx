@@ -182,10 +182,12 @@ const page = () => {
                 </TableRow>
               ))}
             </TableBody>
-            {/* {transactions.length < 1 && (
-              <div className="w-full text-center">No Data . . .</div>
-            )} */}
           </Table>
+          {transactions.length < 1 && (
+            <div className="w-full text-center py-5 text-gray-500">
+              No Data . . .
+            </div>
+          )}
         </div>
       </div>
 

@@ -196,6 +196,11 @@ const page = () => {
             ))}
           </TableBody>
         </Table>
+        {historyOutstandingProject.length < 1 && (
+          <div className="w-full text-center py-5 text-gray-500">
+            No Data . . .
+          </div>
+        )}
       </div>
 
       {previewGroup &&
