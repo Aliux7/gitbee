@@ -16,6 +16,7 @@ import { IoLogOut } from "react-icons/io5";
 import { MdSupportAgent } from "react-icons/md";
 import { useRouter } from "next/navigation";
 import { login } from "@/app/(pages)/login/actions";
+import Loading from "../Loading";
 
 const Header = () => {
   const router = useRouter();
@@ -63,6 +64,7 @@ const Header = () => {
 
   const changeRole = async (role: string) => {
     if (userData) {
+      setLoading(true);
       // instance.logoutRedirect();
       Cookies.remove("token");
       console.log(userData?.microsoftToken);
@@ -89,6 +91,7 @@ const Header = () => {
           router.push("/dashboard-hop");
         if (result.data.ActiveRole?.toLowerCase() == "admin")
           router.push("/dashboard-admin");
+        setLoading(false);
       } else {
         router.push("/");
       }
@@ -96,9 +99,8 @@ const Header = () => {
   };
 
   useEffect(() => {
-
-    console.log(userData)
-  }, [])
+    console.log(userData);
+  }, []);
 
   return (
     <div
@@ -310,6 +312,7 @@ const Header = () => {
           </ul>
         </div>
       </div>
+      {loading && <Loading/>}
     </div>
   );
 };

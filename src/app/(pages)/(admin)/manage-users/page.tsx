@@ -19,7 +19,7 @@ import Loading from "@/app/components/Loading";
 import PopUpConfirmation from "@/app/components/manage-users/PopUpConfirmation";
 
 const page = () => {
-  const listRoleUser = ["hop", "scc", "lecturer"];
+  const listRoleUser = ["admin", "hop", "scc", "lecturer"];
   const [selectedRole, setSelectedRole] = useState(0);
   const { scrollYProgress } = useScroll();
   const prevScrollY = useRef(0);
@@ -104,7 +104,7 @@ const page = () => {
             } rounded-sm`}
             onClick={() => setSelectedRole(0)}
           >
-            User HOP
+            Admin
           </button>
           <button
             className={`w-full whitespace-nowrap cursor-pointer py-2 px-4 relative ${
@@ -114,7 +114,7 @@ const page = () => {
             } rounded-sm`}
             onClick={() => setSelectedRole(1)}
           >
-            User SCC
+            HoP
           </button>
           <button
             className={`w-full whitespace-nowrap cursor-pointer py-2 px-4 relative ${
@@ -124,15 +124,25 @@ const page = () => {
             } rounded-sm`}
             onClick={() => setSelectedRole(2)}
           >
-            User Lecturer
+            SCC
+          </button>
+          <button
+            className={`w-full whitespace-nowrap cursor-pointer py-2 px-4 relative ${
+              selectedRole == 3
+                ? "bg-primary-binus text-white"
+                : "bg-transparent text-primary-binus hover:bg-gray-50"
+            } rounded-sm`}
+            onClick={() => setSelectedRole(3)}
+          >
+            Lecturer
           </button>
         </div>
         <div className="relative min-w-fit flex justify-end items-center h-full bg-white border rounded-md px-2 gap-2">
           <button
-            className="w-full whitespace-nowrap cursor-pointer py-2 px-4 relative text-primary-binus rounded-sm"
+            className="w-full whitespace-nowrap cursor-pointer py-2 px-3 relative text-primary-binus rounded-sm"
             onClick={() => setOpenImportExcel(true)}
           >
-            Import Excel
+            Import Excel Lecturer
           </button>
         </div>
       </div>
@@ -198,6 +208,11 @@ const page = () => {
             )}
           </TableBody>
         </Table>
+        {users?.[listRoleUser[selectedRole]].length < 1 && (
+          <div className="w-full text-center py-5 text-gray-500">
+            No Data . . .
+          </div>
+        )}
       </div>
       {openImportExcel && (
         <ImportExcel

@@ -282,6 +282,11 @@ const page = () => {
             )}
           </TableBody>
         </Table>
+          {projects?.[listStatus[selectedStatus - 1]].length < 1 && (
+            <div className="w-full text-center py-5 text-gray-500">
+              No Data . . .
+            </div>
+          )}
       </div>
     </motion.div>
   );

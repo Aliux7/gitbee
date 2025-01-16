@@ -83,6 +83,7 @@ function PopUpInsert(props: PopUpInsertProps) {
   const [description, setDescription] = useState("");
   const [githubLink, setGithubLink] = useState("");
   const [projectLink, setProjectLink] = useState("");
+  const [videoLink, setVideoLink] = useState("");
   const [thumbnail, setThumbnail] = useState<File | undefined>(undefined);
   const [documentation, setDocumentation] = useState<File | undefined>(
     undefined
@@ -239,6 +240,7 @@ function PopUpInsert(props: PopUpInsertProps) {
       className: props.class_id,
       githubLink,
       projectLink,
+      videoLink,
       thumbnail,
       documentation,
       gallery,
@@ -362,7 +364,9 @@ function PopUpInsert(props: PopUpInsertProps) {
         >
           <div className="flex flex-col gap-3">
             <div className="flex justify-start items-center gap-1">
-              <Label htmlFor="project_name">Project Name</Label>
+              <Label htmlFor="project_name">
+                Project Name <span className="text-primary-orange">*</span>
+              </Label>
               <TooltipProvider>
                 <Tooltip>
                   <TooltipTrigger>
@@ -388,7 +392,10 @@ function PopUpInsert(props: PopUpInsertProps) {
           </div>
           <div className="flex flex-col gap-3">
             <div className="flex justify-start items-center gap-1">
-              <Label htmlFor="project_description">Project Description</Label>
+              <Label htmlFor="project_description">
+                Project Description{" "}
+                <span className="text-primary-orange">*</span>
+              </Label>
               <TooltipProvider>
                 <Tooltip>
                   <TooltipTrigger>
@@ -416,7 +423,9 @@ function PopUpInsert(props: PopUpInsertProps) {
           </div>
           <div className="flex flex-col gap-3">
             <div className="flex justify-start items-center gap-1">
-              <Label htmlFor="github_link">GitHub Link</Label>
+              <Label htmlFor="github_link">
+                GitHub Link <span className="text-primary-orange">*</span>
+              </Label>
               <TooltipProvider>
                 <Tooltip>
                   <TooltipTrigger>
@@ -445,7 +454,9 @@ function PopUpInsert(props: PopUpInsertProps) {
           </div>
           <div className="flex flex-col gap-3">
             <div className="flex justify-start items-center gap-1">
-              <Label htmlFor="project_link">Project Link</Label>
+              <Label htmlFor="project_link">
+                Project Link <span className="text-primary-orange">*</span>
+              </Label>
               <TooltipProvider>
                 <Tooltip>
                   <TooltipTrigger>
@@ -475,7 +486,30 @@ function PopUpInsert(props: PopUpInsertProps) {
           </div>
           <div className="flex flex-col gap-3">
             <div className="flex justify-start items-center gap-1">
-              <Label htmlFor="cover">Cover</Label>
+              <Label htmlFor="project_link">Video Link</Label>
+              <TooltipProvider>
+                <Tooltip>
+                  <TooltipTrigger>
+                    <CiCircleQuestion className="w-4 h-4" />
+                  </TooltipTrigger>
+                  <TooltipContent>
+                    <p>URL that directs users to your video project</p>
+                  </TooltipContent>
+                </Tooltip>
+              </TooltipProvider>
+            </div>
+            <Input
+              type="text"
+              placeholder="Video Link (Optional)"
+              value={videoLink}
+              onChange={(e) => setVideoLink(e.target.value)}
+            />
+          </div>
+          <div className="flex flex-col gap-3">
+            <div className="flex justify-start items-center gap-1">
+              <Label htmlFor="cover">
+                Cover <span className="text-primary-orange">*</span>
+              </Label>
               <TooltipProvider>
                 <Tooltip>
                   <TooltipTrigger>
@@ -518,7 +552,9 @@ function PopUpInsert(props: PopUpInsertProps) {
           </div>
           <div className="flex flex-col gap-3">
             <div className="flex justify-start items-center gap-1">
-              <Label htmlFor="cover">Gallery</Label>
+              <Label htmlFor="cover">
+                Gallery <span className="text-primary-orange">*</span>
+              </Label>
               <TooltipProvider>
                 <Tooltip>
                   <TooltipTrigger>
@@ -576,7 +612,9 @@ function PopUpInsert(props: PopUpInsertProps) {
           </div>
           <div className="flex flex-col gap-3">
             <div className="flex justify-start items-center gap-1">
-              <Label htmlFor="cover">Documentation</Label>
+              <Label htmlFor="cover">
+                Documentation <span className="text-primary-orange">*</span>
+              </Label>
               <TooltipProvider>
                 <Tooltip>
                   <TooltipTrigger>
@@ -618,7 +656,9 @@ function PopUpInsert(props: PopUpInsertProps) {
           </div>
           <div className="flex flex-col gap-3">
             <div className="flex justify-start items-center gap-1">
-              <Label htmlFor="cover">Category</Label>
+              <Label htmlFor="cover">
+                Category <span className="text-primary-orange">*</span>
+              </Label>
               <TooltipProvider>
                 <Tooltip>
                   <TooltipTrigger>
@@ -650,7 +690,9 @@ function PopUpInsert(props: PopUpInsertProps) {
           <div className="flex flex-col gap-3">
             <div className="flex justify-between items-start">
               <div className="flex justify-start items-center gap-1">
-                <Label htmlFor="cover">Technology</Label>
+                <Label htmlFor="cover">
+                  Technology <span className="text-primary-orange">*</span>
+                </Label>
                 <TooltipProvider>
                   <Tooltip>
                     <TooltipTrigger>

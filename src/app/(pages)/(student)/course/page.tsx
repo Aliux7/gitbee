@@ -23,6 +23,7 @@ import {
 } from "@/components/ui/table";
 import PopUpInsert from "@/app/components/course/PopUpInsert";
 import {
+  deleteGroup,
   getAllCategory,
   getAllTech,
   getGroupDetail,
@@ -34,6 +35,9 @@ import Link from "next/link";
 import { SiGithub } from "react-icons/si";
 import { BsGlobe2 } from "react-icons/bs";
 import { useSearchParams } from "next/navigation";
+import { FaVideo } from "react-icons/fa";
+import { IoIosVideocam } from "react-icons/io";
+import { MdDelete } from "react-icons/md";
 
 const page = () => {
   const searchParams = useSearchParams();
@@ -69,6 +73,18 @@ const page = () => {
     });
   }, [scrollYProgress]);
 
+  const handleDeleteGroup = async () => {
+    const resultDeleteGroup = await deleteGroup(
+      semester_id ? semester_id : "",
+      course_code ? course_code : "",
+      class_id ? class_id : "",
+      groupDetail[0]?.group
+    );
+
+    fetchData();
+    console.log(resultDeleteGroup);
+  };
+
   const fetchData = async () => {
     setLoading(true);
 
@@ -83,7 +99,9 @@ const page = () => {
     console.log(resultProjectDetail?.data);
 
     if (resultProjectDetail?.data?.updatedProjects?.length > 0) {
-      setGroupDetail(resultProjectDetail?.data?.updatedProjects[0]?.projectGroups);
+      setGroupDetail(
+        resultProjectDetail?.data?.updatedProjects[0]?.projectGroups
+      );
       console.log(resultProjectDetail?.data?.updatedProjects[0]?.projectGroups);
     } else if (projectDetail?.length == 0) {
       const resultDetailGroup = await getGroupDetail(
@@ -167,7 +185,26 @@ const page = () => {
       <div className="h-fit w-full pt-48 pb-10 flex flex-col gap-5">
         {groupDetail?.length >= 1 && (
           <div className="w-[31rem] max-h-[21rem] h-fit overflow-y-auto shadow-xl border rounded-xl p-5">
-            <h1 className="text-xl">Group Forming</h1>
+            <div className="w-full flex justify-between items-center">
+              <h1 className="text-xl">Group Forming</h1>
+
+              <button
+                onClick={() => {
+                  if (
+                    confirm(
+                      "Are you sure you want to delete Group " +
+                        groupDetail?.group +
+                        "?"
+                    )
+                  ) {
+                    handleDeleteGroup();
+                  }
+                }}
+                className="text-white bg-red-500 px-2 py-2 rounded-md flex justify-center items-center gap-2"
+              >
+                <MdDelete className="text-white fill-white w-5 h-5" />
+              </button>
+            </div>
             <Table>
               <TableHeader>
                 <TableRow>
@@ -190,6 +227,11 @@ const page = () => {
                 ))}
               </TableBody>
             </Table>
+            {groupDetail < 1 && (
+              <div className="w-full text-center py-5 text-gray-500">
+                No Data . . .
+              </div>
+            )}
           </div>
         )}
         <div className="flex-grow max-h-[21rem] h-fit overflow-y-auto shadow-xl border rounded-xl p-5">
@@ -346,6 +388,16 @@ const page = () => {
                       <BsGlobe2 fill="#EB9327" />{" "}
                       {projectDetail[0]?.projectDetail?.project_link}
                     </Link>
+                    {projectDetail[0]?.projectDetail?.video_link &&
+                      projectDetail[0]?.projectDetail?.video_link != "" && (
+                        <Link
+                          href={projectDetail[0]?.projectDetail?.video_link}
+                          className="flex justify-start items-center gap-2 text-sm my-1 text-primary-binus"
+                        >
+                          <IoIosVideocam fill="#EB9327" />{" "}
+                          {projectDetail[0]?.projectDetail?.video_link}
+                        </Link>
+                      )}
                   </div>
                   <div className="w-1/3">
                     <img

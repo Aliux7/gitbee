@@ -11,6 +11,7 @@ import {
   TableBody,
   TableCaption,
   TableCell,
+  TableFooter,
   TableHead,
   TableHeader,
   TableRow,
@@ -182,6 +183,11 @@ const page = () => {
               ))}
             </TableBody>
           </Table>
+          {transactions.length < 1 && (
+            <div className="w-full text-center py-5 text-gray-500">
+              No Data . . .
+            </div>
+          )}
         </div>
       </div>
 
