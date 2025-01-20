@@ -21,7 +21,7 @@ const Card: React.FC<CardProps> = ({ image, title, developers, delay }) => {
           {developers.map((developer, index) => (
             <span className="font-montserrat text-gray-700 capitalize" key={index}>
               {developer?.student_name?.toLowerCase()}
-              {index < developers.length - 1 ? ", " : ""}
+              {index < developers?.length - 1 ? ", " : ""}
             </span>
           ))}
         </h3>

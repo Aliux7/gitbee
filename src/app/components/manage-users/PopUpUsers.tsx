@@ -106,6 +106,7 @@ function PopUpUsers(props: PopUpUsersProps) {
             <option value="Lecturer">Lecturer</option>
             <option value="SCC">SCC</option>
             <option value="HoP">HOP</option>
+            <option value="Admin">Admin</option>
           </select>
         </div>
 

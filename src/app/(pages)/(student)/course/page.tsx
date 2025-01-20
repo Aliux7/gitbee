@@ -349,7 +349,7 @@ const page = () => {
                         return (
                           <span className="capitalize text-gray-500">
                             {row?.student_name.toLowerCase()}
-                            {index + 1 < groupDetail.length ? ", " : ""}
+                            {index + 1 < groupDetail?.length ? ", " : ""}
                           </span>
                         );
                       })}

@@ -312,7 +312,7 @@ const Header = () => {
           </ul>
         </div>
       </div>
-      {loading && <Loading/>}
+      {loading && <Loading />}
     </div>
   );
 };

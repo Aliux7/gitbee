@@ -72,6 +72,7 @@ const page = () => {
       selectedMajorFilter,
       currentSemester?.data?.SemesterId
     );
+    console.log(resultProject?.data)
     if (resultProject?.success) setProjects(resultProject.data);
   };
 
@@ -282,7 +283,7 @@ const page = () => {
             )}
           </TableBody>
         </Table>
-          {projects?.[listStatus[selectedStatus - 1]].length < 1 && (
+          {projects?.[listStatus[selectedStatus - 1]]?.length < 1 && (
             <div className="w-full text-center py-5 text-gray-500">
               No Data . . .
             </div>

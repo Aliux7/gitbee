@@ -1,4 +1,21 @@
- export const getAllUsers = async (search?: string, roleFilter?: string) => {
+export const getAllMajor = async () => {
+  try {
+    const response = await fetch(
+      `${process.env.NEXT_PUBLIC_BACKEND_API}major/all`
+    );
+    const result = await response.json();
+
+    if (result.status) {
+      return { success: true, data: result.data ? result.data : "" };
+    } else {
+      return { success: false, message: result.message };
+    }
+  } catch (error: any) {
+    console.error("API call failed:", error.message);
+  }
+};
+
+export const getAllUsers = async (search?: string, roleFilter?: string) => {
   try {
     const response = await fetch(
       `${process.env.NEXT_PUBLIC_BACKEND_API}user/admin/get-user?search=${search}`

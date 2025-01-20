@@ -2,7 +2,7 @@ import Link from "next/link";
 import React, { useEffect, useState } from "react";
 import { BsGlobe2 } from "react-icons/bs";
 import { motion } from "framer-motion";
-import { IoIosArrowRoundBack } from "react-icons/io";
+import { IoIosArrowRoundBack, IoIosVideocam } from "react-icons/io";
 import { SiGithub } from "react-icons/si";
 import { getProjectById } from "@/app/(pages)/explore/actions";
 import { useAuth } from "@/app/context/AuthContext";
@@ -119,6 +119,17 @@ function ProjectDetailComponent(props: ProjectDetailProps) {
                 <BsGlobe2 fill="#EB9327" />{" "}
                 {detailProject?.projectDetail?.project_link}
               </Link>
+
+              {detailProject?.projectDetail?.video_link &&
+                detailProject?.projectDetail?.video_link != "" && (
+                  <Link
+                    href={detailProject?.projectDetail?.video_link}
+                    className="flex justify-start items-center gap-2 text-sm my-1 text-primary-binus"
+                  >
+                    <IoIosVideocam fill="#EB9327" />{" "}
+                    {detailProject?.projectDetail?.video_link}
+                  </Link>
+                )}
             </div>
             <div className="w-1/3">
               <img

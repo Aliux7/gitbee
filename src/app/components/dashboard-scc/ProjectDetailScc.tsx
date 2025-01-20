@@ -2,7 +2,7 @@ import Link from "next/link";
 import React, { useEffect, useState } from "react";
 import { BsGlobe2 } from "react-icons/bs";
 import { motion } from "framer-motion";
-import { IoIosArrowRoundBack } from "react-icons/io";
+import { IoIosArrowRoundBack, IoIosVideocam } from "react-icons/io";
 import { SiGithub } from "react-icons/si";
 import { setProjectStatus } from "@/app/(pages)/(scc)/dashboard-scc/actions";
 
@@ -137,6 +137,20 @@ function ProjectDetailScc(props: ProjectDetailSccProps) {
                 <BsGlobe2 fill="#EB9327" />{" "}
                 {props.selectedDetailProject?.projectDetail?.project_link}
               </Link>
+
+              {props.selectedDetailProject?.projectDetail?.video_link &&
+                props.selectedDetailProject?.projectDetail?.video_link !=
+                  "" && (
+                  <Link
+                    href={
+                      props.selectedDetailProject?.projectDetail?.video_link
+                    }
+                    className="flex justify-start items-center gap-2 text-sm my-1 text-primary-binus"
+                  >
+                    <IoIosVideocam fill="#EB9327" />{" "}
+                    {props.selectedDetailProject?.projectDetail?.video_link}
+                  </Link>
+                )}
             </div>
             <div className="w-1/3">
               <img
@@ -152,12 +166,36 @@ function ProjectDetailScc(props: ProjectDetailSccProps) {
           </div>
           <div className="w-full">
             <p className="text-lg">
+              <span className="text-primary-binus">Lecturer:</span>{" "}
+              <span className="text-primary-orange">
+                {props.selectedDetailProject?.lecturer_id} -{" "}
+                {props.selectedDetailProject?.lecturer_name}
+              </span>
+              <br />
+              <span className="text-primary-binus">Course:</span>{" "}
+              <span className="text-primary-orange">
+                {props.selectedDetailProject?.projectDetail?.course_id} -{" "}
+                {props.selectedDetailProject?.projectDetail?.course_name} -{" "}
+                {props.selectedDetailProject?.projectDetail?.major_name}
+              </span>
+              <br />
+              <span className="text-primary-binus">Status:</span>{" "}
+              {props.selectedDetailProject?.is_disable == 1 ? (
+                <span className="text-red-500">Hidden</span>
+              ) : (
+                <span className="text-green-500">Display</span>
+              )}
+              <br />
               The lecturer gave a rating of{" "}
               <span className="text-primary-orange underline">
                 {props.selectedDetailProject?.assessment?.grade}
               </span>{" "}
-              out of 5 <br/> 
-              Reason: "<span className="text-primary-orange underline">{props.selectedDetailProject?.assessment?.reason}</span>"
+              out of 5 <br />
+              Reason: "
+              <span className="text-primary-orange underline">
+                {props.selectedDetailProject?.assessment?.reason}
+              </span>
+              "
             </p>
           </div>
         </div>

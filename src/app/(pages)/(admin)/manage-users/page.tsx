@@ -165,7 +165,7 @@ const page = () => {
               <TableHead className="text-center">User Code</TableHead>
               <TableHead className="text-center">Email</TableHead>
               <TableHead className="text-center">Role</TableHead>
-              {selectedRole == 0 && (
+              {selectedRole == 1 && (
                 <TableHead className="text-center">Major</TableHead>
               )}
               <TableHead className="text-center">Action</TableHead>
@@ -183,7 +183,7 @@ const page = () => {
                   </TableCell>
                   <TableCell className="text-center">{user?.email}</TableCell>
                   <TableCell className="text-center">{user?.role}</TableCell>
-                  {selectedRole == 0 && (
+                  {selectedRole == 1 && (
                     <TableCell className="text-center">
                       {user?.hop_major?.map((major: any, index: number) => (
                         <span>
@@ -208,7 +208,7 @@ const page = () => {
             )}
           </TableBody>
         </Table>
-        {users?.[listRoleUser[selectedRole]].length < 1 && (
+        {users?.[listRoleUser[selectedRole]]?.length < 1 && (
           <div className="w-full text-center py-5 text-gray-500">
             No Data . . .
           </div>

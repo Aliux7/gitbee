@@ -7,6 +7,7 @@ import Link from "next/link";
 import { SiGithub } from "react-icons/si";
 import { useAuth } from "@/app/context/AuthContext";
 import { getCurrStudentProject } from "./actions";
+import { IoIosVideocam } from "react-icons/io";
 
 const page = () => {
   const { userData } = useAuth();
@@ -106,6 +107,16 @@ const page = () => {
                 <BsGlobe2 fill="#EB9327" />{" "}
                 {project?.projectDetail?.project_link}
               </Link>
+              {project?.projectDetail?.video_link &&
+                project?.projectDetail?.video_link != "" && (
+                  <Link
+                    href={project?.projectDetail?.video_link}
+                    className="flex justify-start items-center gap-2 text-sm my-1 text-primary-binus"
+                  >
+                    <IoIosVideocam fill="#EB9327" />{" "}
+                    {project?.projectDetail?.video_link}
+                  </Link>
+                )}
             </div>
           </div>
         ))}

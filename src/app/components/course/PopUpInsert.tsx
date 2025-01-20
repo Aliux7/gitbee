@@ -102,7 +102,7 @@ function PopUpInsert(props: PopUpInsertProps) {
 
   useEffect(() => {
     console.log(props.groupMembers.length);
-    if (props.groupMembers.length > 0) {
+    if (props.groupMembers?.length > 0) {
       setCurrentStep(2);
     }
   }, [props.groupMembers]);

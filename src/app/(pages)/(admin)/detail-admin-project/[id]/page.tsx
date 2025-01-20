@@ -21,7 +21,7 @@ import { BsCalendar4Range, BsGlobe2 } from "react-icons/bs";
 import ProjectDetailHop from "@/app/components/dashboard-hop/ProjectDetailHop";
 import Link from "next/link";
 import { SiGithub } from "react-icons/si";
-import { IoIosArrowRoundBack } from "react-icons/io";
+import { IoIosArrowRoundBack, IoIosVideocam } from "react-icons/io";
 import Loading from "@/app/components/Loading";
 
 const page: React.FC<{ params: { id: string } }> = ({ params: { id } }) => {
@@ -137,30 +137,28 @@ const page: React.FC<{ params: { id: string } }> = ({ params: { id } }) => {
           </Link>
           <h1 className="text-2xl border-t pt-5 mr-4">List Developers</h1>
 
-          {project?.projectGroups?.map(
-            (projectGroup: any) => (
-              <Link
-                href={"/portofolio/123"}
-                className="flex justify-start items-center gap-5 border-b pb-5 mr-4 cursor-pointer"
-              >
-                <img
-                  src="/images/1.jpg"
-                  className="rounded-full h-20 w-20 p-1 border object-cover"
-                />
-                <div className="w-48">
-                  <h1 className="truncate font-semibold capitalize">
-                    {projectGroup?.student_name.toLowerCase()}
-                  </h1>
-                  <h1 className="truncate text-sm text-gray-500">
-                    {projectGroup?.student_binusian_id}
-                  </h1>
-                  <h1 className="truncate text-sm text-gray-500">
-                    {projectGroup?.student_id}
-                  </h1>
-                </div>
-              </Link>
-            )
-          )} 
+          {project?.projectGroups?.map((projectGroup: any) => (
+            <Link
+              href={"/portofolio/123"}
+              className="flex justify-start items-center gap-5 border-b pb-5 mr-4 cursor-pointer"
+            >
+              <img
+                src="/images/1.jpg"
+                className="rounded-full h-20 w-20 p-1 border object-cover"
+              />
+              <div className="w-48">
+                <h1 className="truncate font-semibold capitalize">
+                  {projectGroup?.student_name.toLowerCase()}
+                </h1>
+                <h1 className="truncate text-sm text-gray-500">
+                  {projectGroup?.student_binusian_id}
+                </h1>
+                <h1 className="truncate text-sm text-gray-500">
+                  {projectGroup?.student_id}
+                </h1>
+              </div>
+            </Link>
+          ))}
         </motion.div>
         <motion.div
           className="relative w-full border-l pl-3 flex flex-col h-fit py-3 justify-start items-start transition-all ease-in-out duration-500"
@@ -208,6 +206,17 @@ const page: React.FC<{ params: { id: string } }> = ({ params: { id } }) => {
                   <BsGlobe2 fill="#EB9327" />{" "}
                   {project?.projectDetail?.project_link}
                 </Link>
+
+                {project?.projectDetail?.video_link &&
+                  project?.projectDetail?.video_link != "" && (
+                    <Link
+                      href={project?.projectDetail?.video_link}
+                      className="flex justify-start items-center gap-2 text-sm my-1 text-primary-binus"
+                    >
+                      <IoIosVideocam fill="#EB9327" />{" "}
+                      {project?.projectDetail?.video_link}
+                    </Link>
+                  )}
               </div>
               <div className="w-1/3">
                 <img

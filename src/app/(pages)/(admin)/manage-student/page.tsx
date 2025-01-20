@@ -141,7 +141,7 @@ const page = () => {
             ))}
           </TableBody>
         </Table> 
-        {students.length < 1 && (
+        {students?.length < 1 && (
           <div className="w-full text-center py-5 text-gray-500">
             No Data . . .
           </div>

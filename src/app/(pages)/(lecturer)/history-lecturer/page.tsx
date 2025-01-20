@@ -23,6 +23,7 @@ import {
 } from "./action";
 import { CiSearch } from "react-icons/ci";
 import { useAuth } from "@/app/context/AuthContext";
+import { IoIosVideocam } from "react-icons/io";
 
 const page = () => {
   const { userData } = useAuth();
@@ -196,7 +197,7 @@ const page = () => {
             ))}
           </TableBody>
         </Table>
-        {historyOutstandingProject.length < 1 && (
+        {historyOutstandingProject?.length < 1 && (
           <div className="w-full text-center py-5 text-gray-500">
             No Data . . .
           </div>
@@ -262,6 +263,17 @@ const page = () => {
                         <BsGlobe2 fill="#EB9327" />{" "}
                         {selectedPreviewProject?.projectDetail?.project_link}
                       </Link>
+
+                      {selectedPreviewProject?.projectDetail?.video_link &&
+                        selectedPreviewProject?.projectDetail?.video_link != "" && (
+                          <Link
+                            href={selectedPreviewProject?.projectDetail?.video_link}
+                            className="flex justify-start items-center gap-2 text-sm my-1 text-primary-binus"
+                          >
+                            <IoIosVideocam fill="#EB9327" />{" "}
+                            {selectedPreviewProject?.projectDetail?.video_link}
+                          </Link>
+                        )}
                     </div>
                     <div className="w-1/3">
                       <img

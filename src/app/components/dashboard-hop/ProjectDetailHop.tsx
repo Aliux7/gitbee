@@ -2,7 +2,7 @@ import Link from "next/link";
 import React, { useEffect, useState } from "react";
 import { BsGlobe2 } from "react-icons/bs";
 import { motion } from "framer-motion";
-import { IoIosArrowRoundBack } from "react-icons/io";
+import { IoIosArrowRoundBack, IoIosVideocam } from "react-icons/io";
 import { SiGithub } from "react-icons/si";
 import { setProjectStatus } from "@/app/(pages)/(hop)/dashboard-hop/actions";
 
@@ -137,6 +137,19 @@ function ProjectDetailHop(props: ProjectDetailHopProps) {
                 <BsGlobe2 fill="#EB9327" />{" "}
                 {props.selectedDetailProject?.projectDetail?.project_link}
               </Link>
+              {props.selectedDetailProject?.projectDetail?.video_link &&
+                props.selectedDetailProject?.projectDetail?.video_link !=
+                  "" && (
+                  <Link
+                    href={
+                      props.selectedDetailProject?.projectDetail?.video_link
+                    }
+                    className="flex justify-start items-center gap-2 text-sm my-1 text-primary-binus"
+                  >
+                    <IoIosVideocam fill="#EB9327" />{" "}
+                    {props.selectedDetailProject?.projectDetail?.video_link}
+                  </Link>
+                )}
             </div>
             <div className="w-1/3">
               <img
@@ -153,6 +166,26 @@ function ProjectDetailHop(props: ProjectDetailHopProps) {
 
           <div className="w-full">
             <p className="text-lg">
+              <span className="text-primary-binus">Lecturer:</span>{" "}
+              <span className="text-primary-orange">
+                {props.selectedDetailProject?.lecturer_id} -{" "}
+                {props.selectedDetailProject?.lecturer_name}
+              </span>
+              <br />
+              <span className="text-primary-binus">Course:</span>{" "}
+              <span className="text-primary-orange">
+                {props.selectedDetailProject?.projectDetail?.course_id} -{" "}
+                {props.selectedDetailProject?.projectDetail?.course_name} -{" "}
+                {props.selectedDetailProject?.projectDetail?.major_name}
+              </span>
+              <br />
+              <span className="text-primary-binus">Status:</span>{" "}
+              {props.selectedDetailProject?.is_disable == 1 ? (
+                <span className="text-red-500">Hidden</span>
+              ) : (
+                <span className="text-green-500">Display</span>
+              )}
+              <br />
               The lecturer gave a rating of{" "}
               <span className="text-primary-orange underline">
                 {props.selectedDetailProject?.assessment?.grade}
@@ -254,20 +287,20 @@ function ProjectDetailHop(props: ProjectDetailHopProps) {
       </motion.div>
       {showConfirmFinalize && (
         <div className="fixed top-0 w-screen h-screen bg-black/50 z-[110] flex justify-center items-center">
-          <div className="bg-white w-[40rem] h-fit rounded-md p-10">
+          <div className="bg-white w-[40rem] h-fit rounded-md p-10 flex flex-col">
             <h1 className="text-4xl">
               Are you sure you <br />
               {toggleStatus == 0 ? (
-                <span className="text-red-500">
-                  don't want to make this an outstanding project
-                </span>
+                <span className="text-red-500 underline">don't want</span>
               ) : (
-                <span className="text-primary-orange">
-                  want to make this an oustanding project
-                </span>
-              )}
-              ?
+                <span className="text-primary-orange underline">want</span>
+              )}{" "}
+              to make this an outstanding project ?
             </h1>
+            <p className="text-gray-500 mt-2">
+              Note: This action will affect the order of places in the
+              appearance of the finalized project.
+            </p>
             <div className="flex justify-end items-center gap-5 mt-5 text-xl">
               <button
                 className="bg-red-500 text-white px-5 py-1 rounded-md"

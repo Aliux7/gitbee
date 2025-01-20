@@ -74,11 +74,11 @@ export const Hero = () => {
   return (
     <motion.div
       style={{ opacity }}
-      className="sticky top-0 max-h-screen overflow-hidden flex gap-10"
+      className="sticky top-0 min-h-screen flex justify-center lg:justify-normal items-center lg:items-stretch max-h-screen overflow-hidden xl:gap-10 px-10"
     >
-      <div className="w-1/2 flex flex-col justify-center items-start ps-[6.5rem] gap-5">
+      <div className="absolute z-10 bg-opacity-80 bg-gray-50 lg:bg-transparent lg:relative max-w-[90vw] w-auto shadow-lg lg:shadow-none px-3 py-10 sm:p-10 lg:p-0 lg:w-1/2 flex flex-col justify-center items-start gap-3 sm:gap-5 xl:ps-14 rounded-lg">
         <motion.h1
-          className="font-bold font-montserrat text-5xl"
+          className="font-bold font-montserrat text-3xl sm:text-5xl lg:text-4xl xl:text-5xl text-center lg:text-start w-full"
           initial="hidden"
           whileInView="reveal"
           transition={{ staggerChildren: 0.02 }}
@@ -93,7 +93,7 @@ export const Hero = () => {
             </motion.span>
           ))}
           <br />
-          <span className="font-semibold font-montserrat text-4xl">
+          <span className="font-semibold font-montserrat text-xl sm:text-4xl lg:text-3xl xl:text-4xl ">
             {subHeadingStartChars.map((char, index) => (
               <motion.span
                 key={index}
@@ -133,6 +133,7 @@ export const Hero = () => {
         <motion.h3
           initial="hidden"
           whileInView="reveal"
+          className="text-sm px-1 sm:p-0 sm:text-base text-center lg:text-start w-full"
           transition={{ staggerChildren: 0.015 }}
         >
           {descriptionChars.map((char, index) => (
@@ -146,7 +147,7 @@ export const Hero = () => {
           ))}{" "}
         </motion.h3>
 
-        <div className="flex gap-5">
+        <div className="flex gap-5 justify-center lg:justify-start w-full">
           <motion.a
             href="/explore"
             variants={{
@@ -156,7 +157,7 @@ export const Hero = () => {
             initial="hidden"
             whileInView="visible"
             transition={{ duration: 1, delay: 1 }}
-            className="relative cursor-pointer border border-primary-orange bg-transparent px-5 py-2.5 text-primary-orange transition-colors before:absolute before:left-0 before:top-0 before:-z-10 before:h-full before:w-full before:origin-bottom-left before:scale-y-0 before:scale-x-0 before:bg-primary-orange before:transition-transform before:duration-300 before:content-[''] hover:text-white before:hover:scale-y-100 before:hover:scale-x-100 rounded-md before:rounded-sm overflow-hidden"
+            className="text-sm sm:text-base relative cursor-pointer border border-primary-orange bg-transparent px-5 py-2.5 text-primary-orange transition-colors before:absolute before:left-0 before:top-0 before:-z-10 before:h-full before:w-full before:origin-bottom-left before:scale-y-0 before:scale-x-0 before:bg-primary-orange before:transition-transform before:duration-300 before:content-[''] hover:text-white before:hover:scale-y-100 before:hover:scale-x-100 rounded-md before:rounded-sm overflow-hidden"
           >
             Explore
           </motion.a>
@@ -169,13 +170,13 @@ export const Hero = () => {
             initial="hidden"
             whileInView="visible"
             transition={{ duration: 1, delay: 1.5 }}
-            className="cursor-pointer py-2 px-1 relative after:absolute after:w-0 hover:after:w-full after:h-[1px] after:bottom-0 after:left-0 after:bg-primary-binus flex justify-center items-center after:transition-all after:ease-in-out after:duration-300"
+            className="text-sm sm:text-base border-none lg:border cursor-pointer py-2 px-1 relative after:absolute after:w-0 hover:after:w-full after:h-[1px] after:bottom-0 after:left-0 after:bg-primary-binus flex justify-center items-center after:transition-all after:ease-in-out after:duration-300"
           >
             Submit a project
           </motion.a>
         </div>
       </div>
-      <div className="relative w-1/2 flex gap-7 h-full overflow-hidden rotate-3 justify-end items-end pe-[13rem] ">
+      <div className="relative lg:w-1/2 flex gap-7 h-full overflow-hidden lg:rotate-3 justify-end items-end lg:pe-24 xl:pe-36 opacity-30 lg:opacity-100">
         <motion.div
           variants={{
             hidden: { opacity: 0, y: -75 },
