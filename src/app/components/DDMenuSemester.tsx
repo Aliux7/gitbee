@@ -40,14 +40,14 @@ const DDMenuSemester: React.FC<DDMenuSemesterProps> = ({
       <DropdownMenuTrigger asChild>
         <Button
           variant="outline"
-          className={`h-full flex justify-between items-center gap-3 py-3 ${
+          className={`h-full flex justify-between items-center gap-3 sm:py-3 ${
             className == null ? null : className
           }`}
         >
           <div className="pr-2 border-r h-full flex justify-center items-center">
             {icon}
           </div>
-          <div className="truncate text-primary-binus hover:text-primary-orange font-poppins font-normal">
+          <div className="truncate text-primary-binus hover:text-primary-orange font-poppins font-normal text-xs sm:text-base">
             {position}
           </div>
         </Button>

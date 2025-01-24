@@ -128,16 +128,22 @@ const page = () => {
   }, []);
 
   return (
-    <motion.div className="relative min-h-screen flex flex-col justify-start items-center px-[6.25rem] ">
+    <motion.div className="relative min-h-screen flex flex-col justify-start items-center px-5 sm:px-10 xl:px-[6.25rem] ">
       <div
-        className={`fixed top-0 w-full flex justify-center items-center transition-all ease-in-out duration-300 px-24 z-10 ${
+        className={`fixed top-0 w-full flex justify-center items-center transition-all ease-in-out duration-300 px-5 sm:px-10 xl:px-24 z-10 ${
           expand ? "pt-24" : "pt-10"
         } bg-gray-50`}
       >
-        <div className="w-full border-b flex justify-between items-center pb-3">
-          <div className={`px-1 ${expand ? "w-1/2" : "w-[calc(50%-5rem)]"}`}>
-            <h1 className="font-montserrat text-xl text-primary-binus font-semibold">
-              <span className="text-primary-orange text-xl">{course_code}</span>{" "}
+        <div className="w-full border-b flex flex-col-reverse sm:flex-row justify-between items-start sm:items-center pb-3">
+          <div
+            className={`px-1 sm:text-nowrap ${
+              expand ? "sm:w-1/2" : "sm:w-[calc(50%-5rem)]"
+            }`}
+          >
+            <h1 className="font-montserrat text-base sm:text-lg md:text-xl text-primary-binus font-semibold">
+              <span className="text-primary-orange text-base lg:text-lg md:text-xl">
+                {course_code}
+              </span>{" "}
               - {course_name}
             </h1>
           </div>
@@ -148,10 +154,10 @@ const page = () => {
           ></div>
           <div
             className={` ${
-              expand ? "w-1/2" : "w-[calc(50%-5rem)]"
+              expand ? "sm:w-1/2" : "sm:w-[calc(50%-5rem)]"
             } flex justify-end items-center`}
           >
-            <div className="bg-secondary-binus text-xl font-semibold rounded-lg px-2 ">
+            <div className="bg-secondary-binus text-lg md:text-xl font-semibold rounded-lg px-2 text-nowrap">
               {class_id?.toUpperCase()}
             </div>
           </div>
@@ -159,8 +165,8 @@ const page = () => {
       </div>
 
       <div
-        className={`fixed top-0 w-full h-fit flex justify-start items-center transition-all ease-in-out duration-300 px-24 pb-3 z-[5] ${
-          expand ? "pt-36" : "pt-[5.5rem]"
+        className={`fixed top-0 w-full h-fit hidden sm:flex justify-start items-center transition-all ease-in-out duration-300 px-5 sm:px-10 xl:px-24 pb-3 z-[5] ${
+          expand ? "sm:pt-36" : "sm:pt-[5.5rem]"
         } bg-gray-50`}
       >
         <Breadcrumb className="px-1">
@@ -182,9 +188,9 @@ const page = () => {
           </BreadcrumbList>
         </Breadcrumb>
       </div>
-      <div className="h-fit w-full pt-48 pb-10 flex flex-col gap-5">
+      <div className="h-fit w-full pt-52 sm:pt-48 pb-10 flex flex-col gap-5">
         {groupDetail?.length >= 1 && (
-          <div className="w-[31rem] max-h-[21rem] h-fit overflow-y-auto shadow-xl border rounded-xl p-5">
+          <div className="sm:w-[31rem] max-h-[21rem] h-fit overflow-y-auto shadow-xl border rounded-xl p-5">
             <div className="w-full flex justify-between items-center">
               <h1 className="text-xl">Group Forming</h1>
 
@@ -324,12 +330,12 @@ const page = () => {
         </div>
         {projectDetail?.length > 0 && (
           <div className="flex-grow h-fit overflow-y-auto shadow-xl border rounded-xl p-5">
-            <h1 className="text-xl">Detail Project</h1>
-            <motion.div className="relative w-full flex h-fit py-5 justify-start items-start transition-all ease-in-out duration-500 px-3">
-              <div className="w-full flex flex-col pr-5">
-                <div className="w-full flex justify-start items-start border-b pb-5">
-                  <div className="flex flex-col gap-1 w-2/3">
-                    <h1 className="text-3xl font-bold">
+            <h1 className="text-lg sm:text-xl">Detail Project</h1>
+            <motion.div className="relative w-full flex h-fit py-5 justify-start items-start transition-all ease-in-out duration-500 sm:px-3">
+              <div className="w-full flex flex-col lg:pr-5">
+                <div className="w-full flex flex-col lg:flex-row justify-start items-start border-b pb-5 gap-5 lg:gap-0">
+                  <div className="flex flex-col gap-1 w-full lg:w-2/3">
+                    <h1 className="text-2xl sm:text-3xl font-bold">
                       {projectDetail[0]?.projectDetail?.title}{" "}
                       <span className="text-sm font-normal">
                         (
@@ -354,7 +360,7 @@ const page = () => {
                         );
                       })}
                     </h3>
-                    <div className="h-fit flex-grow my-3 pr-10">
+                    <div className="h-fit flex-grow my-3 lg:pr-10">
                       <h1 className="text-balance text-gray-700 overflow-auto">
                         {projectDetail[0]?.projectDetail?.description}
                       </h1>
@@ -399,7 +405,7 @@ const page = () => {
                         </Link>
                       )}
                   </div>
-                  <div className="w-1/3">
+                  <div className="w-full lg:w-1/3">
                     <img
                       src={projectDetail[0]?.projectDetail?.thumbnail}
                       className="w-full rounded-md border h-96 object-cover"

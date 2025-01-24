@@ -55,10 +55,10 @@ const page = () => {
   };
 
   useEffect(() => {
-    scrollYProgress.onChange((currentScrollY) => {
+    const handleScroll = (currentScrollY: number) => {
       if (currentScrollY < 0.1) setExpand(true);
       else if (currentScrollY > prevScrollY.current) setExpand(false);
-      else if (currentScrollY < prevScrollY.current) setExpand(false);
+      else if (currentScrollY < prevScrollY.current) setExpand(true);
 
       if (
         currentScrollY - prevScrollY.current > 0.15 ||
@@ -66,7 +66,29 @@ const page = () => {
       ) {
         prevScrollY.current = currentScrollY;
       }
-    });
+    };
+
+    const mediaQuery = window.matchMedia("(max-width: 1535px)");
+
+    const scrollListener = () => {
+      console.log(mediaQuery);
+      if (!mediaQuery.matches) {
+        console.log("MASUK");
+        scrollYProgress.onChange(handleScroll);
+      }
+    };
+
+    scrollListener();
+
+    const resizeListener = () => {
+      scrollListener();
+    };
+    window.addEventListener("resize", resizeListener);
+
+    return () => {
+      window.removeEventListener("resize", resizeListener);
+      scrollYProgress.clearListeners();
+    };
   }, [scrollYProgress]);
 
   useEffect(() => {
@@ -90,16 +112,16 @@ const page = () => {
   };
 
   return (
-    <motion.div className="relative min-h-screen flex flex-col pt-28 px-16 bg-gray-50">
+    <motion.div className="relative min-h-screen flex flex-col pt-28 xl:px-16 bg-gray-50">
       <div
         className={`bg-gray-50 fixed top-0 ${
-          expand ? "h-[12.25rem]" : "h-[7rem]"
+          expand ? "h-[21rem] sm:h-60 lg:h-[12.25rem]" : "h-[7rem]"
         } w-full left-0 z-10`}
       ></div>
       <div
         className={`sticky ${
           expand ? "top-28" : "top-7"
-        } z-10 w-full flex justify-between items-center gap-5 px-9 h-[5.25rem] transition-all ease-in-out duration-300 bg-gray-50 pb-7`}
+        } z-10 w-full flex flex-col lg:flex-row justify-between items-end lg:items-center gap-3 sm:gap-5 px-9 h-[5.25rem] transition-all ease-in-out duration-300 bg-gray-50 pb-7`}
       >
         <div className="relative w-full flex justify-start items-center h-full">
           <CiSearch
@@ -116,7 +138,7 @@ const page = () => {
             } h-full p-3 px-12 rounded-md`}
           />
         </div>
-        <div className="relative w-fit flex justify-end items-center h-full gap-5">
+        <div className="relative w-fit flex flex-wrap sm:flex-nowrap justify-end items-center h-full gap-2 sm:gap-5">
           <DDMenu
             options={categories}
             filter="Category Project"

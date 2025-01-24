@@ -44,9 +44,9 @@ const page = () => {
   }, []);
 
   return (
-    <motion.div className="relative min-h-screen flex flex-col justify-start items-center px-[6.25rem] ">
+    <motion.div className="relative min-h-screen flex flex-col justify-start items-center px-5 sm:px-10 ">
       <div className="h-fit w-full pt-24 flex flex-col justify-start items-center">
-        <div className="w-[45rem] flex justify-start items-center gap-3">
+        <div className="w-full lg:w-[45rem] flex justify-start items-center gap-3">
           <img
             src="https://www.shutterstock.com/image-vector/smiling-crazy-face-bright-funny-260nw-2019181259.jpg"
             className="border w-32 h-32 object-cover p-2"
@@ -62,7 +62,7 @@ const page = () => {
           </div>
         </div>
       </div>
-      <div className="w-[45rem] flex flex-col justify-start items-start gap-3 my-9 border-t pt-9 mb-24">
+      <div className="w-full lg:w-[45rem] flex flex-col justify-start items-start gap-3 my-9 border-t pt-9 mb-24">
         <h1 className="text-2xl font-semibold">
           <span className="text-primary-orange">~</span> Portofolio
         </h1>
@@ -83,7 +83,7 @@ const page = () => {
               className="border w-full max-h-[30rem] object-cover p-5 my-3"
             />
             <div className="h-px w-full bg-gray-300"></div>
-            <div className="w-full grid grid-cols-2 justify-start items-center gap-5">
+            <div className="w-full grid grid-cols-1 md:grid-cols-2 justify-start items-center gap-5">
               {project?.galleries.map((gallery: any) => (
                 <img
                   src={gallery?.image}
@@ -92,7 +92,7 @@ const page = () => {
               ))}
             </div>
             <div className="h-px w-full bg-gray-300"></div>
-            <div className="w-full flex justify-between items-center">
+            <div className="w-full flex flex-col sm:flex-row flex-wrap justify-between items-start sm:items-center">
               <Link
                 href={project?.projectDetail?.github_link}
                 className="flex justify-start items-center gap-2 text-sm my-1 text-primary-binus"

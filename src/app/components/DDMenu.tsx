@@ -37,7 +37,7 @@ const DDMenu: React.FC<DDMenuProps> = ({
       <DropdownMenuTrigger asChild>
         <Button
           variant="outline"
-          className="h-full w-44 flex justify-between items-center gap-3 py-3 group"
+          className="h-fit sm:h-full w-full sm:w-44 flex justify-between items-center gap-3 py-3 group"
         >
           <div className="pr-2 border-r h-full flex justify-center items-center">
             {React.cloneElement(icon, {

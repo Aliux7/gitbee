@@ -1,4 +1,4 @@
-import React, { useState } from "react";
+import React, { useEffect, useState } from "react";
 import Card from "../Card";
 import splitStringUsingRegex from "@/app/utlis/splitStringUsingRegex";
 import { motion } from "framer-motion";
@@ -13,7 +13,7 @@ const charVariants = {
 };
 
 const Project = () => {
-  const [showCard, setShowCard] = useState(3);
+  const [showCard, setShowCard] = useState(0);
   const headingChars = splitStringUsingRegex(heading);
   const subHeadingChars = splitStringUsingRegex(subHeading);
   const router = useRouter();
@@ -111,22 +111,38 @@ const Project = () => {
     },
   ];
 
+  useEffect(() => {
+    if (window.innerWidth > 1023) {
+      setShowCard(3);
+    } else if (window.innerWidth < 1024 && window.innerWidth > 639) {
+      setShowCard(2);
+    } else {
+      setShowCard(4);
+    }
+  }, [window.innerWidth]);
+
   const handleShowMore = () => {
-    if (showCard == 9) {
+    const increment =
+      window.innerWidth < 1024 && window.innerWidth > 639 ? 2 : 3;
+    if (
+      (window.innerWidth < 1024 && window.innerWidth > 639 && showCard == 8) ||
+      (window.innerWidth > 1023 && showCard == 9) ||
+      (window.innerWidth < 640 && showCard == 9)
+    ) {
       router.push("/explore");
     } else {
-      setShowCard(showCard + 3); // Show more cards
+      setShowCard(showCard + increment);
     }
   };
 
   return (
-    <div className="relative min-h-[42.5rem] overflow-hidden flex flex-col justify-center items-center gap-10 bg-white mb-10 mx-5 md:mx-10 rounded-xl shadow-xl py-10 px-5 md:p-10">
+    <div className="relative min-h-[42.5rem] overflow-hidden flex flex-col justify-center items-center gap-10 bg-white mb-10 mx-5 md:mx-16 rounded-xl shadow-xl py-10 px-5 md:p-10">
       <div className="flex flex-col justify-center items-center gap-2">
         <motion.h1
           initial="hidden"
           whileInView="reveal"
           transition={{ staggerChildren: 0.05 }}
-          className="font-bold font-montserrat text-5xl"
+          className="font-bold font-montserrat text-4xl sm:text-4xl md:text-5xl text-center"
         >
           {headingChars.map((char, index) => (
             <motion.span
@@ -141,6 +157,7 @@ const Project = () => {
         <motion.h3
           initial="hidden"
           whileInView="reveal"
+          className="text-center text-sm sm:text-base"
           transition={{ staggerChildren: 0.03 }}
         >
           {subHeadingChars.map((char, index) => (
@@ -156,7 +173,7 @@ const Project = () => {
         </motion.h3>
       </div>
       <motion.div
-        className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-5 xl:gap-10"
+        className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-5 xl:gap-10 px-5"
         initial="hidden"
         whileInView="reveal"
         transition={{ staggerChildren: 0.5 }}
@@ -183,7 +200,7 @@ const Project = () => {
           variants={charVariants}
           className="w-32 cursor-pointer relative flex justify-center items-center border border-primary-binus bg-transparent px-5 py-2.5 hover:text-primary-binus transition-colors before:absolute before:left-0 before:top-0 before:-z-10 before:h-full before:w-full before:origin-bottom-left before:scale-y-100 before:bg-primary-binus before:transition-transform before:duration-300 before:content-[''] text-white before:hover:scale-y-0 rounded-md before:rounded-sm overflow-hidden"
         >
-          {showCard >= allCards?.length ? "Explore" : "Show More"}
+          {showCard+1 >= allCards?.length ? "Explore" : "Show More"}
         </motion.button>
         <motion.button
           transition={{ duration: 0.5 }}

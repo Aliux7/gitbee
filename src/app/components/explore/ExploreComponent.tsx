@@ -35,7 +35,7 @@ function ExploreComponent(props: ExploreProps) {
     >
       <div
         className={`w-full h-auto bg-white sticky z-10 px-5 transition-all ease-in-out duration-300 visible ${
-          props.expand ? "top-[12.25rem]" : "top-28"
+          props.expand ? "top-[21rem] sm:top-60 lg:top-[12.25rem]" : "top-28"
         }`}
       >
         <div className="p-2 my-5 rounded-md mb-4 border">
@@ -44,7 +44,7 @@ function ExploreComponent(props: ExploreProps) {
       </div>
 
       <motion.div
-        className={`grid grid-cols-3 flex-grow h-fit gap-7 justify-center items-start transition-all ease-in-out duration-500 pt-3`}
+        className={`grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 px-5 h-fit gap-5 md:gap-7 lg:gap-5 xl:gap-10 justify-center items-start transition-all ease-in-out duration-500 pt-36 sm:pt-14 lg:pt-3`}
         initial="hidden"
         whileInView="reveal"
         variants={charVariants}
@@ -64,9 +64,10 @@ function ExploreComponent(props: ExploreProps) {
               delay={0}
               title={project?.projectDetail?.title}
               developers={project?.projectGroups}
+              classStyle="full-parent-content"
             />
           </div>
-        ))} 
+        ))}
       </motion.div>
     </motion.div>
   );
