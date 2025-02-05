@@ -55,16 +55,16 @@ const Header = () => {
         scrollYProgress.onChange(handleScroll);
       }
     };
- 
+
     scrollListener();
- 
+
     const resizeListener = () => {
       scrollListener();
     };
     window.addEventListener("resize", resizeListener);
 
     return () => {
-      window.removeEventListener("resize", resizeListener); 
+      window.removeEventListener("resize", resizeListener);
       scrollYProgress.clearListeners();
     };
   }, [scrollYProgress]);
@@ -146,10 +146,11 @@ const Header = () => {
         }`}
         onMouseEnter={() => setExpand(true)}
       >
+        <div className="bg-gray-50 w-full h-20 top-0 left-0 absolute sm:hidden -z-[5]"></div>
         <div
           className={`${
             expand ? "w-40" : "w-full"
-          } flex justify-center items-center transition-all ease-in-out duration-700`}
+          } flex justify-center items-center transition-all ease-in-out duration-700 z-50`}
         >
           <h1
             className={`font-montserrat font-bold text-2xl text-gray-800 ${
@@ -170,7 +171,7 @@ const Header = () => {
           } flex justify-center items-center gap-5 lg:gap-0 `}
         >
           <ul
-            className={`top-0 absolute right-0 lg:relative flex justify-center items-center gap-5 h-full w-full lg:w-auto pt-28 lg:pt-0 -z-10 lg:z-0`}
+            className={`top-0 absolute right-0 lg:relative flex justify-center items-center gap-5 h-full w-full lg:w-auto pt-20 overflow-auto sm:pt-28 lg:pt-0 -z-10 lg:z-0`}
           >
             {!userData && (
               <ul

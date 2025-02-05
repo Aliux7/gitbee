@@ -92,20 +92,15 @@ const page = () => {
   }, [search]);
 
   return (
-    <motion.div className="relative min-h-screen flex flex-col pt-28 px-16 pb-10 bg-gray-50">
-      <div
-        className={`bg-gray-50 fixed top-0 ${
-          expand ? "h-[12.25rem]" : "h-[7rem]"
-        } w-full left-0 z-10`}
-      ></div>
+    <motion.div className="relative min-h-screen flex flex-col pt-20 sm:pt-28 2xl:px-16 pb-10 bg-gray-50">
       <div
         className={`sticky ${
-          expand ? "top-28" : "top-7"
-        } z-10 w-full flex justify-between items-center gap-5 px-9 h-[5.25rem] transition-all ease-in-out duration-300 bg-gray-50 pb-7`}
+          expand ? "top-20 sm:top-28" : "top-7"
+        } z-10 w-full flex flex-wrap lg:flex-nowrap justify-between items-center gap-3 md:gap-5 px-5 sm:px-9 h-full lg:h-[5.25rem] transition-all ease-in-out duration-300 bg-gray-50 pb-7`}
       >
         <div className="relative w-full flex justify-start items-center h-full">
           <CiSearch
-            className="absolute ml-3 w-7 h-7 pr-2 border-r"
+            className="absolute ml-3 w-5 h-5 sm:w-7 sm:h-7 pr-2 border-r"
             fill="#6B7280"
           />
           <input
@@ -115,12 +110,12 @@ const page = () => {
             onChange={(e) => setSearch(e.target.value)}
             className={`border ${
               expand ? "w-full" : "w-[35.5rem]"
-            } h-full p-3 px-12 rounded-md`}
+            } h-full p-2 sm:p-3 px-12 sm:px-12 rounded-md text-sm sm:text-base`}
           />
         </div>
-        <div className="relative min-w-fit flex justify-end items-center h-full bg-white border rounded-md px-2 gap-2">
+        <div className="relative min-w-fit w-full sm:w-auto flex justify-end items-center h-full bg-white border rounded-md py-2 px-2 gap-2">
           <button
-            className={`w-full whitespace-nowrap cursor-pointer py-2 px-4 relative ${
+            className={`w-full whitespace-nowrap cursor-pointer text-xs sm:text-base py-1 px-2 md:py-2 md:px-4 relative ${
               selectedRole == 0
                 ? "bg-primary-binus text-white"
                 : "bg-transparent text-primary-binus hover:bg-gray-50"
@@ -130,7 +125,7 @@ const page = () => {
             Admin
           </button>
           <button
-            className={`w-full whitespace-nowrap cursor-pointer py-2 px-4 relative ${
+            className={`w-full whitespace-nowrap cursor-pointer text-xs sm:text-base py-1 px-2 md:py-2 md:px-4 relative ${
               selectedRole == 1
                 ? "bg-primary-binus text-white"
                 : "bg-transparent text-primary-binus hover:bg-gray-50"
@@ -140,7 +135,7 @@ const page = () => {
             HoP
           </button>
           <button
-            className={`w-full whitespace-nowrap cursor-pointer py-2 px-4 relative ${
+            className={`w-full whitespace-nowrap cursor-pointer text-xs sm:text-base py-1 px-2 md:py-2 md:px-4 relative ${
               selectedRole == 2
                 ? "bg-primary-binus text-white"
                 : "bg-transparent text-primary-binus hover:bg-gray-50"
@@ -150,7 +145,7 @@ const page = () => {
             SCC
           </button>
           <button
-            className={`w-full whitespace-nowrap cursor-pointer py-2 px-4 relative ${
+            className={`w-full whitespace-nowrap cursor-pointer text-xs sm:text-base py-1 px-2 md:py-2 md:px-4 relative ${
               selectedRole == 3
                 ? "bg-primary-binus text-white"
                 : "bg-transparent text-primary-binus hover:bg-gray-50"
@@ -160,9 +155,9 @@ const page = () => {
             Lecturer
           </button>
         </div>
-        <div className="relative min-w-fit flex justify-end items-center h-full bg-white border rounded-md px-2 gap-2">
+        <div className="relative min-w-fit flex justify-end items-center h-full bg-white border rounded-md py-2 px-2 gap-2">
           <button
-            className="w-full whitespace-nowrap cursor-pointer py-2 px-3 relative text-primary-binus rounded-sm"
+            className="w-full whitespace-nowrap cursor-pointer text-xs sm:text-base py-1 px-2 md:py-2 md:px-3 relative text-primary-binus rounded-sm"
             onClick={() => setOpenImportExcel(true)}
           >
             Import Excel Lecturer
@@ -170,8 +165,8 @@ const page = () => {
         </div>
       </div>
 
-      {selectedRole == 2 && (
-        <div className="mx-9 text-end mb-2">
+      {selectedRole == 3 && (
+        <div className="mx-5 sm:mx-9 text-end mb-2">
           <span
             onClick={() => setOpenPopUpConfirmation(true)}
             className="text-red-500 cursor-pointer"
@@ -180,7 +175,7 @@ const page = () => {
           </span>
         </div>
       )}
-      <div className="w-auto bg-white shadow-md rounded-md mx-9 ">
+      <div className="w-auto bg-white shadow-md rounded-md mx-5 sm:mx-9 ">
         <Table>
           <TableHeader>
             <TableRow>
