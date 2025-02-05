@@ -25,7 +25,7 @@ const page = () => {
   const [loading, setLoading] = useState(false);
 
   useEffect(() => {
-    scrollYProgress.onChange((currentScrollY) => {
+    const handleScroll = (currentScrollY: number) => {
       if (currentScrollY < 0.1) setExpand(true);
       else if (currentScrollY > prevScrollY.current) setExpand(false);
       else if (currentScrollY < prevScrollY.current) setExpand(true);
@@ -36,7 +36,28 @@ const page = () => {
       ) {
         prevScrollY.current = currentScrollY;
       }
-    });
+    };
+
+    const mediaQuery = window.matchMedia("(max-width: 1535px)");
+
+    const scrollListener = () => {
+      console.log(mediaQuery);
+      if (!mediaQuery.matches) {
+        scrollYProgress.onChange(handleScroll);
+      }
+    };
+
+    scrollListener();
+
+    const resizeListener = () => {
+      scrollListener();
+    };
+    window.addEventListener("resize", resizeListener);
+
+    return () => {
+      window.removeEventListener("resize", resizeListener);
+      scrollYProgress.clearListeners();
+    };
   }, [scrollYProgress]);
 
   const fetchData = async () => {
@@ -53,8 +74,8 @@ const page = () => {
 
   const fetchTransactionData = async () => {
     setLoading(true);
-    console.log(userData?.nim)
-    console.log(currentSemester?.data?.SemesterId)
+    console.log(userData?.nim);
+    console.log(currentSemester?.data?.SemesterId);
     const resultTransactions = await getTranscationByStudent(
       currentSemester?.data?.SemesterId,
       userData?.nim ? userData?.nim : ""

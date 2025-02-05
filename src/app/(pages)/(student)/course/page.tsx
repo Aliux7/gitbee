@@ -59,7 +59,7 @@ const page = () => {
   const [technologies, setTechnologies] = useState<any>([]);
 
   useEffect(() => {
-    scrollYProgress.onChange((currentScrollY) => {
+    const handleScroll = (currentScrollY: number) => {
       if (currentScrollY < 0.1) setExpand(true);
       else if (currentScrollY > prevScrollY.current) setExpand(false);
       else if (currentScrollY < prevScrollY.current) setExpand(true);
@@ -70,7 +70,28 @@ const page = () => {
       ) {
         prevScrollY.current = currentScrollY;
       }
-    });
+    };
+
+    const mediaQuery = window.matchMedia("(max-width: 1535px)");
+
+    const scrollListener = () => {
+      console.log(mediaQuery);
+      if (!mediaQuery.matches) {
+        scrollYProgress.onChange(handleScroll);
+      }
+    };
+
+    scrollListener();
+
+    const resizeListener = () => {
+      scrollListener();
+    };
+    window.addEventListener("resize", resizeListener);
+
+    return () => {
+      window.removeEventListener("resize", resizeListener);
+      scrollYProgress.clearListeners();
+    };
   }, [scrollYProgress]);
 
   const handleDeleteGroup = async () => {

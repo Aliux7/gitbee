@@ -33,11 +33,11 @@ function DashboardHopComponent(props: DashboardHopProps) {
       }}
       initial="hidden"
       animate="show"
-      className="relative h-full bg-white mx-9 rounded-md flex flex-col mb-14 pb-7"
+      className="relative h-full bg-white mx-5 sm:mx-9 rounded-md flex flex-col mb-14 pb-7"
     >
       <div
         className={`w-full h-auto bg-white sticky z-10 px-5 transition-all ease-in-out duration-0 visible ${
-          props.expand ? "top-[12.25rem]" : "top-28"
+          props.expand ? "top-36 sm:top-[12.25rem]" : "top-28"
         }`}
       >
         <div className="p-1 rounded-md my-4 border flex justify-around items-center gap-3">
@@ -46,7 +46,7 @@ function DashboardHopComponent(props: DashboardHopProps) {
               currentStatus == 1
                 ? "bg-primary-binus text-white"
                 : "bg-transparent hover:bg-gray-100"
-            }  rounded-sm text-center py-1 cursor-pointer`}
+            } text-sm  sm:text-base rounded-sm text-center py-1 cursor-pointer`}
             onClick={() => setCurrentStatus(1)}
           >
             Reviewed{" "}
@@ -55,13 +55,13 @@ function DashboardHopComponent(props: DashboardHopProps) {
                 currentStatus == 1
                   ? " bg-white text-primary-binus"
                   : "bg-primary-binus text-white"
-              } ml-1 px-1 rounded-sm text-sm`}
+              } ml-1 px-1 rounded-sm text-xs sm:text-sm`}
             >
               {props.projects?.["count reviewed"]}
             </span>
           </div>
           <div
-            className={`w-1/2  rounded-sm text-center py-1 cursor-pointer ${
+            className={`w-1/2 text-sm  sm:text-base rounded-sm text-center py-1 cursor-pointer ${
               currentStatus == 0
                 ? "bg-primary-binus text-white"
                 : "bg-transparent hover:bg-gray-100"
@@ -74,7 +74,7 @@ function DashboardHopComponent(props: DashboardHopProps) {
                 currentStatus == 0
                   ? " bg-white text-primary-binus"
                   : "bg-primary-binus text-white"
-              } ml-1 px-1 rounded-sm text-sm`}
+              } ml-1 px-1 rounded-sm text-xs sm:text-sm`}
             >
               {props.projects?.["count not reviewed"]}
             </span>
@@ -83,7 +83,7 @@ function DashboardHopComponent(props: DashboardHopProps) {
       </div>
 
       <motion.div
-        className={`grid grid-cols-3 flex-grow h-fit gap-7 justify-center items-start transition-all ease-in-out duration-500 pt-3`}
+        className={`grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 px-5 h-fit gap-5 md:gap-7 lg:gap-5 xl:gap-10 justify-center items-start transition-all ease-in-out duration-500 pt-4 sm:pt-0 lg:pt-3`}
         initial="hidden"
         whileInView="reveal"
         variants={charVariants}
@@ -118,7 +118,7 @@ function DashboardHopComponent(props: DashboardHopProps) {
                     props.setSelectedDetailProject(project);
                     props.handleScrollToTop();
                   }}
-                > 
+                >
                   <Card
                     image={project?.projectDetail?.thumbnail}
                     delay={0}

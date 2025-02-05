@@ -69,8 +69,7 @@ const page: React.FC<{ params: { id: string } }> = ({ params: { id } }) => {
   };
 
   useEffect(() => {
-    const handleScroll = (currentScrollY: number) => { 
-
+    const handleScroll = (currentScrollY: number) => {
       if (currentScrollY < 0.1) setExpand(true);
       else if (currentScrollY > prevScrollY.current) setExpand(false);
       else if (currentScrollY < prevScrollY.current) setExpand(true);
@@ -92,16 +91,16 @@ const page: React.FC<{ params: { id: string } }> = ({ params: { id } }) => {
         scrollYProgress.onChange(handleScroll);
       }
     };
- 
+
     scrollListener();
- 
+
     const resizeListener = () => {
       scrollListener();
     };
     window.addEventListener("resize", resizeListener);
 
     return () => {
-      window.removeEventListener("resize", resizeListener); 
+      window.removeEventListener("resize", resizeListener);
       scrollYProgress.clearListeners();
     };
   }, [scrollYProgress]);
@@ -134,36 +133,33 @@ const page: React.FC<{ params: { id: string } }> = ({ params: { id } }) => {
   };
 
   return (
-    <motion.div className="relative min-h-screen flex flex-col pt-28 px-16 bg-gray-50">
+    <motion.div className="relative min-h-screen flex flex-col pt-28 2xl:px-16 bg-gray-50">
       <div
         className={`bg-gray-50 fixed top-0 h-[7rem] w-full left-0 z-10`}
       ></div>
 
-      {/* Jangan pakai HOP nnti di ganti jadi admin component sendiri */}
       <motion.div
-        className="relative flex justify-center items-start w-auto bg-white h-full mx-9 rounded-md px-5 mb-14 pb-7 pt-3"
+        className="relative flex flex-col lg:flex-row justify-center items-start w-auto bg-white h-full mx-5 sm:mx-9 rounded-md px-3 lg:px-5 mb-14 pb-7 pt-3"
         initial="hidden"
         animate="visible"
         exit="hidden"
       >
         <motion.div
-          className={`sticky top-32 w-[30rem] h-full py-2 opacity-100 flex flex-col gap-5 transition-all ease-in-out duration-500 overflow-hidden`}
+          className={`lg:sticky top-32 w-full md:w-[30rem] h-full py-2 opacity-100 flex flex-col sm:gap-5 transition-all ease-in-out duration-500 overflow-hidden`}
           variants={containerVariants}
         >
-          {/* <h1 className="text-center py-10 text-gray-500">No Project Selected</h1> */}
-
           <Link
             href={"/dashboard-admin"}
             className="hover:bg-gray-100 p-1.5 cursor-pointer rounded-md flex justify-start items-center w-fit "
           >
             <IoIosArrowRoundBack className="w-7 h-7" /> Back to Dashboard
           </Link>
-          <h1 className="text-2xl border-t pt-5 mr-4">List Developers</h1>
+          <h1 className="text-2xl border-t pt-5 mr-4 hidden lg:block">List Developers</h1>
 
           {project?.projectGroups?.map((projectGroup: any) => (
             <Link
               href={"/portofolio/123"}
-              className="flex justify-start items-center gap-5 border-b pb-5 mr-4 cursor-pointer"
+              className=" hidden lg:flex justify-start items-center gap-5 border-b pb-5 mr-4 cursor-pointer"
             >
               <img
                 src="/images/1.jpg"
@@ -184,16 +180,16 @@ const page: React.FC<{ params: { id: string } }> = ({ params: { id } }) => {
           ))}
         </motion.div>
         <motion.div
-          className="relative w-full border-l pl-3 flex flex-col h-fit py-3 justify-start items-start transition-all ease-in-out duration-500"
+          className="relative w-full lg:border-l pl-3 flex flex-col h-fit pb-3 sm:py-3 justify-start items-start transition-all ease-in-out duration-500"
           variants={containerVariants}
         >
-          <div className="w-full flex flex-col pr-5">
-            <div className="w-full flex justify-start items-start border-b pb-5">
-              <div className="mx-3 flex flex-col gap-1 w-2/3">
-                <h1 className="text-3xl font-bold">
+          <div className="w-full flex flex-col pr-2 sm:pr-5">
+            <div className="w-full flex flex-col md:flex-row justify-start items-start border-b pb-5 gap-3 md:gap-0">
+              <div className="sm:mx-3 flex flex-col gap-1 md:w-2/3">
+                <h1 className="text-2xl sm:text-3xl font-bold">
                   {project?.projectDetail?.title}
                 </h1>
-                <h3 className="text-sm text-gray-500">
+                <h3 className="text-xs sm:text-sm text-gray-500">
                   By{" "}
                   {project?.projectGroups?.map((member: any, index: number) => (
                     <span className="text-gray-500">
@@ -202,8 +198,8 @@ const page: React.FC<{ params: { id: string } }> = ({ params: { id } }) => {
                     </span>
                   ))}
                 </h3>
-                <div className="h-fit flex-grow my-3 pr-10">
-                  <h1 className="text-balance text-gray-700">
+                <div className="h-fit flex-grow my-3 md:pr-10">
+                  <h1 className="text-sm sm:text-base sm:text-balance text-gray-700">
                     {project?.projectDetail?.description}
                   </h1>
                 </div>
@@ -241,7 +237,7 @@ const page: React.FC<{ params: { id: string } }> = ({ params: { id } }) => {
                     </Link>
                   )}
               </div>
-              <div className="w-1/3">
+              <div className="px-2 md:w-1/3">
                 <img
                   src={project?.projectDetail?.thumbnail}
                   className="w-full rounded-md border"
@@ -270,7 +266,7 @@ const page: React.FC<{ params: { id: string } }> = ({ params: { id } }) => {
                   toggleStatus == 0
                     ? "bg-green-500 text-white"
                     : "bg-gray-100 text-green-500"
-                } cursor-pointer rounded-sm text-lg`}
+                } cursor-pointer rounded-sm sm:text-lg`}
               >
                 Show Project
               </div>
@@ -284,7 +280,7 @@ const page: React.FC<{ params: { id: string } }> = ({ params: { id } }) => {
                   toggleStatus == 1
                     ? "bg-red-500 text-white"
                     : "bg-gray-100 text-red-500"
-                } cursor-pointer rounded-sm text-lg`}
+                } cursor-pointer rounded-sm sm:text-lg`}
               >
                 Hide Project
               </div>

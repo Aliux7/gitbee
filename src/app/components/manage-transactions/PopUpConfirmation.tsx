@@ -21,7 +21,7 @@ function PopUpConfirmation(props: PopUpConfirmationProps) {
       >
         <label className="block text-2xl font-medium " htmlFor="name">
           Are you sure you want to{" "}
-          <span className="text-primary-orange">delete all</span> transaction ?
+          <span className="text-red-500 underline">delete all</span> transaction ?
         </label>
         <button
           onClick={props.handleDeleteAllTransaction}

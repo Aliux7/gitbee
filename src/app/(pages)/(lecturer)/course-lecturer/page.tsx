@@ -132,8 +132,8 @@ const page = () => {
           title: "Oops! Something went wrong!",
           description: `Your above 3 rating projects must have a reason`,
         });
-        setLoading(false); 
-        return; 
+        setLoading(false);
+        return;
       }
     }
 
@@ -183,7 +183,7 @@ const page = () => {
   }, []);
 
   useEffect(() => {
-    scrollYProgress.onChange((currentScrollY) => {
+    const handleScroll = (currentScrollY: number) => {
       if (currentScrollY < 0.1) setExpand(true);
       else if (currentScrollY > prevScrollY.current) setExpand(false);
       else if (currentScrollY < prevScrollY.current) setExpand(true);
@@ -194,7 +194,28 @@ const page = () => {
       ) {
         prevScrollY.current = currentScrollY;
       }
-    });
+    };
+
+    const mediaQuery = window.matchMedia("(max-width: 1535px)");
+
+    const scrollListener = () => {
+      console.log(mediaQuery);
+      if (!mediaQuery.matches) {
+        scrollYProgress.onChange(handleScroll);
+      }
+    };
+
+    scrollListener();
+
+    const resizeListener = () => {
+      scrollListener();
+    };
+    window.addEventListener("resize", resizeListener);
+
+    return () => {
+      window.removeEventListener("resize", resizeListener);
+      scrollYProgress.clearListeners();
+    };
   }, [scrollYProgress]);
 
   const handleDeleteGroup = async (group: string) => {
@@ -210,14 +231,14 @@ const page = () => {
   };
 
   return (
-    <motion.div className="relative min-h-screen flex flex-col justify-start items-center px-[6.25rem] ">
+    <motion.div className="relative min-h-screen flex flex-col justify-start items-center px-5 sm:px-10 xl:px-[6.25rem] ">
       <div
-        className={`fixed top-0 w-full flex justify-center items-center transition-all ease-in-out duration-300 px-24 z-10 pb-5 ${
+        className={`fixed top-0 w-full flex justify-center items-center transition-all ease-in-out duration-300 px-5 sm:px-10 xl:px-24 z-10 pb-5 ${
           expand ? "pt-24" : "pt-10"
         } bg-gray-50`}
       >
         <div className="w-full border-b flex justify-between items-center pb-3">
-          <div className={`px-1 ${expand ? "w-1/2" : "w-[calc(50%-5rem)]"}`}>
+          <div className={`px-1 ${expand ? "lg:w-1/2" : "lg:w-[calc(50%-5rem)]"}`}>
             <Breadcrumb>
               <BreadcrumbList>
                 <BreadcrumbItem>
@@ -259,7 +280,7 @@ const page = () => {
           ></div>
           <div
             className={` ${
-              expand ? "w-1/2" : "w-[calc(50%-5rem)]"
+              expand ? "lg:w-1/2" : "lg:w-[calc(50%-5rem)]"
             } flex justify-end items-center`}
           >
             <div className="bg-secondary-binus text-sm font-semibold rounded-md px-2 ">
@@ -269,7 +290,7 @@ const page = () => {
         </div>
       </div>
       {!showPreviewDetailProject && (
-        <div className="h-fit w-full pt-36 pb-10 flex flex-col gap-5">
+        <div className="h-fit w-full pt-44 sm:pt-36 pb-10 flex flex-col gap-5">
           <div className="flex justify-between items-end">
             <div>
               <h1 className="">
@@ -351,7 +372,7 @@ const page = () => {
               ) : null}
             </div>
           </div>
-          <div className="grid grid-cols-3 gap-5 justify-center items-start w-full place-items-stretch">
+          <div className="grid grid-cols-1 md:grid-cols-2 xl:grid-cols-3 gap-5 justify-center items-start w-full place-items-stretch">
             {groupsClassData?.updatedProjects?.map(
               (groupDetail: any, index: number) => (
                 <div
@@ -517,8 +538,7 @@ const page = () => {
                     </Table>
                   </div>
                   <div className="w-full flex justify-between items-end gap-5 border-t pt-3 min-h-[6rem]">
-                    <div className="w-1/2"></div>
-                    <div className="w-1/2 flex flex-col justify-end items-end text-primary-binus  cursor-pointer">
+                    <div className="w-full flex flex-col justify-end items-end text-primary-binus  cursor-pointer">
                       <button
                         onClick={() => {
                           if (
@@ -531,7 +551,7 @@ const page = () => {
                             handleDeleteGroup(groupDetail.group);
                           }
                         }}
-                        className="text-white bg-red-500 px-3 py-1 rounded-md flex justify-center items-center gap-2"
+                        className="text-white bg-red-500 px-3 py-1 rounded-md flex justify-center items-center gap-2 text-nowrap"
                       >
                         <MdDelete className="text-white fill-white w-4 h-4" />
                         Delete Group

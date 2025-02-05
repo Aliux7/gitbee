@@ -334,7 +334,7 @@ const Header = () => {
                   className="py-10 lg:py-0 w-full border-b lg:border-none  flex justify-end items-center pl-auto lg:pl-0"
                   href="/manage-users"
                 >
-                  <li className="w-fit cursor-pointer py-2 px-3 relative after:absolute after:w-0 hover:after:w-full after:h-[2px] after:bottom-0 after:left-0 after:bg-primary-binus flex justify-center items-center after:transition-all after:ease-in-out after:duration-300">
+                  <li className="text-nowrap w-fit cursor-pointer py-2 px-3 relative after:absolute after:w-0 hover:after:w-full after:h-[2px] after:bottom-0 after:left-0 after:bg-primary-binus flex justify-center items-center after:transition-all after:ease-in-out after:duration-300">
                     Manage Users
                   </li>
                 </Link>

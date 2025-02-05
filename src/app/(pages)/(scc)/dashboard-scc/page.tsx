@@ -58,8 +58,7 @@ const page = () => {
   };
 
   useEffect(() => {
-    const handleScroll = (currentScrollY: number) => { 
-
+    const handleScroll = (currentScrollY: number) => {
       if (currentScrollY < 0.1) setExpand(true);
       else if (currentScrollY > prevScrollY.current) setExpand(false);
       else if (currentScrollY < prevScrollY.current) setExpand(true);
@@ -81,16 +80,16 @@ const page = () => {
         scrollYProgress.onChange(handleScroll);
       }
     };
- 
+
     scrollListener();
- 
+
     const resizeListener = () => {
       scrollListener();
     };
     window.addEventListener("resize", resizeListener);
 
     return () => {
-      window.removeEventListener("resize", resizeListener); 
+      window.removeEventListener("resize", resizeListener);
       scrollYProgress.clearListeners();
     };
   }, [scrollYProgress]);
@@ -111,13 +110,15 @@ const page = () => {
   };
 
   return (
-    <motion.div className="relative min-h-screen flex flex-col pt-28 px-16 bg-gray-50">
+    <motion.div className="relative min-h-screen flex flex-col pt-20 sm:pt-28 xl:px-16 bg-gray-50">
       <div
-        className={`bg-gray-50 fixed top-0 h-[7rem] w-full left-0 z-10`}
+        className={`bg-gray-50 fixed top-0 ${
+          !showDevelopers ? "h-60 lg:h-[7rem]" : "h-[7rem]"
+        } w-full left-0 z-10`}
       ></div>
       {!showDevelopers && (
         <div
-          className={`sticky top-7 z-10 w-full flex justify-between items-center gap-5 px-9 h-[5.25rem] transition-all ease-in-out duration-300 bg-gray-50 pb-7`}
+          className={`sticky top-20 sm:top-28 2xl:top-7 z-10 w-full flex flex-col lg:flex-row justify-between items-center gap-2 sm:gap-5 px-5 sm:px-9 h-full sm:h-[5.25rem] transition-all ease-in-out duration-300 bg-gray-50 pb-3 sm:pb-7`}
         >
           <div className="relative w-full flex justify-start items-center h-full">
             <CiSearch
@@ -134,15 +135,16 @@ const page = () => {
               } h-full p-3 px-12 rounded-md`}
             />
           </div>
-          <div className="relative w-fit flex justify-end items-center h-full gap-5">
+          <div className="relative w-full lg:w-fit flex flex-col sm:flex-row justify-end items-center h-full gap-2 sm:gap-5 ">
             <DDMenu
               options={majors}
               filter="Major Project"
               setSelectedValue={setSelectedMajorFilter}
               icon={<IoBookOutline className="w-4 h-4" />}
+              className="max-h-8 sm:max-h-none"
             />
             <DDMenuSemester
-              className="h-full w-64"
+              className="h-full w-full sm:w-64"
               options={listSemester}
               filter="Semester"
               icon={<BsCalendar4Range className="w-4 h-4" />}

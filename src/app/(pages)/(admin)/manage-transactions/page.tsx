@@ -34,8 +34,7 @@ const page = () => {
   };
 
   useEffect(() => {
-    const handleScroll = (currentScrollY: number) => { 
-
+    const handleScroll = (currentScrollY: number) => {
       if (currentScrollY < 0.1) setExpand(true);
       else if (currentScrollY > prevScrollY.current) setExpand(false);
       else if (currentScrollY < prevScrollY.current) setExpand(true);
@@ -57,16 +56,16 @@ const page = () => {
         scrollYProgress.onChange(handleScroll);
       }
     };
- 
+
     scrollListener();
- 
+
     const resizeListener = () => {
       scrollListener();
     };
     window.addEventListener("resize", resizeListener);
 
     return () => {
-      window.removeEventListener("resize", resizeListener); 
+      window.removeEventListener("resize", resizeListener);
       scrollYProgress.clearListeners();
     };
   }, [scrollYProgress]);
@@ -85,16 +84,16 @@ const page = () => {
   };
 
   return (
-    <motion.div className="relative min-h-screen flex flex-col pt-28 px-16 bg-gray-50 pb-10">
+    <motion.div className="relative min-h-screen flex flex-col pt-28 2xl:px-16 bg-gray-50 pb-10">
       <div
         className={`bg-gray-50 fixed top-0 ${
-          expand ? "h-[12.25rem]" : "h-[7rem]"
+          expand ? "h-[10rem] sm:h-[12.25rem]" : "h-[7rem]"
         } w-full left-0 z-10`}
       ></div>
       <div
         className={`sticky ${
           expand ? "top-28" : "top-7"
-        } z-10 w-full flex justify-between items-center gap-5 px-9 h-[5.25rem] transition-all ease-in-out duration-300 bg-gray-50 pb-7`}
+        } z-10 w-full flex justify-between items-center gap-3 sm:gap-5 px-5 sm:px-9 h-[4.5rem] sm:h-[5.25rem] transition-all ease-in-out duration-300 bg-gray-50 pb-7`}
       >
         <div className="relative w-full flex justify-start items-center h-full">
           <CiSearch
@@ -108,12 +107,12 @@ const page = () => {
             onChange={(e) => setSearch(e.target.value)}
             className={`border ${
               expand ? "w-full" : "w-[35.5rem]"
-            } h-full p-3 px-12 rounded-md`}
+            } h-full p-3 px-12 rounded-md text-sm sm:text-base`}
           />
         </div>
         <div className="relative min-w-fit flex justify-end items-center h-full bg-white border rounded-md px-2 gap-2">
           <button
-            className="w-full whitespace-nowrap cursor-pointer py-2 px-4 relative text-primary-binus rounded-sm"
+            className="w-full whitespace-nowrap cursor-pointer py-1 sm:py-2 px-2 sm:px-4 relative text-primary-binus rounded-sm text-sm sm:text-base"
             onClick={() => setOpenImportExcel(true)}
           >
             Import Excel
@@ -121,7 +120,7 @@ const page = () => {
         </div>
       </div>
 
-      <div className="mx-9 text-end mb-2">
+      <div className="mx-5 sm:mx-9 text-end mb-2 text-sm sm:text-base">
         <span
           onClick={() => setOpenPopUpConfirmation(true)}
           className="text-red-500 cursor-pointer"
@@ -129,7 +128,7 @@ const page = () => {
           Delete All Transactions
         </span>
       </div>
-      <div className="w-auto bg-white shadow-md rounded-md mx-9">
+      <div className="w-auto bg-white shadow-md rounded-md mx-5 sm:mx-9">
         <Table>
           <TableHeader>
             <TableRow>

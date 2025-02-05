@@ -24,7 +24,7 @@ function PreviewDetailComponent(props: PreviewDetailProps) {
 
   return (
     <motion.div
-      className="relative flex justify-center items-start w-auto bg-white h-full rounded-md px-5 mb-14 pb-7 pt-3"
+      className="relative flex justify-center items-start w-auto bg-white h-full rounded-md px-3 lg:px-5 mb-14 pb-7 pt-10 sm:pt-3"
       initial="hidden"
       animate="visible"
       exit="hidden"
@@ -32,10 +32,9 @@ function PreviewDetailComponent(props: PreviewDetailProps) {
       <motion.div
         className={`sticky ${
           props.expand ? "top-40" : "top-24"
-        } w-[30rem] h-full py-2 opacity-100 flex flex-col gap-5 transition-all ease-in-out duration-500 overflow-hidden`}
+        } w-[30rem] h-full py-2 opacity-100 hidden lg:flex flex-col gap-5 transition-all ease-in-out duration-500 overflow-hidden`}
         variants={containerVariants}
       >
-        {/* <h1 className="text-center py-10 text-gray-500">No Project Selected</h1> */}
         {props.selectedPreviewProject?.projectGroups.map(
           (student: any, index: number) => (
             <Link
@@ -62,18 +61,19 @@ function PreviewDetailComponent(props: PreviewDetailProps) {
         )}
       </motion.div>
       <motion.div
-        className="relative w-full border-l pl-3 flex h-fit py-3 justify-start items-start transition-all ease-in-out duration-500"
+        className="relative w-full lg:border-l lg:pl-3 flex flex-col sm:flex-row gap-3 sm:gap-0 h-fit py-3 justify-start items-start transition-all ease-in-out duration-500"
         variants={containerVariants}
       >
         <div
-          className="hover:bg-gray-100 p-1.5 cursor-pointer rounded-full"
+          className="hover:bg-gray-100 p-1.5 cursor-pointer rounded-full flex justify-center items-center gap-1 sm:gap-0 border-b sm:border-none"
           onClick={() => props.setShowPreviewDetailProject(false)}
         >
           <IoIosArrowRoundBack className="w-7 h-7" />
+          <span className="text-lg visible sm:hidden">Back</span>
         </div>
         <div className="w-full flex flex-col pr-5">
-          <div className="w-full flex justify-start items-start border-b pb-5">
-            <div className="mx-3 flex flex-col gap-1 w-2/3">
+          <div className="w-full flex md:flex-row flex-col gap-3 lg:gap-0 justify-start items-start border-b pb-5">
+            <div className="mx-1 lg:mx-3 flex flex-col gap-1 w-full md:w-2/3">
               <h1 className="text-3xl font-bold">
                 {props.selectedPreviewProject?.projectDetail?.title}
               </h1>
@@ -93,7 +93,7 @@ function PreviewDetailComponent(props: PreviewDetailProps) {
                   }
                 )}
               </h3>
-              <div className="h-fit flex-grow my-3 pr-10">
+              <div className="h-fit flex-grow my-3 pr-4 lg:pr-10">
                 <h1 className="text-balance text-gray-700">
                   {props.selectedPreviewProject?.projectDetail?.description}
                 </h1>
@@ -143,7 +143,7 @@ function PreviewDetailComponent(props: PreviewDetailProps) {
                   </Link>
                 )}
             </div>
-            <div className="w-1/3">
+            <div className="md:w-1/3">
               {/* <img
                     src="/images/image-1.webp"
                     className="w-full rounded-md"

@@ -44,7 +44,7 @@ const page = () => {
   };
 
   useEffect(() => {
-    scrollYProgress.onChange((currentScrollY) => {
+    const handleScroll = (currentScrollY: number) => {
       if (currentScrollY < 0.1) setExpand(true);
       else if (currentScrollY > prevScrollY.current) setExpand(false);
       else if (currentScrollY < prevScrollY.current) setExpand(true);
@@ -55,7 +55,28 @@ const page = () => {
       ) {
         prevScrollY.current = currentScrollY;
       }
-    });
+    };
+
+    const mediaQuery = window.matchMedia("(max-width: 1535px)");
+
+    const scrollListener = () => {
+      console.log(mediaQuery);
+      if (!mediaQuery.matches) {
+        scrollYProgress.onChange(handleScroll);
+      }
+    };
+
+    scrollListener();
+
+    const resizeListener = () => {
+      scrollListener();
+    };
+    window.addEventListener("resize", resizeListener);
+
+    return () => {
+      window.removeEventListener("resize", resizeListener);
+      scrollYProgress.clearListeners();
+    };
   }, [scrollYProgress]);
 
   const fetchData = async () => {
@@ -87,15 +108,15 @@ const page = () => {
   }, [search, currentSemester]);
 
   return (
-    <motion.div className="relative min-h-screen flex flex-col justify-start items-center px-[6.25rem] ">
+    <motion.div className="relative min-h-screen flex flex-col justify-start items-center px-5 sm:px-10 xl:px-[6.25rem] ">
       <div
-        className={`fixed top-0 w-full flex justify-center items-center transition-all ease-in-out duration-300 px-24 z-20 ${
+        className={`fixed top-0 w-full flex justify-center items-center transition-all ease-in-out duration-300 px-5 sm:px-10 xl:px-24 z-20 ${
           expand ? "pt-24" : "pt-8"
         } bg-gray-50`}
       >
-        <div className="w-full border-b flex justify-between items-center pb-3">
-          <div className={`px-1 ${expand ? "w-1/2" : "w-[calc(50%-5rem)]"}`}>
-            <h1 className="font-montserrat text-3xl font-semibold text-primary-binus">
+        <div className="w-full border-b flex flex-col sm:flex-row justify-between items-start sm:items-center pb-3">
+          <div className={`lg:px-1 ${expand ? "lg:w-1/2" : "lg:w-[calc(50%-5rem)]"}`}>
+            <h1 className="font-montserrat text-2xl xl:text-3xl font-semibold text-primary-binus">
               My Outstanding Review History
             </h1>
           </div>
@@ -106,7 +127,7 @@ const page = () => {
           ></div>
           <div
             className={` ${
-              expand ? "w-1/2" : "w-[calc(50%-5rem)]"
+              expand ? "lg:w-1/2" : "lg:w-[calc(50%-5rem)]"
             } flex justify-end items-center`}
           >
             <DDMenuSemester
@@ -120,7 +141,7 @@ const page = () => {
         </div>
       </div>
 
-      <div className="relative w-full flex justify-start items-center h-full mt-44">
+      <div className="relative w-full flex justify-start items-center h-full mt-56 sm:mt-48 lg:mt-44">
         <CiSearch
           className="absolute ml-3 w-7 h-7 pr-2 border-r"
           fill="#6B7280"
@@ -188,7 +209,7 @@ const page = () => {
                     onClick={() => {
                       setPreviewGroup(true), setSelectedPreviewProject(project);
                     }}
-                    className="bg-primary-binus py-0.5 text-white rounded-md cursor-pointer"
+                    className="bg-primary-binus py-0.5 px-1 text-white rounded-md cursor-pointer"
                   >
                     Preview
                   </div>
@@ -215,18 +236,18 @@ const page = () => {
           >
             <motion.div
               onClick={(e) => e.stopPropagation()}
-              className="bg-gray-50 border rounded-md min-w-96 w-[60rem] max-w-[80vw] h-auto max-h-[85vh] flex flex-col px-10 py-7 gap-5 overflow-y-auto"
+              className="bg-gray-50 border rounded-md min-w-96 max-w-[60rem] w-[95vw] sm:w-[90vw] lg:w-[80vw] h-auto max-h-[85vh] flex flex-col px-5 lg:px-10 py-7 gap-5 overflow-y-auto"
               initial="hidden"
               animate="visible"
               exit="hidden"
             >
               <motion.div
-                className="relative w-full pl-3 flex h-fit py-3 justify-start items-start transition-all ease-in-out duration-500"
+                className="relative w-full sm:pl-3 flex h-fit py-3 justify-start items-start transition-all ease-in-out duration-500"
                 variants={containerVariants}
               >
-                <div className="w-full flex flex-col pr-5">
-                  <div className="w-full flex justify-start items-start border-b pb-5">
-                    <div className="mx-3 flex flex-col gap-1 w-2/3">
+                <div className="w-full flex flex-col md:pr-5">
+                  <div className="w-full flex flex-col gap-3 md:gap-0 md:flex-row justify-start items-start border-b pb-5">
+                    <div className="md:mx-3 flex flex-col gap-1 w-full md:w-2/3">
                       <h1 className="text-3xl font-bold">
                         {selectedPreviewProject?.projectDetail?.title}
                       </h1>
@@ -240,7 +261,7 @@ const page = () => {
                           )
                         )}
                       </h3>
-                      <div className="h-fit flex-grow my-3 pr-10">
+                      <div className="h-fit flex-grow my-3 md:pr-10">
                         <h1 className="text-balance text-gray-700">
                           {selectedPreviewProject?.projectDetail?.description}
                         </h1>
@@ -265,9 +286,12 @@ const page = () => {
                       </Link>
 
                       {selectedPreviewProject?.projectDetail?.video_link &&
-                        selectedPreviewProject?.projectDetail?.video_link != "" && (
+                        selectedPreviewProject?.projectDetail?.video_link !=
+                          "" && (
                           <Link
-                            href={selectedPreviewProject?.projectDetail?.video_link}
+                            href={
+                              selectedPreviewProject?.projectDetail?.video_link
+                            }
                             className="flex justify-start items-center gap-2 text-sm my-1 text-primary-binus"
                           >
                             <IoIosVideocam fill="#EB9327" />{" "}
@@ -275,7 +299,7 @@ const page = () => {
                           </Link>
                         )}
                     </div>
-                    <div className="w-1/3">
+                    <div className="md:w-1/3 w-full">
                       <img
                         src={selectedPreviewProject?.projectDetail?.thumbnail}
                         className="w-full rounded-md border"

@@ -51,29 +51,29 @@ function ProjectDetailHop(props: ProjectDetailHopProps) {
 
   return (
     <motion.div
-      className="relative flex justify-center items-start w-auto bg-white h-full mx-9 rounded-md px-5 mb-14 pb-7 pt-3"
+      className="relative flex flex-col lg:flex-row justify-center items-start w-auto bg-white h-full mx-5 sm:mx-9 rounded-md px-5 mb-14 pb-7 pt-10 sm:pt-3"
       initial="hidden"
       animate="visible"
       exit="hidden"
     >
       <motion.div
-        className={`sticky top-32 w-[30rem] h-full py-2 opacity-100 flex flex-col gap-5 transition-all ease-in-out duration-500 overflow-hidden`}
+        className={`lg:sticky top-32 sm:w-[30rem] h-full py-2 opacity-100 flex flex-col gap-5 transition-all ease-in-out duration-500 overflow-hidden`}
         variants={containerVariants}
       >
-        {/* <h1 className="text-center py-10 text-gray-500">No Project Selected</h1> */}
-
         <div
           className="hover:bg-gray-100 p-1.5 cursor-pointer rounded-md flex justify-start items-center w-fit "
           onClick={() => props.setShowDevelopers(false)}
         >
           <IoIosArrowRoundBack className="w-7 h-7" /> Back to Dashboard
         </div>
-        <h1 className="text-2xl border-t pt-5 mr-4">List Developers</h1>
+        <h1 className="text-2xl border-t pt-5 mr-4 hidden lg:block">
+          List Developers
+        </h1>
         {props.selectedDetailProject?.projectGroups?.map(
           (projectGroup: any) => (
             <Link
               href={"/portofolio/123"}
-              className="flex justify-start items-center gap-5 border-b pb-5 mr-4 cursor-pointer"
+              className="hidden lg:flex justify-start items-center gap-5 border-b pb-5 mr-4 cursor-pointer"
             >
               <img
                 src="/images/1.jpg"
@@ -95,12 +95,12 @@ function ProjectDetailHop(props: ProjectDetailHopProps) {
         )}
       </motion.div>
       <motion.div
-        className="relative w-full border-l pl-3 flex flex-col h-fit py-3 justify-start items-start transition-all ease-in-out duration-500"
+        className="relative w-full lg:border-l sm:pl-3 flex flex-col h-fit py-3 justify-start items-start transition-all ease-in-out duration-500"
         variants={containerVariants}
       >
-        <div className="w-full flex flex-col pr-5">
-          <div className="w-full flex justify-start items-start border-b pb-5">
-            <div className="mx-3 flex flex-col gap-1 w-2/3">
+        <div className="w-full flex flex-col sm:pr-5">
+          <div className="w-full flex flex-col gap-4 sm:gap-0 sm:flex-row justify-start items-start border-b pb-5">
+            <div className="mx-3 flex flex-col gap-1 sm:w-2/3">
               <h1 className="text-3xl font-bold">
                 {props.selectedDetailProject?.projectDetail?.title}
               </h1>
@@ -118,7 +118,7 @@ function ProjectDetailHop(props: ProjectDetailHopProps) {
                   )
                 )}
               </h3>
-              <div className="h-fit flex-grow my-3 pr-10">
+              <div className="h-fit flex-grow my-3 sm:pr-10">
                 <h1 className="text-balance text-gray-700">
                   {props.selectedDetailProject?.projectDetail?.description}
                 </h1>
@@ -151,7 +151,7 @@ function ProjectDetailHop(props: ProjectDetailHopProps) {
                   </Link>
                 )}
             </div>
-            <div className="w-1/3">
+            <div className="sm:w-1/3 mx-2 sm:mx-0">
               <img
                 src={props.selectedDetailProject?.projectDetail?.thumbnail}
                 className="w-full rounded-md border"
@@ -165,7 +165,7 @@ function ProjectDetailHop(props: ProjectDetailHopProps) {
           </div>
 
           <div className="w-full">
-            <p className="text-lg">
+            <p className="sm:text-lg">
               <span className="text-primary-binus">Lecturer:</span>{" "}
               <span className="text-primary-orange">
                 {props.selectedDetailProject?.lecturer_id} -{" "}
@@ -200,7 +200,7 @@ function ProjectDetailHop(props: ProjectDetailHopProps) {
           </div>
         </div>
         {props.selectedDetailProject?.outstandingProject ? (
-          <div className="w-full h-auto flex justify-end items-center gap-5 mt-10 text-lg">
+          <div className="w-full h-auto flex justify-end items-center gap-5 mt-10 sm:text-lg">
             {props.selectedDetailProject?.outstandingProject?.is_outstanding ==
             1 ? (
               <div>
@@ -245,14 +245,14 @@ function ProjectDetailHop(props: ProjectDetailHopProps) {
             )}
           </div>
         ) : (
-          <div className="w-full h-auto flex justify-end items-center gap-5 mt-10">
+          <div className="w-full h-auto flex flex-col md:flex-row justify-end items-end md:items-center gap-5 mt-10">
             <div className="flex justify-center items-center gap-1 bg-white rounded-md border p-1">
               <div
                 className={`px-5 py-1 ${
                   toggleStatus == 0
                     ? "bg-red-500 text-white"
                     : "hover:bg-gray-100 text-red-500"
-                } cursor-pointer rounded-sm text-lg`}
+                } cursor-pointer rounded-sm text-sm sm:text-lg`}
                 onClick={() => setToggleStatus(0)}
               >
                 Not Outstanding
@@ -262,14 +262,14 @@ function ProjectDetailHop(props: ProjectDetailHopProps) {
                   toggleStatus == 1
                     ? "bg-primary-orange text-white"
                     : "hover:bg-gray-100 text-primary-orange"
-                } cursor-pointer rounded-sm text-lg`}
+                } cursor-pointer rounded-sm text-sm sm:text-lg`}
                 onClick={() => setToggleStatus(1)}
               >
                 Outstanding
               </div>
             </div>
             <button
-              className={`text-white px-10 py-2 rounded-md ${
+              className={`text-white text-sm sm:text-base  px-10 py-2 rounded-md ${
                 toggleStatus == 1 || toggleStatus == 0
                   ? "cursor-pointer bg-primary-binus"
                   : "cursor-not-allowed bg-gray-500"

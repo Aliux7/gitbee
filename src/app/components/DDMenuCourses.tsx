@@ -37,7 +37,7 @@ const DDMenuCourses: React.FC<DDMenuCoursesProps> = ({
       <DropdownMenuTrigger asChild>
         <Button
           variant="outline"
-          className="h-full w-full max-w-80 flex justify-start items-center gap-3 py-3 group"
+          className="h-full w-full sm:max-w-80 flex justify-start items-center gap-3 sm:py-3 group"
         >
           <div className="pr-2 border-r h-full flex justify-center items-center">
             {React.cloneElement(icon, {

@@ -65,20 +65,19 @@ const page = () => {
   };
 
   const fetchProjectData = async () => {
-    console.log(currentSemester?.data?.SemesterId)
+    console.log(currentSemester?.data?.SemesterId);
     const resultProject = await getAllProjects(
       search,
       selectedCategoryFilter,
       selectedMajorFilter,
       currentSemester?.data?.SemesterId
     );
-    console.log(resultProject?.data)
+    console.log(resultProject?.data);
     if (resultProject?.success) setProjects(resultProject.data);
   };
 
   useEffect(() => {
-    const handleScroll = (currentScrollY: number) => { 
-
+    const handleScroll = (currentScrollY: number) => {
       if (currentScrollY < 0.1) setExpand(true);
       else if (currentScrollY > prevScrollY.current) setExpand(false);
       else if (currentScrollY < prevScrollY.current) setExpand(true);
@@ -100,28 +99,23 @@ const page = () => {
         scrollYProgress.onChange(handleScroll);
       }
     };
- 
+
     scrollListener();
- 
+
     const resizeListener = () => {
       scrollListener();
     };
     window.addEventListener("resize", resizeListener);
 
     return () => {
-      window.removeEventListener("resize", resizeListener); 
+      window.removeEventListener("resize", resizeListener);
       scrollYProgress.clearListeners();
     };
   }, [scrollYProgress]);
 
   useEffect(() => {
     fetchProjectData();
-  }, [
-    search,
-    selectedCategoryFilter,
-    selectedMajorFilter,
-    currentSemester
-  ]);
+  }, [search, selectedCategoryFilter, selectedMajorFilter, currentSemester]);
 
   useEffect(() => {
     fetchData();
@@ -135,7 +129,7 @@ const page = () => {
   };
 
   return (
-    <motion.div className="relative min-h-screen flex flex-col pt-28 px-16 bg-gray-50">
+    <motion.div className="relative min-h-screen flex flex-col pt-20 sm:pt-28 px-5 sm:px-10 2xl:px-24 bg-gray-50 pb-9">
       <div
         className={`bg-gray-50 fixed top-0 ${
           expand ? "h-[12.25rem]" : "h-[7rem]"
@@ -143,8 +137,8 @@ const page = () => {
       ></div>
       <div
         className={`sticky ${
-          expand ? "top-28" : "top-7"
-        } z-10 w-full flex justify-between items-center gap-5 px-9 h-[5.25rem] transition-all ease-in-out duration-300 bg-gray-50 pb-7`}
+          expand ? "top-20 sm:top-28" : "top-7"
+        } z-10 w-full flex flex-col lg:flex-row justify-between items-center gap-2 sm:gap-5 h-auto lg:h-[5.25rem] transition-all ease-in-out duration-300 bg-gray-50 pb-7`}
       >
         <div className="relative w-full flex justify-start items-center h-full">
           <CiSearch
@@ -161,21 +155,23 @@ const page = () => {
             } h-full p-3 px-12 rounded-md`}
           />
         </div>
-        <div className="relative w-fit flex justify-end items-center h-full gap-5">
+        <div className="relative w-full lg:w-fit flex flex-col sm:flex-row justify-end items-center h-full gap-2 sm:gap-5">
           <DDMenu
             options={categories}
             filter="Category"
+            className="max-h-8 sm:max-h-none"
             setSelectedValue={setSelectedCategoryFilter}
             icon={<TbCategory2 className="w-4 h-4" />}
           />
           <DDMenu
             options={majors}
             filter="Major"
+            className="max-h-8 sm:max-h-none"
             setSelectedValue={setSelectedMajorFilter}
             icon={<IoBookOutline className="w-4 h-4" />}
           />
           <DDMenuSemester
-            className="h-full max-w-44"
+            className="h-full w-full sm:w-auto sm:max-w-44"
             options={listSemester}
             filter="Semester"
             icon={<BsCalendar4Range className="w-4 h-4" />}
@@ -184,15 +180,18 @@ const page = () => {
           />
         </div>
       </div>
-      <div className="w-auto bg-white shadow-md rounded-md mx-9 mb-7 flex justify-around items-center py-7">
+      <div className="w-auto bg-white shadow-md rounded-md mb-7 grid grid-cols-2 md:flex justify-around items-center py-7 px-5 gap-2">
         <div
           onClick={() => setSelectedStats(1)}
-          className={`flex flex-col justify-center items-center text-lg gap-3 hover:bg-gray-50 px-7 py-3 rounded-lg cursor-pointer ${
+          className={`flex flex-col justify-center items-center text-lg gap-3 hover:bg-gray-50 px-3 lg:px-7 py-3 rounded-lg cursor-pointer ${
             selectedStatus == 1 && "border border-primary-binus"
           } `}
         >
-          <img src="/icons/submit.png" className="w-24 h-24" />
-          <div className="flex justify-center items-center gap-2">
+          <img
+            src="/icons/submit.png"
+            className="w-14 h-14 lg:w-20 lg:h-20 xl:w-24 xl:h-24"
+          />
+          <div className="flex justify-center items-center gap-2 text-sm lg:text-base 2xl:text-lg">
             Submitted By Student{" "}
             <span className="bg-primary-binus text-white px-1 text-sm rounded-sm">
               {projects?.["count submitted"]}
@@ -201,12 +200,15 @@ const page = () => {
         </div>
         <div
           onClick={() => setSelectedStats(2)}
-          className={`flex flex-col justify-center items-center text-lg gap-3 hover:bg-gray-50 px-7 py-3 rounded-lg cursor-pointer ${
+          className={`flex flex-col justify-center items-center text-lg gap-3 hover:bg-gray-50 px-3 lg:px-7 py-3 rounded-lg cursor-pointer ${
             selectedStatus == 2 && "border border-primary-binus"
           } `}
         >
-          <img src="/icons/reviews.png" className="w-24 h-24" />
-          <div className="flex justify-center items-center gap-2">
+          <img
+            src="/icons/reviews.png"
+            className="w-14 h-14 lg:w-20 lg:h-20 xl:w-24 xl:h-24"
+          />
+          <div className="flex justify-center items-center gap-2 text-sm lg:text-base 2xl:text-lg">
             Graded By Lecturer{" "}
             <span className="bg-primary-binus text-white px-1 text-sm rounded-sm">
               {projects?.["count graded"]}
@@ -215,12 +217,15 @@ const page = () => {
         </div>
         <div
           onClick={() => setSelectedStats(3)}
-          className={`flex flex-col justify-center items-center text-lg gap-3 hover:bg-gray-50 px-7 py-3 rounded-lg cursor-pointer ${
+          className={`flex flex-col justify-center items-center text-lg gap-3 hover:bg-gray-50 px-3 lg:px-7 py-3 rounded-lg cursor-pointer ${
             selectedStatus == 3 && "border border-primary-binus"
           } `}
         >
-          <img src="/icons/recommendation.png" className="w-24 h-24" />
-          <div className="flex justify-center items-center gap-2">
+          <img
+            src="/icons/recommendation.png"
+            className="w-14 h-14 lg:w-20 lg:h-20 xl:w-24 xl:h-24"
+          />
+          <div className="flex justify-center items-center gap-2 text-sm lg:text-base 2xl:text-lg">
             Reviewed By SCC{" "}
             <span className="bg-primary-binus text-white px-1 text-sm rounded-sm">
               {projects?.["count reviewed"]}
@@ -229,12 +234,15 @@ const page = () => {
         </div>
         <div
           onClick={() => setSelectedStats(4)}
-          className={`flex flex-col justify-center items-center text-lg gap-3 hover:bg-gray-50 px-7 py-3 rounded-lg cursor-pointer ${
+          className={`flex flex-col justify-center items-center text-lg gap-3 hover:bg-gray-50 px-3 lg:px-7 py-3 rounded-lg cursor-pointer ${
             selectedStatus == 4 && "border border-primary-binus"
           } `}
         >
-          <img src="/icons/outstanding.png" className="w-24 h-24" />
-          <div className="flex justify-center items-center gap-2">
+          <img
+            src="/icons/outstanding.png"
+            className="w-14 h-14 lg:w-20 lg:h-20 xl:w-24 xl:h-24"
+          />
+          <div className="flex justify-center items-center gap-2 text-sm lg:text-base 2xl:text-lg">
             Reviewed By HOP{" "}
             <span className="bg-primary-binus text-white px-1 text-sm rounded-sm">
               {projects?.["count outstanding"]}
@@ -242,7 +250,7 @@ const page = () => {
           </div>
         </div>
       </div>
-      <div className="w-auto bg-white shadow-md rounded-md mx-9">
+      <div className="w-auto bg-white shadow-md rounded-md ">
         <Table>
           <TableHeader>
             <TableRow>
@@ -276,11 +284,15 @@ const page = () => {
                     </Link>
                   </TableCell>
                   <TableCell className="text-center">
-                    <div>
+                    <div className="text-nowrap">
                       {project?.projectGroups?.map(
                         (member: any, index: number) => (
                           <span>
-                            {index + 1}. <span className="capitalize">{member?.student_name?.toLowerCase()}</span> <br />
+                            {index + 1}.{" "}
+                            <span className="capitalize">
+                              {member?.student_name?.toLowerCase()}
+                            </span>{" "}
+                            <br />
                           </span>
                         )
                       )}
@@ -306,11 +318,11 @@ const page = () => {
             )}
           </TableBody>
         </Table>
-          {projects?.[listStatus[selectedStatus - 1]]?.length < 1 && (
-            <div className="w-full text-center py-5 text-gray-500">
-              No Data . . .
-            </div>
-          )}
+        {projects?.[listStatus[selectedStatus - 1]]?.length < 1 && (
+          <div className="w-full text-center py-5 text-gray-500">
+            No Data . . .
+          </div>
+        )}
       </div>
     </motion.div>
   );

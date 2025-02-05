@@ -42,7 +42,7 @@ const page = () => {
   const [selectedCategoryFilter, setSelectedCategoryFilter] = useState("");
 
   useEffect(() => {
-    scrollYProgress.onChange((currentScrollY) => {
+    const handleScroll = (currentScrollY: number) => {
       if (currentScrollY < 0.1) setExpand(true);
       else if (currentScrollY > prevScrollY.current) setExpand(false);
       else if (currentScrollY < prevScrollY.current) setExpand(true);
@@ -53,7 +53,28 @@ const page = () => {
       ) {
         prevScrollY.current = currentScrollY;
       }
-    });
+    };
+
+    const mediaQuery = window.matchMedia("(max-width: 1535px)");
+
+    const scrollListener = () => {
+      console.log(mediaQuery);
+      if (!mediaQuery.matches) {
+        scrollYProgress.onChange(handleScroll);
+      }
+    };
+
+    scrollListener();
+
+    const resizeListener = () => {
+      scrollListener();
+    };
+    window.addEventListener("resize", resizeListener);
+
+    return () => {
+      window.removeEventListener("resize", resizeListener);
+      scrollYProgress.clearListeners();
+    };
   }, [scrollYProgress]);
 
   const fetchData = async () => {
@@ -93,15 +114,15 @@ const page = () => {
   }, [currentSemester, selectedCategoryFilter]);
 
   return (
-    <motion.div className="relative min-h-screen flex flex-col justify-start items-center px-[6.25rem] ">
+    <motion.div className="relative min-h-screen flex flex-col justify-start items-center px-5 sm:px-10 xl:px-[6.25rem] ">
       <div
-        className={`fixed top-0 w-full flex justify-center items-center transition-all ease-in-out duration-300 px-24 z-20 ${
+        className={`fixed top-0 w-full flex justify-center items-center transition-all ease-in-out duration-300 px-5 sm:px-10 xl:px-24 z-20 ${
           expand ? "pt-24" : "pt-10"
         } bg-gray-50`}
       >
-        <div className="w-full border-b flex justify-between items-center pb-3">
+        <div className="w-full border-b flex flex-nowrap justify-between items-start sm:items-center pb-3">
           <div className={`px-1 ${expand ? "w-1/2" : "w-[calc(50%-5rem)]"}`}>
-            <h1 className="font-montserrat text-3xl font-semibold text-primary-binus">
+            <h1 className="font-montserrat text-xl sm:text-3xl font-semibold text-primary-binus">
               My Classes
             </h1>
           </div>
@@ -119,7 +140,7 @@ const page = () => {
             <DDMenuSemester
               options={listSemester}
               filter="Semester"
-              icon={<BsCalendar4Range className="w-4 h-4" />}
+              icon={<BsCalendar4Range className="w-3 h-3 sm:w-4 sm:h-4" />}
               currentSemester={currentSemester}
               setCurrentSemester={setCurrentSemester}
             />

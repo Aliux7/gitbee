@@ -11,25 +11,7 @@ import { IoIosVideocam } from "react-icons/io";
 
 const page = () => {
   const { userData } = useAuth();
-  const { scrollYProgress } = useScroll();
-  const prevScrollY = useRef(0);
-  const [expand, setExpand] = useState(true);
   const [studentProjects, setStudentProjects] = useState<any>();
-
-  useEffect(() => {
-    scrollYProgress.onChange((currentScrollY) => {
-      if (currentScrollY < 0.1) setExpand(true);
-      else if (currentScrollY > prevScrollY.current) setExpand(false);
-      else if (currentScrollY < prevScrollY.current) setExpand(true);
-
-      if (
-        currentScrollY - prevScrollY.current > 0.15 ||
-        currentScrollY - prevScrollY.current < -0.15
-      ) {
-        prevScrollY.current = currentScrollY;
-      }
-    });
-  }, [scrollYProgress]);
 
   const fetchData = async () => {
     const resultProjectStudent = await getCurrStudentProject(
