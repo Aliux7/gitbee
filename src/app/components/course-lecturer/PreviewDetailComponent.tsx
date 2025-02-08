@@ -38,7 +38,7 @@ function PreviewDetailComponent(props: PreviewDetailProps) {
         {props.selectedPreviewProject?.projectGroups.map(
           (student: any, index: number) => (
             <Link
-              href={"/portofolio/123"}
+              href={"#"}
               className="flex justify-start items-center gap-5 border-b pb-5 mr-4 cursor-pointer"
             >
               <img

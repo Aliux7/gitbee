@@ -158,7 +158,7 @@ const page: React.FC<{ params: { id: string } }> = ({ params: { id } }) => {
 
           {project?.projectGroups?.map((projectGroup: any) => (
             <Link
-              href={"/portofolio/123"}
+              href={"#"}
               className=" hidden lg:flex justify-start items-center gap-5 border-b pb-5 mr-4 cursor-pointer"
             >
               <img
