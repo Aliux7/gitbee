@@ -154,11 +154,18 @@ const page: React.FC<{ params: { id: string } }> = ({ params: { id } }) => {
           >
             <IoIosArrowRoundBack className="w-7 h-7" /> Back to Dashboard
           </Link>
-          <h1 className="text-2xl border-t pt-5 mr-4 hidden lg:block">List Developers</h1>
+          <h1 className="text-2xl border-t pt-5 mr-4 hidden lg:block">
+            List Developers
+          </h1>
 
           {project?.projectGroups?.map((projectGroup: any) => (
             <Link
-              href={"#"}
+              href={{
+                pathname: `/profile/${projectGroup?.student_id}`,
+                query: {
+                  name: projectGroup?.student_name, 
+                },
+              }}
               className=" hidden lg:flex justify-start items-center gap-5 border-b pb-5 mr-4 cursor-pointer"
             >
               <img

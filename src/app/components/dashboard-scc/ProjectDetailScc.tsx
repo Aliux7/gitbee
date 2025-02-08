@@ -72,7 +72,12 @@ function ProjectDetailScc(props: ProjectDetailSccProps) {
         {props.selectedDetailProject?.projectGroups?.map(
           (projectGroup: any) => (
             <Link
-              href={"#"}
+              href={{
+                pathname: `/profile/${projectGroup?.student_id}`,
+                query: {
+                  name: projectGroup?.student_name,
+                },
+              }}
               className="hidden lg:flex justify-start items-center gap-5 border-b pb-5 mr-4 cursor-pointer"
             >
               <img

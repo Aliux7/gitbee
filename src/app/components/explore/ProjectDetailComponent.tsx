@@ -48,7 +48,12 @@ function ProjectDetailComponent(props: ProjectDetailProps) {
       >
         {detailProject?.projectGroups.map((student: any) => (
           <Link
-            href={"#"}
+            href={{
+              pathname: `/profile/${student?.student_id}`,
+              query: {
+                name: student?.student_name,
+              },
+            }}
             className="flex justify-start items-center gap-5 border-b pb-5 mr-4 cursor-pointer"
           >
             <img
