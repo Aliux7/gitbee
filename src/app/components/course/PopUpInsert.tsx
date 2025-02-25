@@ -17,7 +17,7 @@ import {
 } from "@/app/(pages)/(student)/course/actions";
 import { motion } from "framer-motion";
 import Link from "next/link";
-import { IoIosArrowRoundBack } from "react-icons/io";
+import { IoIosArrowRoundBack, IoIosVideocam } from "react-icons/io";
 import { SiGithub } from "react-icons/si";
 import { BsGlobe2 } from "react-icons/bs";
 import { useAuth } from "@/app/context/AuthContext";
@@ -856,6 +856,15 @@ function PopUpInsert(props: PopUpInsertProps) {
                   >
                     <BsGlobe2 fill="#EB9327" /> {projectLink}
                   </Link>
+                  {videoLink && videoLink != "" && (
+                    <Link
+                      href={videoLink}
+                      className="flex justify-start items-center gap-2 text-sm my-1 text-primary-binus"
+                    >
+                      <IoIosVideocam fill="#EB9327" />{" "}
+                      {videoLink}
+                    </Link>
+                  )}
                 </div>
                 <div className="w-1/3">
                   <img

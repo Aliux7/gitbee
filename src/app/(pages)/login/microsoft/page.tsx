@@ -2,7 +2,7 @@
 import { useMsal } from "@azure/msal-react";
 import React, { useEffect } from "react";
 import { useRouter } from "next/navigation";
-import { login } from "./actions";
+import { login } from "../actions";
 import { useAuth } from "@/app/context/AuthContext";
 
 const page = () => {

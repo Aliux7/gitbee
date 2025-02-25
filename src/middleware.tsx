@@ -7,13 +7,13 @@ export function middleware(req: NextRequest) {
   const pathname = req.nextUrl.pathname;
 
   if (!token) {
-    return NextResponse.redirect(new URL("/login", req.url));
+    return NextResponse.redirect(new URL("/login/microsoft", req.url));
   }
 
   try {
     const decoded = jwt.decode(token) as { role?: string[] };
     if (!decoded?.role || !Array.isArray(decoded.role)) {
-      return NextResponse.redirect(new URL("/login", req.url));
+      return NextResponse.redirect(new URL("/login/microsoft", req.url));
     }
 
     const roles = decoded.role.map((r) => r.toLowerCase());
@@ -45,10 +45,10 @@ export function middleware(req: NextRequest) {
 
     console.log(isAllowed);
     if (!isAllowed) {
-      return NextResponse.redirect(new URL("/login", req.url));
+      return NextResponse.redirect(new URL("/login/microsoft", req.url));
     }
   } catch (error) {
-    return NextResponse.redirect(new URL("/login", req.url));
+    return NextResponse.redirect(new URL("/login/microsoft", req.url));
   }
 
   return NextResponse.next();

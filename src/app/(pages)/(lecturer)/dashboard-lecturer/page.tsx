@@ -163,14 +163,13 @@ const page = () => {
                 <TableHead className="text-center">Course Name</TableHead>
                 <TableHead className="text-center">Start Correction</TableHead>
                 <TableHead className="text-center">End Correction</TableHead>
-                <TableHead className="text-center">Student</TableHead>
-                <TableHead className="text-center">Submit</TableHead>
+                <TableHead className="text-center">Student</TableHead> 
                 <TableHead className="text-center">Action</TableHead>
               </TableRow>
             </TableHeader>
             <TableBody>
-              {transactions?.map((transaction: any) => (
-                <TableRow>
+              {transactions?.map((transaction: any, index: number) => (
+                <TableRow key={index}>
                   <TableCell className="text-start font-medium">
                     {transaction?.class}
                   </TableCell>
@@ -182,8 +181,7 @@ const page = () => {
                   </TableCell>
                   <TableCell className="text-center"> - </TableCell>
                   <TableCell className="text-center"> - </TableCell>
-                  <TableCell className="text-center"> - </TableCell>
-                  <TableCell className="text-center"> - </TableCell>
+                  <TableCell className="text-center"> {transaction?.total_students} </TableCell> 
                   <TableCell className="text-center">
                     <Link
                       href={{

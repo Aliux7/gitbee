@@ -9,6 +9,8 @@ import {
 } from "framer-motion";
 import useMeasure from "react-use-measure";
 import splitStringUsingRegex from "../../utlis/splitStringUsingRegex";
+import { useMsal } from "@azure/msal-react";
+import { useAuth } from "@/app/context/AuthContext";
 
 const heading = "BINUS Project Gallery";
 const subHeadingStart = "Show the ";
@@ -23,6 +25,8 @@ const charVariants = {
 };
 
 export const Hero = () => {
+  const { instance, inProgress, accounts } = useMsal();
+  const { userData, setUserData } = useAuth();
   const { scrollYProgress } = useScroll();
   const yTranslationUp = useMotionValue(0);
   const yTranslationDown = useMotionValue(0);
@@ -70,6 +74,17 @@ export const Hero = () => {
       controlsDown.stop();
     };
   }, [yTranslationUp, yTranslationDown, height1, height2]);
+
+  const loginMicrosoft = async () => {
+    const loginRequest = {
+      scopes: ["user.read"],
+      prompt: "select_account",
+    };
+
+    instance.loginRedirect(loginRequest).catch((error: any) => {
+      console.error(error);
+    });
+  };
 
   return (
     <motion.div
@@ -161,19 +176,35 @@ export const Hero = () => {
           >
             Explore
           </motion.a>
-          <motion.a
-            href="/classes"
-            variants={{
-              hidden: { opacity: 0, x: -175 },
-              visible: { opacity: 1, x: 0 },
-            }}
-            initial="hidden"
-            whileInView="visible"
-            transition={{ duration: 1, delay: 1.5 }}
-            className="text-sm sm:text-base border-none lg:border cursor-pointer py-2 px-1 relative after:absolute after:w-0 hover:after:w-full after:h-[1px] after:bottom-0 after:left-0 after:bg-primary-binus flex justify-center items-center after:transition-all after:ease-in-out after:duration-300"
-          >
-            Submit a project
-          </motion.a>
+          {userData ? (
+            <motion.a
+              href="/dashboard"
+              variants={{
+                hidden: { opacity: 0, x: -175 },
+                visible: { opacity: 1, x: 0 },
+              }}
+              initial="hidden"
+              whileInView="visible"
+              transition={{ duration: 1, delay: 1.5 }}
+              className="text-sm sm:text-base border-none lg:border cursor-pointer py-2 px-1 relative after:absolute after:w-0 hover:after:w-full after:h-[1px] after:bottom-0 after:left-0 after:bg-primary-binus flex justify-center items-center after:transition-all after:ease-in-out after:duration-300"
+            >
+              Submit a project
+            </motion.a>
+          ) : (
+            <motion.div
+              onClick={() => loginMicrosoft()}
+              variants={{
+                hidden: { opacity: 0, x: -175 },
+                visible: { opacity: 1, x: 0 },
+              }}
+              initial="hidden"
+              whileInView="visible"
+              transition={{ duration: 1, delay: 1.5 }}
+              className="text-sm sm:text-base border-none lg:border cursor-pointer py-2 px-1 relative after:absolute after:w-0 hover:after:w-full after:h-[1px] after:bottom-0 after:left-0 after:bg-primary-binus flex justify-center items-center after:transition-all after:ease-in-out after:duration-300"
+            >
+              Submit a project
+            </motion.div>
+          )}
         </div>
       </div>
       <div className="relative lg:w-1/2 flex gap-7 h-full overflow-hidden lg:rotate-3 justify-end items-end lg:pe-24 xl:pe-36 opacity-30 lg:opacity-100">

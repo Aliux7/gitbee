@@ -207,7 +207,7 @@ const Project = () => {
           variants={charVariants}
           className="w-32 relative border border-primary-binus bg-transparent px-5 py-2.5 text-primary-binus transition-colors before:absolute before:left-0 before:top-0 before:-z-10 before:h-full before:w-full before:origin-top-left before:scale-y-0 before:bg-primary-binus before:transition-transform before:duration-300 before:content-[''] hover:text-white before:hover:scale-y-100 rounded-md before:rounded-sm overflow-hidden"
         >
-          Contact
+          Contact Us
         </motion.button>
       </motion.div>
     </div>

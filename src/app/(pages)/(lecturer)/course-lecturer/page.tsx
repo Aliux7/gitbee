@@ -238,7 +238,9 @@ const page = () => {
         } bg-gray-50`}
       >
         <div className="w-full border-b flex justify-between items-center pb-3">
-          <div className={`px-1 ${expand ? "lg:w-1/2" : "lg:w-[calc(50%-5rem)]"}`}>
+          <div
+            className={`px-1 ${expand ? "lg:w-1/2" : "lg:w-[calc(50%-5rem)]"}`}
+          >
             <Breadcrumb>
               <BreadcrumbList>
                 <BreadcrumbItem>
@@ -320,13 +322,16 @@ const page = () => {
                 <span className="text-primary-binus font-semibold">
                   Group Created:
                 </span>{" "}
-                20/30 Student
+                {groupsClassData?.countStudentSubmitted}/{groupsClassData?.totalStudents} Student
               </h1>
               <h1 className="">
                 <span className="text-primary-binus font-semibold">
                   Project Submitted:
                 </span>{" "}
-                3/7 Submitted
+                {groupsClassData?.updatedProjects?.length}/
+                {groupsClassData?.updatedProjects?.length +
+                  groupsClassData?.sortedGroups?.length}{" "}
+                Submitted
               </h1>
               <h1 className="">
                 <span className="text-primary-binus font-semibold">
